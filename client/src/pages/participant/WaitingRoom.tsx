@@ -14,6 +14,7 @@ import {
 
 export const WaitingRoom: React.FC = () => {
   const [activeRound, setActiveRound] = useState<any>(null);
+  const [upcomingRound, setUpcomingRound] = useState<any>(null);
   const [checking, setChecking] = useState(false);
   const navigate = useNavigate();
   const team = useAuthStore((state) => state.team);
@@ -45,6 +46,7 @@ export const WaitingRoom: React.FC = () => {
             navigate('/event/round', { replace: true });
           } else {
             setActiveRound(res.data.activeRound);
+            setUpcomingRound(res.data.upcomingRound || res.data.activeRound);
           }
         }
       } catch (err) {
@@ -112,8 +114,13 @@ export const WaitingRoom: React.FC = () => {
           You are Ready for the Arena
         </h2>
         <p className="text-slate-400 text-sm max-w-md mx-auto mb-8">
-          Waiting for the event organizers to launch Round 1 (Bug Hunt).
-          Your screen will automatically transition the moment the round begins.
+          Waiting for the event organizers to launch{' '}
+          <span className="text-white font-medium">
+            {upcomingRound 
+              ? (upcomingRound.name.startsWith('Round') ? upcomingRound.name : `Round ${upcomingRound.number} (${upcomingRound.name})`) 
+              : 'Round 1 (Bug Hunt)'}
+          </span>
+          . Your screen will automatically transition the moment the round begins.
         </p>
 
         {/* Team State Card */}
@@ -146,7 +153,12 @@ export const WaitingRoom: React.FC = () => {
               <span className="text-slate-400">Next Upcoming Round</span>
               <span className="text-emerald-400 font-semibold flex items-center">
                 <Clock className="w-3.5 h-3.5 mr-1" />
-                {activeRound ? `Round ${activeRound.number}: ${activeRound.name}` : 'Round 1: Bug Hunt (30 Min)'}
+                {(() => {
+                  const target = upcomingRound || activeRound;
+                  if (!target) return 'Round 1: Bug Hunt (15 Min)';
+                  const name = target.name?.startsWith('Round') ? target.name : `Round ${target.number}: ${target.name}`;
+                  return `${name} (${target.durationMinutes || (target.number === 2 ? 30 : 15)} Min)`;
+                })()}
               </span>
             </div>
           </div>

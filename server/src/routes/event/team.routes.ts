@@ -100,12 +100,20 @@ router.get('/status', async (req: Request, res: Response, next: NextFunction) =>
       where: { status: 'ACTIVE' },
     });
 
+    const upcomingRound = activeRound || (await prisma.round.findFirst({
+      where: { status: { in: ['LOCKED', 'ACTIVE'] } },
+      orderBy: { number: 'asc' },
+    })) || (await prisma.round.findFirst({
+      orderBy: { number: 'asc' },
+    }));
+
     const settings = await prisma.eventSettings.findFirst();
 
     res.json({
       success: true,
       team,
       activeRound,
+      upcomingRound,
       eventStatus: settings?.eventStatus || 'NOT_STARTED',
     });
   } catch (err) {

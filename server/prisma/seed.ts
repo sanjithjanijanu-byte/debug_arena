@@ -58,12 +58,12 @@ async function main() {
   });
   console.log(`✅ Admin seeded: ${admin.username}`);
 
-  // 4. Seed Rounds (2 Rounds: Round 1 MCQ & Round 2 Hard Debugging)
+  // 4. Seed Rounds (2 Rounds: Round 1 MCQ 15 mins & Round 2 Hard Debugging 30 mins)
   const round1 = await prisma.round.create({
     data: {
       number: 1,
       name: 'Bug Hunt',
-      durationMinutes: 30,
+      durationMinutes: 15,
       difficulty: Difficulty.EASY,
       status: 'LOCKED',
     },
@@ -73,12 +73,12 @@ async function main() {
     data: {
       number: 2,
       name: 'Debugging Showdown',
-      durationMinutes: 45,
+      durationMinutes: 30,
       difficulty: Difficulty.HARD,
       status: 'LOCKED',
     },
   });
-  console.log('✅ Rounds 1 and 2 seeded');
+  console.log('✅ Rounds 1 (15 Min) and 2 (30 Min) seeded');
 
   // 5. Seed Teams & Participants
   const defaultTeamPassHash = await bcrypt.hash('team123', 12);

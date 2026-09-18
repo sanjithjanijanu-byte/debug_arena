@@ -134,11 +134,36 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+// Synchronize Round Durations on Startup (Round 1: 15m, Round 2: 30m)
+async function syncRoundDurations() {
+  try {
+    await prisma.round.updateMany({
+      where: { number: 1 },
+      data: { durationMinutes: 15 },
+    });
+    await prisma.round.updateMany({
+      where: { number: 2 },
+      data: { durationMinutes: 30 },
+    });
+    const round3 = await prisma.round.findFirst({
+      where: { number: 3 },
+      include: { questions: true },
+    });
+    if (round3 && round3.questions.length === 0) {
+      await prisma.round.delete({ where: { id: round3.id } }).catch(() => {});
+    }
+    console.log('⚡ Round durations auto-synced: Round 1 (15m), Round 2 (30m)');
+  } catch (err) {
+    console.warn('⚠️ syncRoundDurations skipped or error:', err);
+  }
+}
+
 // Graceful Server Startup
 server.listen(env.PORT, () => {
   console.log(`🚀 Debugging Event Platform Server running on port ${env.PORT}`);
   console.log(`📡 WebSocket ready on port ${env.PORT}`);
   console.log(`🎯 Client origin allowed: ${env.CLIENT_URL}`);
+  syncRoundDurations();
 });
 
 // Process Signal Handling
