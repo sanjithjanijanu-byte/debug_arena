@@ -1,4 +1,4 @@
-import { PrismaClient, Language, Difficulty } from '@prisma/client';
+import { PrismaClient, Language } from '@prisma/client';
 import fs from 'fs';
 import path from 'path';
 
@@ -38,13 +38,6 @@ export async function seedAllSetsQuestions() {
       continue;
     }
 
-    // Determine difficulty
-    const diff = item.roundNumber === 1
-      ? Difficulty.EASY
-      : item.roundNumber === 2
-      ? Difficulty.MEDIUM
-      : Difficulty.HARD;
-
     const created = await prisma.question.create({
       data: {
         roundId,
@@ -56,7 +49,6 @@ export async function seedAllSetsQuestions() {
         points: item.points || (item.roundNumber === 1 ? 10 : item.roundNumber === 2 ? 20 : 30),
         timeLimitMs: item.timeLimitMs || 2500,
         memoryLimitMb: item.memoryLimitMb || 256,
-        difficulty: diff,
         isTiebreaker: false,
         testCases: {
           create: (item.testCases || []).map((tc: any) => ({
