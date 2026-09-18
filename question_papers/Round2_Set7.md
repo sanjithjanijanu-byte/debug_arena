@@ -63,7 +63,6 @@ int main() {
 
     for (int right = 0; right < n; right++) {
         windowSum += nums[right];
-        // BUG: strictly greater than target ignores sum == target
         while (windowSum > target) {
             minLen = min(minLen, right - left + 1);
             windowSum -= nums[left++];
@@ -95,7 +94,6 @@ public class Main {
 
         for (int right = 0; right < n; right++) {
             windowSum += list.get(right);
-            // BUG: strictly greater
             while (windowSum > target) {
                 minLen = Math.min(minLen, right - left + 1);
                 windowSum -= list.get(left++);
@@ -125,7 +123,6 @@ def solve():
 
     for right in range(n):
         window_sum += nums[right]
-        # BUG: strictly greater
         while window_sum > target:
             min_len = min(min_len, right - left + 1)
             window_sum -= nums[left]

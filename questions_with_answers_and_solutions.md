@@ -1717,8 +1717,7 @@ public class Main {
 import sys
 
 def solve():
-    s = sys.stdin.read().rstrip('
-')
+    s = sys.stdin.read().strip()
     last_seen = {}
     left = 0
     max_len = 0

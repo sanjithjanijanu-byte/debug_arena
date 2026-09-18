@@ -71,7 +71,6 @@ int main() {
 
     priority_queue<int, vector<int>, greater<int>> pq;
     for (int i = 0; i < n; i++) {
-        // BUG: should be inDegree[i] == 0
         if (inDegree[i] == 1) {
             pq.push(i);
         }
@@ -129,7 +128,6 @@ public class Main {
 
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for (int i = 0; i < n; i++) {
-            // BUG: inDegree[i] == 1
             if (inDegree[i] == 1) pq.add(i);
         }
 
@@ -182,7 +180,6 @@ def main():
 
     pq = []
     for i in range(n):
-        # BUG: in_degree[i] == 1
         if in_degree[i] == 1:
             heapq.heappush(pq, i)
 

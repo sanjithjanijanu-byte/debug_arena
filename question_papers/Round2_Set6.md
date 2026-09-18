@@ -60,7 +60,6 @@ int main() {
             long long sum = nums[i] + nums[left] + nums[right];
             if (sum == 0) {
                 count++;
-                // BUG: Infinite loop or wrong skip condition
                 while (left < right && nums[left] == nums[left + 1]) left++;
                 while (left < right && nums[right] == nums[right - 1]) right--;
                 left++;
@@ -104,7 +103,6 @@ public class Main {
                 long sum = list.get(i) + list.get(left) + list.get(right);
                 if (sum == 0) {
                     count++;
-                    // BUG: duplicate skip logic flaw
                     while (left < right && Objects.equals(list.get(left), list.get(left + 1))) left++;
                     while (left < right && Objects.equals(list.get(right), list.get(right - 1))) right--;
                     left++;
@@ -146,7 +144,6 @@ def solve():
             s = nums[i] + nums[left] + nums[right]
             if s == 0:
                 count += 1
-                # BUG: wrong duplicate step
                 while left < right and nums[left] == nums[left + 1]:
                     left += 1
                 while left < right and nums[right] == nums[right - 1]:

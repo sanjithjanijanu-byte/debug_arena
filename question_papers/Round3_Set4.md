@@ -58,7 +58,6 @@ int main() {
             st.pop();
             if (st.empty()) break;
 
-            // BUG: calculated width as current - top instead of current - st.top() - 1
             long long distance = current - top;
             long long bounded_height = min(height[current], height[st.top()]) - height[top];
             totalWater += distance * bounded_height;
@@ -92,7 +91,6 @@ public class Main {
                 int top = st.pop();
                 if (st.isEmpty()) break;
 
-                // BUG: distance = current - top
                 long distance = current - top;
                 long boundedHeight = Math.min(height[current], height[st.peek()]) - height[top];
                 totalWater += distance * boundedHeight;
@@ -125,7 +123,6 @@ def main():
             top = st.pop()
             if not st:
                 break
-            # BUG: current - top
             distance = current - top
             bounded_height = min(height[current], height[st[-1]]) - height[top]
             total_water += distance * bounded_height

@@ -22,8 +22,8 @@ Input:
 7 2
 1 2 1 2 3 4 5
 Output:
-6
-Explanation: Subarray [1, 2, 1, 2] has sum 6 and contains 2 distinct elements.
+9
+Explanation: Subarray [4, 5] has sum 9 and contains 2 distinct elements (<= 2).
 
 Example 2:
 Input:
@@ -37,10 +37,10 @@ Output:
     timeLimitMs: 2500,
     memoryLimitMb: 256,
     testCases: [
-      { stdin: '7 2\n1 2 1 2 3 4 5', expectedStdout: '6', isHidden: false, weight: 1 },
+      { stdin: '7 2\n1 2 1 2 3 4 5', expectedStdout: '9', isHidden: false, weight: 1 },
       { stdin: '5 1\n3 3 3 3 3', expectedStdout: '15', isHidden: false, weight: 1 },
       { stdin: '5 3\n-1 -2 -3 -4 -5', expectedStdout: '-1', isHidden: false, weight: 1 },
-      { stdin: '6 2\n10 -5 10 10 -5 20', expectedStdout: '35', isHidden: true, weight: 2 },
+      { stdin: '6 2\n10 -5 10 10 -5 20', expectedStdout: '25', isHidden: true, weight: 2 },
       { stdin: '4 2\n1 2 3 4', expectedStdout: '7', isHidden: true, weight: 2 },
     ],
     implementations: {
@@ -69,7 +69,6 @@ int main() {
         while (freq.size() > (size_t)k) {
             freq[arr[left]]--;
             if (freq[arr[left]] == 0) freq.erase(arr[left]);
-            // BUG: left incremented before subtracting arr[left]
             left++;
             windowSum -= arr[left];
         }
@@ -139,7 +138,6 @@ public class Main {
             while (freq.size() > k) {
                 freq.merge(arr[left], -1, Integer::sum);
                 if (freq.get(arr[left]) == 0) freq.remove(arr[left]);
-                // BUG: left incremented before subtracting arr[left]
                 left++;
                 windowSum -= arr[left];
             }
@@ -208,7 +206,6 @@ def solve():
             freq[arr[left]] -= 1
             if freq[arr[left]] == 0:
                 del freq[arr[left]]
-            # BUG: left incremented before subtracting arr[left]
             left += 1
             window_sum -= arr[left]
 
@@ -317,7 +314,6 @@ int main() {
         long long height = min(h[left], h[right]);
         maxWater = max(maxWater, width * height);
 
-        // BUG: Moves the larger pointer instead of the shorter
         if (h[left] > h[right]) {
             left++;
         } else {
@@ -377,7 +373,6 @@ public class Main {
             long height = Math.min(h[left], h[right]);
             maxWater = Math.max(maxWater, width * height);
 
-            // BUG: Moves the taller pointer
             if (h[left] > h[right]) {
                 left++;
             } else {
@@ -435,7 +430,6 @@ def solve():
         height = min(h[left], h[right])
         max_water = max(max_water, width * height)
 
-        # BUG: Advances the taller pointer
         if h[left] > h[right]:
             left += 1
         else:
@@ -543,7 +537,6 @@ int main() {
     for (int right = 0; right < (int)s.length(); right++) {
         char c = s[right];
         if (lastSeen.find(c) != lastSeen.end()) {
-            // BUG: Moves left backwards if lastSeen[c] is before left
             left = lastSeen[c] + 1;
         }
         lastSeen[c] = right;
@@ -598,7 +591,6 @@ public class Main {
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             if (lastSeen.containsKey(c)) {
-                // BUG: does not clamp left
                 left = lastSeen.get(c) + 1;
             }
             lastSeen.put(c, right);
@@ -636,14 +628,13 @@ public class Main {
         buggyCode: `import sys
 
 def solve():
-    s = sys.stdin.read().rstrip('\r\n')
+    s = sys.stdin.read().strip()
     last_seen = {}
     left = 0
     max_len = 0
 
     for right, c in enumerate(s):
         if c in last_seen:
-            # BUG: moves left backwards
             left = last_seen[c] + 1
         last_seen[c] = right
         max_len = max(max_len, right - left + 1)
@@ -655,7 +646,7 @@ if __name__ == '__main__':
         referenceSolution: `import sys
 
 def solve():
-    s = sys.stdin.read().rstrip('\r\n')
+    s = sys.stdin.read().strip()
     last_seen = {}
     left = 0
     max_len = 0
@@ -728,7 +719,6 @@ int main() {
 
     long long curr = 1;
     for (int i = 0; i < n; i++) {
-        // BUG: multiplies before assigning
         curr *= nums[i];
         res[i] = curr;
     }
@@ -792,7 +782,6 @@ public class Main {
         long curr = 1;
 
         for (int i = 0; i < n; i++) {
-            // BUG: multiplies before setting prefix
             curr *= list.get(i);
             res[i] = curr;
         }
@@ -853,7 +842,6 @@ def solve():
 
     curr = 1
     for i in range(n):
-        # BUG: updates curr first
         curr *= nums[i]
         res[i] = curr
 
@@ -945,7 +933,6 @@ int search(vector<int>& nums, int target) {
         int mid = low + (high - low) / 2;
         if (nums[mid] == target) return mid;
 
-        // BUG: strictly less ignores low == mid case
         if (nums[low] < nums[mid]) {
             if (nums[low] <= target && target < nums[mid]) {
                 high = mid - 1;
@@ -1019,7 +1006,6 @@ public class Main {
             int mid = low + (high - low) / 2;
             if (nums[mid] == target) return mid;
 
-            // BUG: strictly less ignores low == mid
             if (nums[low] < nums[mid]) {
                 if (nums[low] <= target && target < nums[mid]) {
                     high = mid - 1;
@@ -1097,7 +1083,6 @@ def search(nums, target):
         if nums[mid] == target:
             return mid
 
-        # BUG: strictly less check
         if nums[low] < nums[mid]:
             if nums[low] <= target < nums[mid]:
                 high = mid - 1
@@ -1219,7 +1204,6 @@ int main() {
             long long sum = nums[i] + nums[left] + nums[right];
             if (sum == 0) {
                 count++;
-                // BUG: Infinite loop or wrong skip condition
                 while (left < right && nums[left] == nums[left + 1]) left++;
                 while (left < right && nums[right] == nums[right - 1]) right--;
                 left++;
@@ -1301,7 +1285,6 @@ public class Main {
                 long sum = list.get(i) + list.get(left) + list.get(right);
                 if (sum == 0) {
                     count++;
-                    // BUG: duplicate skip logic flaw
                     while (left < right && Objects.equals(list.get(left), list.get(left + 1))) left++;
                     while (left < right && Objects.equals(list.get(right), list.get(right - 1))) right--;
                     left++;
@@ -1379,7 +1362,6 @@ def solve():
             s = nums[i] + nums[left] + nums[right]
             if s == 0:
                 count += 1
-                # BUG: wrong duplicate step
                 while left < right and nums[left] == nums[left + 1]:
                     left += 1
                 while left < right and nums[right] == nums[right - 1]:
@@ -1504,7 +1486,6 @@ int main() {
 
     for (int right = 0; right < n; right++) {
         windowSum += nums[right];
-        // BUG: strictly greater than target ignores sum == target
         while (windowSum > target) {
             minLen = min(minLen, right - left + 1);
             windowSum -= nums[left++];
@@ -1561,7 +1542,6 @@ public class Main {
 
         for (int right = 0; right < n; right++) {
             windowSum += list.get(right);
-            // BUG: strictly greater
             while (windowSum > target) {
                 minLen = Math.min(minLen, right - left + 1);
                 windowSum -= list.get(left++);
@@ -1614,7 +1594,6 @@ def solve():
 
     for right in range(n):
         window_sum += nums[right]
-        # BUG: strictly greater
         while window_sum > target:
             min_len = min(min_len, right - left + 1)
             window_sum -= nums[left]

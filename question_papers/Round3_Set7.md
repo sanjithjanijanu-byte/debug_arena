@@ -58,7 +58,6 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         prefixSum += nums[i];
-        // BUG: remainder can be negative in C++
         int rem = prefixSum % k;
 
         if (remainderCount.count(rem)) {
@@ -95,7 +94,6 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             prefixSum += nums[i];
-            // BUG: negative remainder in Java
             int rem = (int)(prefixSum % k);
 
             if (remainderCount.containsKey(rem)) {
@@ -128,7 +126,6 @@ def main():
 
     for x in nums:
         prefix_sum += x
-        # BUG: Simulated C-style integer division remainder logic that fails for negative numbers
         rem = int(prefix_sum - int(prefix_sum / k) * k)
 
         if rem in remainder_count:

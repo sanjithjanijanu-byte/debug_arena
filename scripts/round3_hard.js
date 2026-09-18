@@ -46,7 +46,7 @@ Output:
     testCases: [
       { stdin: '4 4 2 0 3\n1 2\n0 1 2\n1 2 3\n2 3 4\n0 3 15', expectedStdout: '9', isHidden: false, weight: 1 },
       { stdin: '3 1 1 0 2\n1\n0 1 5', expectedStdout: '-1', isHidden: false, weight: 1 },
-      { stdin: '5 6 3 0 4\n1 2 3\n0 1 2\n1 2 2\n2 3 2\n3 4 2\n0 4 1\n1 4 10', expectedStdout: '9', isHidden: true, weight: 2 },
+      { stdin: '5 6 3 0 4\n1 2 3\n0 1 2\n1 2 2\n2 3 2\n3 4 2\n0 4 1\n1 4 10', expectedStdout: '8', isHidden: true, weight: 2 },
       { stdin: '3 3 0 0 2\n\n0 1 1\n1 2 2\n0 2 5', expectedStdout: '3', isHidden: true, weight: 2 }
     ],
     implementations: {
@@ -108,7 +108,6 @@ int main() {
                 new_mask |= (1 << chkIndex[v]);
             }
 
-            // BUG: checked and updated dist[v][mask] instead of dist[v][new_mask]
             if (dist[u][mask] + edge.w < dist[v][mask]) {
                 dist[v][mask] = dist[u][mask] + edge.w;
                 pq.push({dist[v][mask], v, new_mask});
@@ -253,7 +252,6 @@ public class Main {
                 int newMask = cur.mask;
                 if (chkIndex[e.to] != -1) newMask |= (1 << chkIndex[e.to]);
 
-                // BUG: dist[e.to][cur.mask] used instead of dist[e.to][newMask]
                 if (dist[cur.u][cur.mask] + e.w < dist[e.to][cur.mask]) {
                     dist[e.to][cur.mask] = dist[cur.u][cur.mask] + e.w;
                     pq.add(new State(dist[e.to][cur.mask], e.to, newMask));
@@ -385,7 +383,6 @@ def main():
             if chkIndex[v] != -1:
                 new_mask |= (1 << chkIndex[v])
 
-            # BUG: used mask instead of new_mask
             if dist[u][mask] + w < dist[v][mask]:
                 dist[v][mask] = dist[u][mask] + w
                 heapq.heappush(pq, (dist[v][mask], v, new_mask))
@@ -507,7 +504,7 @@ Output:
       { stdin: 'hit cog\n6\nhot dot dog lot log cog', expectedStdout: '2', isHidden: false, weight: 1 },
       { stdin: 'hit cog\n5\nhot dot dog lot log', expectedStdout: '0', isHidden: false, weight: 1 },
       { stdin: 'a c\n3\na b c', expectedStdout: '1', isHidden: true, weight: 2 },
-      { stdin: 'red tax\n5\nted tex red tax tad', expectedStdout: '3', isHidden: true, weight: 2 }
+      { stdin: 'red tax\n5\nted tex red tax tad', expectedStdout: '2', isHidden: true, weight: 2 }
     ],
     implementations: {
       CPP: {
@@ -564,7 +561,6 @@ int main() {
                         }
                         paths[nextWord] = (paths[nextWord] + paths[curr]) % MOD;
                         if (nextWord == endWord) found = true;
-                        // BUG: Removing word immediately inside node processing
                         dict.erase(nextWord);
                     }
                 }
@@ -695,7 +691,6 @@ public class Main {
                             }
                             paths.put(nextWord, (paths.getOrDefault(nextWord, 0L) + paths.get(curr)) % MOD);
                             if (nextWord.equals(endWord)) found = true;
-                            // BUG: Immediate removal
                             dict.remove(nextWord);
                         }
                     }
@@ -814,7 +809,6 @@ def main():
                         paths[next_word] = (paths[next_word] + paths[curr]) % MOD
                         if next_word == end_word:
                             found = True
-                        # BUG: Removed immediately from word_list
                         word_list.remove(next_word)
                 chars[pos] = orig
 
@@ -967,7 +961,6 @@ int main() {
             cout << fixed << setprecision(1) << median << endl;
             return 0;
         } else if (maxLeftA > minRightB) {
-            // BUG: incremented low instead of decrementing high
             low = i + 1;
         } else {
             high = i - 1;
@@ -1062,7 +1055,6 @@ public class Main {
                 System.out.printf(Locale.US, "%.1f\\n", median);
                 return;
             } else if (maxLeftA > minRightB) {
-                // BUG: inverted adjustment
                 low = i + 1;
             } else {
                 high = i - 1;
@@ -1153,7 +1145,6 @@ def main():
             print(f"{median:.1f}")
             return
         elif maxLeftA > minRightB:
-            # BUG: wrong branch update
             low = i + 1
         else:
             high = i - 1
@@ -1269,7 +1260,6 @@ int main() {
             st.pop();
             if (st.empty()) break;
 
-            // BUG: calculated width as current - top instead of current - st.top() - 1
             long long distance = current - top;
             long long bounded_height = min(height[current], height[st.top()]) - height[top];
             totalWater += distance * bounded_height;
@@ -1331,7 +1321,6 @@ public class Main {
                 int top = st.pop();
                 if (st.isEmpty()) break;
 
-                // BUG: distance = current - top
                 long distance = current - top;
                 long boundedHeight = Math.min(height[current], height[st.peek()]) - height[top];
                 totalWater += distance * boundedHeight;
@@ -1389,7 +1378,6 @@ def main():
             top = st.pop()
             if not st:
                 break
-            # BUG: current - top
             distance = current - top
             bounded_height = min(height[current], height[st[-1]]) - height[top]
             total_water += distance * bounded_height
@@ -1516,7 +1504,6 @@ int main() {
             }
 
             char leftChar = s[left];
-            // BUG: decrements formed if windowFreq[leftChar] <= targetFreq[leftChar] BEFORE decrementing windowFreq
             if (targetFreq.count(leftChar) && windowFreq[leftChar] <= targetFreq[leftChar]) {
                 formed--;
             }
@@ -1616,7 +1603,6 @@ public class Main {
                 }
 
                 char leftChar = s.charAt(left);
-                // BUG: condition <= instead of ==
                 if (targetFreq.containsKey(leftChar) && windowFreq.get(leftChar) <= targetFreq.get(leftChar)) {
                     formed--;
                 }
@@ -1708,7 +1694,6 @@ def main():
                 start_idx = left
 
             left_char = s[left]
-            # BUG: checked <= before decrementing
             if left_char in target_freq and window_freq[left_char] <= target_freq[left_char]:
                 formed -= 1
             window_freq[left_char] -= 1
@@ -1839,7 +1824,6 @@ int main() {
 
     priority_queue<int, vector<int>, greater<int>> pq;
     for (int i = 0; i < n; i++) {
-        // BUG: should be inDegree[i] == 0
         if (inDegree[i] == 1) {
             pq.push(i);
         }
@@ -1945,7 +1929,6 @@ public class Main {
 
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         for (int i = 0; i < n; i++) {
-            // BUG: inDegree[i] == 1
             if (inDegree[i] == 1) pq.add(i);
         }
 
@@ -2041,7 +2024,6 @@ def main():
 
     pq = []
     for i in range(n):
-        # BUG: in_degree[i] == 1
         if in_degree[i] == 1:
             heapq.heappush(pq, i)
 
@@ -2148,7 +2130,7 @@ Output:
     testCases: [
       { stdin: '6 5\n4 5 0 -2 -3 1', expectedStdout: '7', isHidden: false, weight: 1 },
       { stdin: '1 5\n5', expectedStdout: '1', isHidden: false, weight: 1 },
-      { stdin: '4 3\n-1 2 9 -3', expectedStdout: '4', isHidden: true, weight: 2 },
+      { stdin: '4 3\n-1 2 9 -3', expectedStdout: '3', isHidden: true, weight: 2 },
       { stdin: '5 7\n-7 -7 -7 -7 -7', expectedStdout: '15', isHidden: true, weight: 2 }
     ],
     implementations: {
@@ -2172,7 +2154,6 @@ int main() {
 
     for (int i = 0; i < n; i++) {
         prefixSum += nums[i];
-        // BUG: remainder can be negative in C++
         int rem = prefixSum % k;
 
         if (remainderCount.count(rem)) {
@@ -2236,7 +2217,6 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             prefixSum += nums[i];
-            // BUG: negative remainder in Java
             int rem = (int)(prefixSum % k);
 
             if (remainderCount.containsKey(rem)) {
@@ -2297,7 +2277,6 @@ def main():
 
     for x in nums:
         prefix_sum += x
-        # BUG: Simulated C-style integer division remainder logic that fails for negative numbers
         rem = int(prefix_sum - int(prefix_sum / k) * k)
 
         if rem in remainder_count:

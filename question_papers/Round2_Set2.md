@@ -56,7 +56,6 @@ int main() {
         long long height = min(h[left], h[right]);
         maxWater = max(maxWater, width * height);
 
-        // BUG: Moves the larger pointer instead of the shorter
         if (h[left] > h[right]) {
             left++;
         } else {
@@ -90,7 +89,6 @@ public class Main {
             long height = Math.min(h[left], h[right]);
             maxWater = Math.max(maxWater, width * height);
 
-            // BUG: Moves the taller pointer
             if (h[left] > h[right]) {
                 left++;
             } else {
@@ -123,7 +121,6 @@ def solve():
         height = min(h[left], h[right])
         max_water = max(max_water, width * height)
 
-        # BUG: Advances the taller pointer
         if h[left] > h[right]:
             left += 1
         else:

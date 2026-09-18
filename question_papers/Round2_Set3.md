@@ -62,7 +62,6 @@ int main() {
     for (int right = 0; right < (int)s.length(); right++) {
         char c = s[right];
         if (lastSeen.find(c) != lastSeen.end()) {
-            // BUG: Moves left backwards if lastSeen[c] is before left
             left = lastSeen[c] + 1;
         }
         lastSeen[c] = right;
@@ -91,7 +90,6 @@ public class Main {
         for (int right = 0; right < s.length(); right++) {
             char c = s.charAt(right);
             if (lastSeen.containsKey(c)) {
-                // BUG: does not clamp left
                 left = lastSeen.get(c) + 1;
             }
             lastSeen.put(c, right);
@@ -109,15 +107,13 @@ public class Main {
 import sys
 
 def solve():
-    s = sys.stdin.read().rstrip('
-')
+    s = sys.stdin.read().strip()
     last_seen = {}
     left = 0
     max_len = 0
 
     for right, c in enumerate(s):
         if c in last_seen:
-            # BUG: moves left backwards
             left = last_seen[c] + 1
         last_seen[c] = right
         max_len = max(max_len, right - left + 1)

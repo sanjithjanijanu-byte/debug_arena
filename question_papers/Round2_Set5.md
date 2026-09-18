@@ -47,7 +47,6 @@ int search(vector<int>& nums, int target) {
         int mid = low + (high - low) / 2;
         if (nums[mid] == target) return mid;
 
-        // BUG: strictly less ignores low == mid case
         if (nums[low] < nums[mid]) {
             if (nums[low] <= target && target < nums[mid]) {
                 high = mid - 1;
@@ -88,7 +87,6 @@ public class Main {
             int mid = low + (high - low) / 2;
             if (nums[mid] == target) return mid;
 
-            // BUG: strictly less ignores low == mid
             if (nums[low] < nums[mid]) {
                 if (nums[low] <= target && target < nums[mid]) {
                     high = mid - 1;
@@ -132,7 +130,6 @@ def search(nums, target):
         if nums[mid] == target:
             return mid
 
-        # BUG: strictly less check
         if nums[low] < nums[mid]:
             if nums[low] <= target < nums[mid]:
                 high = mid - 1

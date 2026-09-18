@@ -49,7 +49,6 @@ int main() {
 
     long long curr = 1;
     for (int i = 0; i < n; i++) {
-        // BUG: multiplies before assigning
         curr *= nums[i];
         res[i] = curr;
     }
@@ -85,7 +84,6 @@ public class Main {
         long curr = 1;
 
         for (int i = 0; i < n; i++) {
-            // BUG: multiplies before setting prefix
             curr *= list.get(i);
             res[i] = curr;
         }
@@ -118,7 +116,6 @@ def solve():
 
     curr = 1
     for i in range(n):
-        # BUG: updates curr first
         curr *= nums[i]
         res[i] = curr
 

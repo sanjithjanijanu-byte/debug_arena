@@ -20,8 +20,8 @@ Input:
 7 2
 1 2 1 2 3 4 5
 Output:
-6
-Explanation: Subarray [1, 2, 1, 2] has sum 6 and contains 2 distinct elements.
+9
+Explanation: Subarray [4, 5] has sum 9 and contains 2 distinct elements (<= 2).
 
 Example 2:
 Input:
@@ -61,7 +61,6 @@ int main() {
         while (freq.size() > (size_t)k) {
             freq[arr[left]]--;
             if (freq[arr[left]] == 0) freq.erase(arr[left]);
-            // BUG: left incremented before subtracting arr[left]
             left++;
             windowSum -= arr[left];
         }
@@ -100,7 +99,6 @@ public class Main {
             while (freq.size() > k) {
                 freq.merge(arr[left], -1, Integer::sum);
                 if (freq.get(arr[left]) == 0) freq.remove(arr[left]);
-                // BUG: left incremented before subtracting arr[left]
                 left++;
                 windowSum -= arr[left];
             }
@@ -139,7 +137,6 @@ def solve():
             freq[arr[left]] -= 1
             if freq[arr[left]] == 0:
                 del freq[arr[left]]
-            # BUG: left incremented before subtracting arr[left]
             left += 1
             window_sum -= arr[left]
 

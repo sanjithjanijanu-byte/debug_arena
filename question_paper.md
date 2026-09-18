@@ -4783,8 +4783,8 @@ Input:
 7 2
 1 2 1 2 3 4 5
 Output:
-6
-Explanation: Subarray [1, 2, 1, 2] has sum 6 and contains 2 distinct elements.
+9
+Explanation: Subarray [4, 5] has sum 9 and contains 2 distinct elements (<= 2).
 
 Example 2:
 Input:

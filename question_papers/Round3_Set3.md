@@ -81,7 +81,6 @@ int main() {
             cout << fixed << setprecision(1) << median << endl;
             return 0;
         } else if (maxLeftA > minRightB) {
-            // BUG: incremented low instead of decrementing high
             low = i + 1;
         } else {
             high = i - 1;
@@ -132,7 +131,6 @@ public class Main {
                 System.out.printf(Locale.US, "%.1f\n", median);
                 return;
             } else if (maxLeftA > minRightB) {
-                // BUG: inverted adjustment
                 low = i + 1;
             } else {
                 high = i - 1;
@@ -181,7 +179,6 @@ def main():
             print(f"{median:.1f}")
             return
         elif maxLeftA > minRightB:
-            # BUG: wrong branch update
             low = i + 1
         else:
             high = i - 1

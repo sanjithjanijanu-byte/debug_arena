@@ -82,7 +82,6 @@ int main() {
             }
 
             char leftChar = s[left];
-            // BUG: decrements formed if windowFreq[leftChar] <= targetFreq[leftChar] BEFORE decrementing windowFreq
             if (targetFreq.count(leftChar) && windowFreq[leftChar] <= targetFreq[leftChar]) {
                 formed--;
             }
@@ -136,7 +135,6 @@ public class Main {
                 }
 
                 char leftChar = s.charAt(left);
-                // BUG: condition <= instead of ==
                 if (targetFreq.containsKey(leftChar) && windowFreq.get(leftChar) <= targetFreq.get(leftChar)) {
                     formed--;
                 }
@@ -185,7 +183,6 @@ def main():
                 start_idx = left
 
             left_char = s[left]
-            # BUG: checked <= before decrementing
             if left_char in target_freq and window_freq[left_char] <= target_freq[left_char]:
                 formed -= 1
             window_freq[left_char] -= 1

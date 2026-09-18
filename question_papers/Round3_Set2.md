@@ -100,7 +100,6 @@ int main() {
                         }
                         paths[nextWord] = (paths[nextWord] + paths[curr]) % MOD;
                         if (nextWord == endWord) found = true;
-                        // BUG: Removing word immediately inside node processing
                         dict.erase(nextWord);
                     }
                 }
@@ -163,7 +162,6 @@ public class Main {
                             }
                             paths.put(nextWord, (paths.getOrDefault(nextWord, 0L) + paths.get(curr)) % MOD);
                             if (nextWord.equals(endWord)) found = true;
-                            // BUG: Immediate removal
                             dict.remove(nextWord);
                         }
                     }
@@ -221,7 +219,6 @@ def main():
                         paths[next_word] = (paths[next_word] + paths[curr]) % MOD
                         if next_word == end_word:
                             found = True
-                        # BUG: Removed immediately from word_list
                         word_list.remove(next_word)
                 chars[pos] = orig
 

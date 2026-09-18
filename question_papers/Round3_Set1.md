@@ -101,7 +101,6 @@ int main() {
                 new_mask |= (1 << chkIndex[v]);
             }
 
-            // BUG: checked and updated dist[v][mask] instead of dist[v][new_mask]
             if (dist[u][mask] + edge.w < dist[v][mask]) {
                 dist[v][mask] = dist[u][mask] + edge.w;
                 pq.push({dist[v][mask], v, new_mask});
@@ -179,7 +178,6 @@ public class Main {
                 int newMask = cur.mask;
                 if (chkIndex[e.to] != -1) newMask |= (1 << chkIndex[e.to]);
 
-                // BUG: dist[e.to][cur.mask] used instead of dist[e.to][newMask]
                 if (dist[cur.u][cur.mask] + e.w < dist[e.to][cur.mask]) {
                     dist[e.to][cur.mask] = dist[cur.u][cur.mask] + e.w;
                     pq.add(new State(dist[e.to][cur.mask], e.to, newMask));
@@ -245,7 +243,6 @@ def main():
             if chkIndex[v] != -1:
                 new_mask |= (1 << chkIndex[v])
 
-            # BUG: used mask instead of new_mask
             if dist[u][mask] + w < dist[v][mask]:
                 dist[v][mask] = dist[u][mask] + w
                 heapq.heappush(pq, (dist[v][mask], v, new_mask))
