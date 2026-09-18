@@ -4,8 +4,8 @@ let socket: Socket | null = null;
 
 export function getSocket(): Socket {
   if (!socket) {
-    const adminToken = localStorage.getItem('adminToken');
-    const participantToken = localStorage.getItem('participantToken');
+    const adminToken = sessionStorage.getItem('adminToken') || localStorage.getItem('adminToken');
+    const participantToken = sessionStorage.getItem('participantToken') || localStorage.getItem('participantToken');
     const token = adminToken || participantToken || '';
 
     // Use window.location.origin so WebSocket connects to whatever host/port the app is running on

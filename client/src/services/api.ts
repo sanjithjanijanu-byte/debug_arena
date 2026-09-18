@@ -14,12 +14,12 @@ api.interceptors.request.use(
 
     // Route-specific token scope
     if (url.startsWith('/admin')) {
-      const adminToken = localStorage.getItem('adminToken');
+      const adminToken = sessionStorage.getItem('adminToken') || localStorage.getItem('adminToken');
       if (adminToken) {
         config.headers.Authorization = `Bearer ${adminToken}`;
       }
     } else if (url.startsWith('/event')) {
-      const participantToken = localStorage.getItem('participantToken');
+      const participantToken = sessionStorage.getItem('participantToken') || localStorage.getItem('participantToken');
       if (participantToken) {
         config.headers.Authorization = `Bearer ${participantToken}`;
       }
@@ -38,12 +38,18 @@ api.interceptors.response.use(
       const url = error.config?.url || '';
 
       if (url.startsWith('/admin')) {
+        sessionStorage.removeItem('adminToken');
+        sessionStorage.removeItem('adminUser');
         localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminUser');
         if (window.location.pathname !== '/admin/login') {
           window.location.href = '/admin/login';
         }
       } else if (url.startsWith('/event')) {
+        sessionStorage.removeItem('participantToken');
+        sessionStorage.removeItem('teamInfo');
         localStorage.removeItem('participantToken');
+        localStorage.removeItem('teamInfo');
         if (window.location.pathname !== '/login') {
           window.location.href = '/login';
         }

@@ -17,34 +17,51 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  adminToken: localStorage.getItem('adminToken'),
-  admin: localStorage.getItem('adminUser') ? JSON.parse(localStorage.getItem('adminUser')!) : null,
+  adminToken: sessionStorage.getItem('adminToken') || localStorage.getItem('adminToken'),
+  admin: (sessionStorage.getItem('adminUser') || localStorage.getItem('adminUser'))
+    ? JSON.parse((sessionStorage.getItem('adminUser') || localStorage.getItem('adminUser'))!)
+    : null,
   setAdminAuth: (token, admin) => {
+    sessionStorage.setItem('adminToken', token);
+    sessionStorage.setItem('adminUser', JSON.stringify(admin));
     localStorage.setItem('adminToken', token);
     localStorage.setItem('adminUser', JSON.stringify(admin));
     set({ adminToken: token, admin });
   },
   logoutAdmin: () => {
+    sessionStorage.removeItem('adminToken');
+    sessionStorage.removeItem('adminUser');
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUser');
     set({ adminToken: null, admin: null });
   },
 
-  participantToken: localStorage.getItem('participantToken'),
-  team: localStorage.getItem('teamInfo') ? JSON.parse(localStorage.getItem('teamInfo')!) : null,
+  // Participant auth isolated per-tab in sessionStorage to enable multiple simultaneous team logins
+  participantToken: sessionStorage.getItem('participantToken') || localStorage.getItem('participantToken'),
+  team: (() => {
+    const raw = sessionStorage.getItem('teamInfo') || localStorage.getItem('teamInfo');
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  })(),
   setParticipantAuth: (token, team) => {
-    localStorage.setItem('participantToken', token);
-    localStorage.setItem('teamInfo', JSON.stringify(team));
+    sessionStorage.setItem('participantToken', token);
+    sessionStorage.setItem('teamInfo', JSON.stringify(team));
     set({ participantToken: token, team });
   },
   updateTeam: (updates) => {
     set((state) => {
       const updated = { ...state.team, ...updates };
-      localStorage.setItem('teamInfo', JSON.stringify(updated));
+      sessionStorage.setItem('teamInfo', JSON.stringify(updated));
       return { team: updated };
     });
   },
   logoutParticipant: () => {
+    sessionStorage.removeItem('participantToken');
+    sessionStorage.removeItem('teamInfo');
     localStorage.removeItem('participantToken');
     localStorage.removeItem('teamInfo');
     set({ participantToken: null, team: null });

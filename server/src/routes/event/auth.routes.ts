@@ -59,10 +59,12 @@ router.post(
         );
       }
 
-      // Check settings for dual login violation logging
+      // Dual login / concurrent session policy
       const settings = await prisma.eventSettings.findFirst();
-      if (settings?.dualLoginEnabled && team.activeSessionId) {
-        // Log violation for secondary login attempt
+      const allowDual = settings?.dualLoginEnabled ?? true;
+
+      if (!allowDual && team.activeSessionId) {
+        // Log violation for secondary login attempt when single-session enforcement is active
         await prisma.violation.create({
           data: {
             teamId: team.id,
@@ -72,8 +74,8 @@ router.post(
         });
       }
 
-      // Single active session enforcement: Generate fresh session ID
-      const newSessionId = uuidv4();
+      // If dual login is allowed, reuse existing activeSessionId so concurrent teammates remain authenticated
+      const newSessionId = (allowDual && team.activeSessionId) ? team.activeSessionId : uuidv4();
 
       await prisma.team.update({
         where: { id: team.id },

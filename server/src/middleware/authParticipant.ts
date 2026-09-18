@@ -43,11 +43,14 @@ export async function authParticipant(req: Request, res: Response, next: NextFun
       throw new UnauthorizedError('Team no longer exists');
     }
 
-    // Enforce single active session
-    if (team.activeSessionId && team.activeSessionId !== decoded.sessionId) {
-      throw new UnauthorizedError(
-        'Session terminated: Your team has logged in from another device or browser.'
-      );
+    // Enforce single active session only when dual login is disabled by organizers
+    const settings = await prisma.eventSettings.findFirst();
+    if (settings && !settings.dualLoginEnabled) {
+      if (team.activeSessionId && team.activeSessionId !== decoded.sessionId) {
+        throw new UnauthorizedError(
+          'Session terminated: Your team has logged in from another device or browser.'
+        );
+      }
     }
 
     // Check if team is disqualified
