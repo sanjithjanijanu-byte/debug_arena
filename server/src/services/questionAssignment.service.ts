@@ -88,15 +88,35 @@ export async function assignQuestionsForTeam(
     return [];
   }
 
+  // Detect sets if titles have "Set X" format (e.g. "Set 1 - Q1...", "Set 2: ...")
+  const setMap = new Map<number, typeof availableQuestions>();
+  for (const q of availableQuestions) {
+    const match = q.title.match(/Set\s+(\d+)/i);
+    const setNum = match ? parseInt(match[1], 10) : 1;
+    if (!setMap.has(setNum)) {
+      setMap.set(setNum, []);
+    }
+    setMap.get(setNum)!.push(q);
+  }
+
+  let assignedQuestions = availableQuestions;
+  const uniqueSets = Array.from(setMap.keys()).sort((a, b) => a - b);
+
+  if (uniqueSets.length > 1) {
+    // Determine which set this team receives (teamCode % uniqueSets.length)
+    const setIndex = getTeamSetIndex(team, uniqueSets.length);
+    const assignedSetNum = uniqueSets[setIndex];
+    assignedQuestions = setMap.get(assignedSetNum) || availableQuestions;
+  }
+
   // Sort naturally by question number (Q1, Q2, ..., Q20)
-  availableQuestions.sort((a, b) => {
+  assignedQuestions.sort((a, b) => {
     const numA = parseInt((a.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
     const numB = parseInt((b.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
     return numA - numB;
   });
 
-  // Assign ALL available questions to each team (all 20 MCQs for Round 1)
-  const questionIds = availableQuestions.map((q) => q.id);
+  const questionIds = assignedQuestions.map((q) => q.id);
 
   // Persist assignments in database
   const assignmentsData = questionIds.map((qId) => ({
@@ -116,7 +136,7 @@ export async function assignQuestionsForTeam(
 
 /**
  * Returns existing assigned question IDs for a team in a round.
- * If no assignments exist yet or fewer questions were assigned, generates all assignments.
+ * If no assignments exist yet, generates assignments based on the team's set.
  */
 export async function ensureTeamQuestionAssignments(
   teamId: string,
@@ -134,25 +154,9 @@ export async function ensureTeamQuestionAssignments(
     select: { questionId: true },
   });
 
-  const totalCandidateQuestions = await prisma.question.count({
-    where: { roundId, language, isTiebreaker: false },
-  });
-
-  // If already assigned all candidate questions, return them
-  if (existing.length >= totalCandidateQuestions && existing.length > 0) {
+  if (existing.length > 0) {
     return existing.map((a) => a.questionId);
   }
-
-  // Otherwise (e.g. previously only 4 questions were assigned), re-assign all questions
-  await prisma.assignment.deleteMany({
-    where: {
-      teamId,
-      question: {
-        roundId,
-        language,
-      },
-    },
-  });
 
   return await assignQuestionsForTeam(teamId, roundId, language);
 }

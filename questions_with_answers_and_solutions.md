@@ -1,3217 +1,2186 @@
-# DEBUGGING COMPETITION — COMPLETE QUESTION BANK
+# DEBUG ARENA — Official Judge & Solutions Manual
 
-## Event Overview
-
-A **2-hour college-level programming debugging competition** with 3 rounds.
-
-| Round            | Format                       |       Time |
-| ---------------- | ---------------------------- | ---------: |
-| **Settling In**  | Registration & Setup         | **30 min** |
-| **Round 1**      | MCQs – C++, Java, Python     | **20 min** |
-| **Round 2**      | Code Debugging               | **35 min** |
-| **Round 3**      | Advanced Debugging Challenge | **35 min** |
-| **Total**        |                              |  **2 hrs** |
+> **CONFIDENTIAL**: For Judges, Faculty, and Event Coordinators Only.
+> Contains complete answer keys, root cause diagnostics, and reference solutions for all competition rounds and sets.
 
 ---
 
-
-# ROUND 1 — MCQ QUALIFICATION
+## Table of Contents
+1. [Round 1: MCQ Answer Keys & Explanations (Sets 1 - 5)](#round-1-mcq-solutions)
+2. [Round 2: Medium Debugging Solutions (Sets 1 - 7)](#round-2-medium-solutions)
+3. [Round 3: Hard Debugging Solutions (Sets 1 - 7)](#round-3-hard-solutions)
 
 ---
 
-## SET 1
+<a name="round-1-mcq-solutions"></a>
+# Round 1: MCQ Solutions (Sets 1 - 5)
 
-### C++ (Set 1)
+## Round 1 — Set 1
 
-#### Q1. What is the output of the following C++ code?
+### Quick Answer Key (Set 1)
+
+| Q# | C++ Key | Java Key | Python Key |
+|:---:|:---:|:---:|:---:||
+| Q1 | **B** | **B** | **A** |
+| Q2 | **C** | **C** | **C** |
+| Q3 | **B** | **B** | **B** |
+| Q4 | **B** | **B** | **C** |
+| Q5 | **A** | **B** | **B** |
+| Q6 | **B** | **B** | **B** |
+| Q7 | **A** | **B** | **A** |
+| Q8 | **B** | **B** | **B** |
+| Q9 | **B** | **B** | **B** |
+| Q10 | **A** | **B** | **B** |
+| Q11 | **B** | **B** | **B** |
+| Q12 | **A** | **B** | **A** |
+| Q13 | **B** | **B** | **B** |
+| Q14 | **B** | **A** | **A** |
+| Q15 | **B** | **A** | **B** |
+| Q16 | **B** | **B** | **B** |
+| Q17 | **A** | **B** | **B** |
+| Q18 | **B** | **B** | **B** |
+| Q19 | **B** | **A** | **A** |
+| Q20 | **A** | **B** | **B** |
+
+### Set 1 — C++ Explanations
+
+#### Q1. Integer Division in C++
+- **Correct Answer:** **(B)** 3
+- **Explanation:** In C++, dividing two integers truncates the decimal part towards zero: 7 / 2 = 3.
+
+#### Q2. Post-Increment Operator
+- **Correct Answer:** **(C)** 6 5
+- **Explanation:** Post-increment assigns the current value of x (5) to y, then increments x to 6.
+
+#### Q3. Pass-by-Value in C++
+- **Correct Answer:** **(B)** 20
+- **Explanation:** x is passed by value, so modifying x inside addTen does not affect num in main.
+
+#### Q4. Array Indexing in C++
+- **Correct Answer:** **(B)** 40
+- **Explanation:** Arrays are 0-indexed: arr[0]=10, arr[1]=20, arr[2]=30, arr[3]=40.
+
+#### Q5. String Length and Character Access
+- **Correct Answer:** **(A)** 5 e
+- **Explanation:** "Hello" has length 5 and s[1] is the character at index 1: 'e'.
+
+#### Q6. Modulo Operator
+- **Correct Answer:** **(B)** 2
+- **Explanation:** 14 % 4 computes the remainder of 14 divided by 4, which is 2.
+
+#### Q7. For Loop Accumulator
+- **Correct Answer:** **(A)** 10
+- **Explanation:** The loop adds 0 + 1 + 2 + 3 + 4 = 10.
+
+#### Q8. Ternary Conditional Operator
+- **Correct Answer:** **(B)** 200
+- **Explanation:** 10 > 15 is false, so the ternary expression selects the second value: 200.
+
+#### Q9. Boolean Logic Operators
+- **Correct Answer:** **(B)** 0 1
+- **Explanation:** (5 > 0 && -2 > 0) is false (0). (5 > 0 || -2 > 0) is true (1).
+
+#### Q10. Vector push_back and size
+- **Correct Answer:** **(A)** 2 100
+- **Explanation:** push_back inserts 2 elements, so size is 2. v[0] is the first element, 100.
+
+#### Q11. Reference Variables
+- **Correct Answer:** **(B)** 25 25
+- **Explanation:** ref is an alias for x. Mutating ref directly alters x to 25.
+
+#### Q12. Nested Ternary Operator
+- **Correct Answer:** **(A)** 1
+- **Explanation:** a > 3 (5 > 3) is true, and a < 10 (5 < 10) is true, resulting in 1.
+
+#### Q13. Switch Statement Fall-Through
+- **Correct Answer:** **(B)** Two Three
+- **Explanation:** Without a break after case 2, execution falls through to case 3: "Two Three ".
+
+#### Q14. Pointer Dereferencing
+- **Correct Answer:** **(B)** 50
+- **Explanation:** *ptr dereferences ptr to access variable a. 42 + 8 = 50.
+
+#### Q15. Static Local Variable
+- **Correct Answer:** **(B)** 1 2 3
+- **Explanation:** A static local variable persists across function calls, incrementing 1, 2, 3.
+
+#### Q16. Short-Circuit Logical AND
+- **Correct Answer:** **(B)** 5
+- **Explanation:** Because x != 0 is false, && short-circuits. ++y is never evaluated and y remains 5.
+
+#### Q17. Vector push_back and pop_back
+- **Correct Answer:** **(A)** 2 20
+- **Explanation:** push_back(30) adds 30, and pop_back() removes it. Size is 2, and v.back() is 20.
+
+#### Q18. Array Size using sizeof
+- **Correct Answer:** **(B)** 6
+- **Explanation:** sizeof(arr) is 24 bytes and sizeof(arr[0]) is 4 bytes. 24 / 4 = 6 elements.
+
+#### Q19. Do-While Loop Execution Guarantee
+- **Correct Answer:** **(B)** 15
+- **Explanation:** A do-while loop executes at least once. x becomes 15, then 15 < 10 is false, terminating.
+
+#### Q20. String Search with string::find
+- **Correct Answer:** **(A)** Found at 3
+- **Explanation:** "competitor" contains "pet" starting at 0-based index 3.
+
+### Set 1 — Java Explanations
+
+#### Q1. String Concatenation Precedence
+- **Correct Answer:** **(B)** Sum: 1020
+- **Explanation:** Left-to-right evaluation converts 10 to a string ("Sum: 10"), then concatenates 20 ("Sum: 1020").
+
+#### Q2. String equals() vs == Operator
+- **Correct Answer:** **(C)** true false
+- **Explanation:** .equals() compares content (true); == compares object references in memory (false).
+
+#### Q3. Array length Property
+- **Correct Answer:** **(B)** 5
+- **Explanation:** In Java, an array length is accessed via the .length field, returning 5.
+
+#### Q4. Pass-by-Value with Primitive Arguments
+- **Correct Answer:** **(B)** 25
+- **Explanation:** Java primitives are passed by value; changing parameter a has no effect on x.
+
+#### Q5. While Loop Counter
+- **Correct Answer:** **(B)** 4
+- **Explanation:** count increments 1 -> 2 -> 3 -> 4. When count reaches 4, 4 < 4 is false and loop stops.
+
+#### Q6. Integer Division Truncation
+- **Correct Answer:** **(B)** 3
+- **Explanation:** Dividing two integers in Java truncates towards zero, producing 3.
+
+#### Q7. String Immutability
+- **Correct Answer:** **(B)** Hello
+- **Explanation:** Strings are immutable in Java. s.concat() returns a new string without reassigning s.
+
+#### Q8. Loop Break Statement
+- **Correct Answer:** **(B)** 3
+- **Explanation:** When i reaches 3, it prints 3 and breaks out of the loop immediately.
+
+#### Q9. Math.max() Method
+- **Correct Answer:** **(B)** 40
+- **Explanation:** Math.max(25, 40) returns the greater value, 40.
+
+#### Q10. Default Boolean Field Value
+- **Correct Answer:** **(B)** false
+- **Explanation:** The default initial value of uninitialized boolean class fields in Java is false.
+
+#### Q11. Unary Operators Precedence
+- **Correct Answer:** **(B)** 12
+- **Explanation:** ++x pre-increments to 6. x++ uses 6 and then increments to 7. 6 + 6 = 12.
+
+#### Q12. Substring Indexing
+- **Correct Answer:** **(B)** uggi
+- **Explanation:** substring(3, 7) takes indices 3, 4, 5, 6, which are 'u', 'g', 'g', 'i'.
+
+#### Q13. Boolean Assignment in Conditionals
+- **Correct Answer:** **(B)** No
+- **Explanation:** The assignment flag = false sets flag to false and evaluates to false, executing the else block.
+
+#### Q14. String charAt and Length
+- **Correct Answer:** **(A)** Am
+- **Explanation:** s.charAt(0) is 'A' and s.charAt(8) is 'm', concatenating to "Am".
+
+#### Q15. Enhanced For Loop Accumulator
+- **Correct Answer:** **(A)** 12
+- **Explanation:** The for-each loop adds all elements: 2 + 4 + 6 = 12.
+
+#### Q16. Math.max and Math.min Nesting
+- **Correct Answer:** **(B)** 15
+- **Explanation:** Math.min(25, 10) gives 10. Math.max(15, 10) returns 15.
+
+#### Q17. ArrayList Remove by Index
+- **Correct Answer:** **(B)** [10, 30]
+- **Explanation:** list.remove(1) removes the item at index 1 (20), leaving [10, 30].
+
+#### Q18. Ternary Operator Evaluation
+- **Correct Answer:** **(B)** 40
+- **Explanation:** 10 > 20 is false, so max is 20. 20 * 2 = 40.
+
+#### Q19. StringBuilder Append & Length
+- **Correct Answer:** **(A)** 7 c
+- **Explanation:** "code" + "123" has length 7, and the character at index 0 is 'c'.
+
+#### Q20. Static Initialization Block
+- **Correct Answer:** **(B)** 15
+- **Explanation:** The static block executes when the class loads, modifying x from 10 to 15 before main runs.
+
+### Set 1 — Python Explanations
+
+#### Q1. Integer Floor Division vs Float Division
+- **Correct Answer:** **(A)** 4 4.5
+- **Explanation:** // performs integer floor division (4), while / returns float division (4.5).
+
+#### Q2. String Multiplication Operator
+- **Correct Answer:** **(C)** Go!Go!Go!
+- **Explanation:** Multiplying a string by an integer repeats it without extra spaces: "Go!Go!Go!".
+
+#### Q3. List Slicing Indices
+- **Correct Answer:** **(B)** [20, 30]
+- **Explanation:** nums[1:3] starts at index 1 and stops before index 3, returning [20, 30].
+
+#### Q4. Negative Indexing in Lists
+- **Correct Answer:** **(C)** cherry
+- **Explanation:** Negative index -1 retrieves the last element: "cherry".
+
+#### Q5. Dictionary get() Default Value
+- **Correct Answer:** **(B)** 0
+- **Explanation:** dict.get(key, default) returns default 0 when key "Charlie" is not found.
+
+#### Q6. List Length with len()
+- **Correct Answer:** **(B)** 5
+- **Explanation:** len() returns the count of items in the list, which is 5.
+
+#### Q7. String lower() Method
+- **Correct Answer:** **(A)** hello
+- **Explanation:** str.lower() converts all uppercase characters to lowercase: "hello".
+
+#### Q8. List append() Modification
+- **Correct Answer:** **(B)** [1, 2, 3, 4]
+- **Explanation:** append(4) adds 4 to the end of the list in-place: [1, 2, 3, 4].
+
+#### Q9. Range Function Sequence
+- **Correct Answer:** **(B)** [1, 2, 3, 4]
+- **Explanation:** range(1, 5) generates values starting from 1 up to 4: [1, 2, 3, 4].
+
+#### Q10. Tuple Packing and Unpacking
+- **Correct Answer:** **(B)** 20 10
+- **Explanation:** Tuple unpacking swaps values simultaneously: x = 20 and y = 10.
+
+#### Q11. List Slicing Range
+- **Correct Answer:** **(B)** [2, 3, 4]
+- **Explanation:** nums[1:4] extracts indices 1, 2, 3: [2, 3, 4].
+
+#### Q12. Default Function Parameters
+- **Correct Answer:** **(A)** Hello, Bob!
+- **Explanation:** Since msg is not provided, the default parameter "Hello" is used: "Hello, Bob!".
+
+#### Q13. List Reference Assignment
+- **Correct Answer:** **(B)** 4
+- **Explanation:** y refers to the same object as x. Appending to y modifies x: len(x) is 4.
+
+#### Q14. List Comprehension with Filter
+- **Correct Answer:** **(A)** [0, 4]
+- **Explanation:** range(4) has even numbers 0 and 2. Multiplying by 2 yields [0, 4].
+
+#### Q15. List Comprehension with Strings
+- **Correct Answer:** **(B)** ['CAT', 'DOG']
+- **Explanation:** Filters words with length <= 3 ("cat", "dog") and converts to uppercase: ['CAT', 'DOG'].
+
+#### Q16. Dictionary Key Membership
+- **Correct Answer:** **(B)** True False
+- **Explanation:** "in" on dict checks keys: "a" is a key (True), but 1 is a value, not a key (False).
+
+#### Q17. String Split and Join
+- **Correct Answer:** **(B)** apple/banana
+- **Explanation:** parts[:2] is ['apple', 'banana'], which joined by "/" produces "apple/banana".
+
+#### Q18. List pop() Return Value
+- **Correct Answer:** **(B)** 30 [10, 20]
+- **Explanation:** pop() removes and returns the last element (30), leaving [10, 20].
+
+#### Q19. Float Truncation with int()
+- **Correct Answer:** **(A)** 8
+- **Explanation:** int() truncates the fractional part towards zero, returning integer 8.
+
+#### Q20. Truthiness of Empty List vs List with Zero
+- **Correct Answer:** **(B)** False True
+- **Explanation:** An empty list [] evaluates to False; a non-empty list [0] evaluates to True.
+
+---
+
+## Round 1 — Set 2
+
+### Quick Answer Key (Set 2)
+
+| Q# | C++ Key | Java Key | Python Key |
+|:---:|:---:|:---:|:---:||
+| Q1 | **B** | **B** | **B** |
+| Q2 | **B** | **B** | **B** |
+| Q3 | **A** | **B** | **B** |
+| Q4 | **B** | **A** | **C** |
+| Q5 | **B** | **B** | **A** |
+| Q6 | **A** | **A** | **B** |
+| Q7 | **B** | **C** | **B** |
+| Q8 | **A** | **C** | **B** |
+| Q9 | **A** | **B** | **B** |
+| Q10 | **B** | **B** | **A** |
+| Q11 | **C** | **B** | **B** |
+| Q12 | **B** | **B** | **B** |
+| Q13 | **B** | **B** | **C** |
+| Q14 | **B** | **B** | **B** |
+| Q15 | **B** | **B** | **B** |
+| Q16 | **B** | **B** | **B** |
+| Q17 | **B** | **C** | **A** |
+| Q18 | **B** | **B** | **B** |
+| Q19 | **A** | **A** | **B** |
+| Q20 | **C** | **B** | **B** |
+
+### Set 2 — C++ Explanations
+
+#### Q1. Bitwise XOR Identity
+- **Correct Answer:** **(B)** 25
+- **Explanation:** XOR is commutative and associative, and x ^ x = 0. Therefore a ^ b ^ a = b = 25.
+
+#### Q2. Size of Pointer vs Array
+- **Correct Answer:** **(B)** 8 40
+- **Explanation:** In printSize, arr decays to a pointer (int*), which is 8 bytes on 64-bit. In main, sizeof(arr) is 10 * 4 = 40 bytes.
+
+#### Q3. Pre vs Post Decrement
+- **Correct Answer:** **(A)** 3 8
+- **Explanation:** --i decrements i to 4 and evaluates to 4. Then i-- evaluates to 4 and decrements i to 3. Total j = 4 + 4 = 8, and final i = 3.
+
+#### Q4. Static Local Variable
+- **Correct Answer:** **(B)** 15 20
+- **Explanation:** Static local variables retain their value across function calls. First call outputs 15, second call adds 5 and outputs 20.
+
+#### Q5. String Concatenation with Literals
+- **Correct Answer:** **(B)** Compilation Error: cannot add two string literals
+- **Explanation:** In C++, "Hello" and ", " are const char arrays. You cannot use the + operator directly between two string literals.
+
+#### Q6. Short-Circuit Logical AND
+- **Correct Answer:** **(A)** 10
+- **Explanation:** Since x != 0 evaluates to false, the logical AND short-circuits and ++y is never evaluated. Thus y remains 10.
+
+#### Q7. Const Reference Binding
+- **Correct Answer:** **(B)** 20
+- **Explanation:** A const reference cannot modify the underlying variable through ref, but modifying the variable directly changes the value seen through ref.
+
+#### Q8. Default Vector Initialization
+- **Correct Answer:** **(A)** 4 7
+- **Explanation:** vector<int> v(4, 7) creates a vector of size 4 where every element is initialized to 7. v[2] is 7.
+
+#### Q9. Ternary Operator Associativity
+- **Correct Answer:** **(A)** 2
+- **Explanation:** The conditional operator is right-associative: a ? b : (c ? 10 : 20). Since a = 1 (true), it evaluates to b, which is 2.
+
+#### Q10. Reference vs Pointer Reassignment
+- **Correct Answer:** **(B)** 25 15
+- **Explanation:** References cannot be reseated. ref = y copies y into x (so x becomes 15). Then ref = 25 sets x = 25. y remains 15.
+
+#### Q11. Integer Overflow in C++
+- **Correct Answer:** **(C)** Undefined Behavior
+- **Explanation:** Signed integer overflow is strictly Undefined Behavior (UB) in ISO C++.
+
+#### Q12. Virtual Destructor Necessity
+- **Correct Answer:** **(B)** To ensure derived class destructors are called when deleting via base pointer
+- **Explanation:** Deleting a derived class object through a base class pointer without a virtual destructor causes undefined behavior and resource leaks.
+
+#### Q13. Vector push_back vs emplace_back
+- **Correct Answer:** **(B)** emplace_back constructs elements in-place avoiding redundant copies/moves
+- **Explanation:** emplace_back forwards arguments to construct the object directly in the container memory, avoiding temporary object creation.
+
+#### Q14. Lambda Capture by Reference
+- **Correct Answer:** **(B)** 15
+- **Explanation:** [&x] captures x by reference, so mutating x inside the lambda updates the original variable x to 15.
+
+#### Q15. Do-While Loop Condition
+- **Correct Answer:** **(B)** 1 time, prints 7
+- **Explanation:** A do-while loop always executes its body at least once before testing the condition. i becomes 7, then 7 < 5 is false.
+
+#### Q16. Structured Binding (C++17)
+- **Correct Answer:** **(B)** Answer: 42
+- **Explanation:** Structured bindings unpack the pair into variables num (42) and text ("Answer").
+
+#### Q17. String find Return on Failure
+- **Correct Answer:** **(B)** string::npos
+- **Explanation:** std::string::find returns std::string::npos (which represents the maximum possible value for size_t).
+
+#### Q18. Unordered Map Operator[] Insertion
+- **Correct Answer:** **(B)** Prints 0 1
+- **Explanation:** operator[] default-constructs the value (0 for int) and inserts the pair into the map, increasing size to 1.
+
+#### Q19. Recursive Base Case Off-by-One
+- **Correct Answer:** **(A)** 3
+- **Explanation:** mystery(3) = 3 * mystery(1). mystery(1) = 1 * mystery(-1). mystery(-1) returns 1. Result = 3 * 1 * 1 = 3.
+
+#### Q20. Unique Pointer Move Semantics
+- **Correct Answer:** **(C)** Compilation error because copy constructor is deleted
+- **Explanation:** std::unique_ptr has a deleted copy constructor. It can only be moved using std::move, not copied.
+
+### Set 2 — Java Explanations
+
+#### Q1. Integer Cache in Java
+- **Correct Answer:** **(B)** true false
+- **Explanation:** Java caches Integer objects in the range [-128, 127]. For 127, both refer to the cached instance (true). For 128, distinct objects are created on the heap, so == compares references (false).
+
+#### Q2. Finally Block Execution with Return
+- **Correct Answer:** **(B)** 20
+- **Explanation:** The finally block always executes and its return statement overrides any return statement executed inside the try block.
+
+#### Q3. String Immutability and concat
+- **Correct Answer:** **(B)** Java
+- **Explanation:** Strings in Java are immutable. s.concat() returns a new string, but since the return value is not assigned back to s, s remains "Java".
+
+#### Q4. Static Method Overriding (Hiding)
+- **Correct Answer:** **(A)** Super 
+- **Explanation:** Static methods in Java cannot be overridden; they are hidden. Method resolution for static methods is determined at compile time based on the reference type (Super).
+
+#### Q5. ConcurrentModificationException in For-Each
+- **Correct Answer:** **(B)** ConcurrentModificationException
+- **Explanation:** Modifying an ArrayList directly while iterating over it via an enhanced for-loop (iterator) invalidates the iterators modCount, triggering ConcurrentModificationException.
+
+#### Q6. Bitwise Unsigned Right Shift
+- **Correct Answer:** **(A)** true
+- **Explanation:** The >>> operator zero-fills the high-order bits regardless of sign. For negative numbers, this results in a large positive integer (> 0).
+
+#### Q7. Array Polymorphism and ArrayStoreException
+- **Correct Answer:** **(C)** ArrayStoreException at runtime
+- **Explanation:** Java arrays are covariant and retain runtime type information. Storing an Integer (42) into a String[] array causes ArrayStoreException at runtime.
+
+#### Q8. StringBuilder Capacity Growth
+- **Correct Answer:** **(C)** 16
+- **Explanation:** The default no-arg constructor of StringBuilder allocates a buffer with an initial capacity of 16 characters.
+
+#### Q9. Ternary Operator Auto-Unboxing NullPointerException
+- **Correct Answer:** **(B)** Prints false without error
+- **Explanation:** Because b != null is false, the expression safely returns false without attempting to unbox null. Result is false.
+
+#### Q10. Final Variable Reassignment
+- **Correct Answer:** **(B)** Compilation error in reset(): cannot assign a value to final variable x
+- **Explanation:** A blank final instance variable must be assigned exactly once in an initializer or constructor; reassigning in a method is a compile-time error.
+
+#### Q11. Switch Expression Exhaustiveness
+- **Correct Answer:** **(B)** Must cover all possible input values (exhaustive), often requiring default
+- **Explanation:** Switch expressions that produce a value must be exhaustive; all enum constants or a default branch must be present.
+
+#### Q12. HashMap get with Key hashCode Mutation
+- **Correct Answer:** **(B)** map.get(key) will likely return null because the bucket lookup looks in the new hash index
+- **Explanation:** If an object hashCode changes after being placed in a HashMap, searching for it computes the new hash code and looks in the wrong bucket, returning null.
+
+#### Q13. Interface Default Method Resolution
+- **Correct Answer:** **(B)** Must explicitly override the method to resolve the ambiguity or compile error occurs
+- **Explanation:** The compiler requires the implementing class to explicitly override the conflicting method and decide how to resolve it (e.g., A.super.m()).
+
+#### Q14. Garbage Collection System.gc Guarantee
+- **Correct Answer:** **(B)** It is merely a hint/request to the JVM; there is no guarantee GC will run immediately
+- **Explanation:** System.gc() merely suggests that the Java Virtual Machine expend effort toward recycling unused objects; the JVM is free to ignore it.
+
+#### Q15. Covariant Return Types
+- **Correct Answer:** **(B)** Yes, Java supports covariant return types since Java 5
+- **Explanation:** Java allows an overriding method to declare a return type that is a subtype (subclass) of the return type declared in the overridden method.
+
+#### Q16. Volatile Keyword Guarantee
+- **Correct Answer:** **(B)** Memory visibility across threads (reads/writes directly to main memory) and instruction reordering prevention
+- **Explanation:** volatile guarantees that any read of a volatile variable sees the most recent write by any thread, but it does NOT provide mutual exclusion or atomic compound operations.
+
+#### Q17. Cloneable Interface Marker
+- **Correct Answer:** **(C)** No methods; it is a marker interface
+- **Explanation:** Cloneable is a marker (tagging) interface with zero method declarations. clone() is defined as protected in java.lang.Object.
+
+#### Q18. Try-With-Resources AutoCloseable
+- **Correct Answer:** **(B)** In reverse order of declaration (r2 first, then r1)
+- **Explanation:** Resources in a try-with-resources statement are closed in reverse order of their creation/declaration.
+
+#### Q19. String intern() Pool
+- **Correct Answer:** **(A)** true
+- **Explanation:** intern() returns the canonical representation from the string intern pool. Since s2 is a string literal from the pool, s1 == s2 evaluates to true.
+
+#### Q20. Generics Type Erasure
+- **Correct Answer:** **(B)** Type parameters are erased and replaced by their bounds (or Object) with necessary casts
+- **Explanation:** Java uses type erasure: generic type parameters are replaced by their upper bound (or Object) at compile time to maintain backwards compatibility.
+
+### Set 2 — Python Explanations
+
+#### Q1. Default Mutable Argument Trap
+- **Correct Answer:** **(B)** [1] then [1, 2]
+- **Explanation:** Default argument expressions in Python are evaluated once when the function is defined, not each time it is called. The shared list accumulates elements across calls: [1], then [1, 2].
+
+#### Q2. Integer Caching (-5 to 256)
+- **Correct Answer:** **(B)** True False
+- **Explanation:** CPython pre-allocates an array of integer objects for small integers in the range [-5, 256]. 256 shares the same object id (True), whereas 257 creates distinct objects (False).
+
+#### Q3. Tuple with Mutable Element Mutation
+- **Correct Answer:** **(B)** ([1, 2, 99], 3)
+- **Explanation:** The tuple itself is immutable (its references cannot change), but the list inside the tuple is mutable, so appending 99 to t[0] succeeds: ([1, 2, 99], 3).
+
+#### Q4. List Comprehension Variable Leak (Python 3)
+- **Correct Answer:** **(C)** 100
+- **Explanation:** In Python 3, list comprehensions have their own local scope, preventing the loop variable from leaking into the enclosing scope. x remains 100.
+
+#### Q5. String Multiplication and Join
+- **Correct Answer:** **(A)** a-b-a-b
+- **Explanation:** ["a", "b"] * 2 produces ["a", "b", "a", "b"]. Joining them with "-" produces "a-b-a-b".
+
+#### Q6. Isinstance with Bool and Int
+- **Correct Answer:** **(B)** True
+- **Explanation:** In Python, the bool class is a direct subclass of int (True has int value 1, False has 0). Therefore isinstance(True, int) is True.
+
+#### Q7. Dictionary get Default Value
+- **Correct Answer:** **(B)** 42
+- **Explanation:** dict.get(key, default) returns the specified default value (42) if the key is not present in the dictionary without raising a KeyError.
+
+#### Q8. Generator Yield State
+- **Correct Answer:** **(B)** 1 2
+- **Explanation:** Generators yield one value at a time and suspend state. The first next() yields 1, and the second yields 2.
+
+#### Q9. Nonlocal Keyword Purpose
+- **Correct Answer:** **(B)** Binds x to the nearest enclosing non-global scope variable
+- **Explanation:** nonlocal causes the identifier to refer to previously bound variables in the nearest enclosing scope excluding globals.
+
+#### Q10. Set Discard vs Remove
+- **Correct Answer:** **(A)** remove raises KeyError; discard does nothing
+- **Explanation:** s.remove(x) raises a KeyError if x is not present in the set. s.discard(x) silently does nothing if x is absent.
+
+#### Q11. Try Except Else Block
+- **Correct Answer:** **(B)** Only when NO exception was raised in the try block
+- **Explanation:** The else block executes only if the try block completed successfully without raising any exceptions.
+
+#### Q12. List Pop with Index
+- **Correct Answer:** **(B)** 20
+- **Explanation:** pop(index) removes and returns the element at the specified index. Index 1 contains 20.
+
+#### Q13. Unhashable Type in Dictionary Key
+- **Correct Answer:** **(C)** list: [1, 2]
+- **Explanation:** Dictionary keys must be hashable and immutable. Lists are mutable and unhashable, raising TypeError: unhashable type: list.
+
+#### Q14. All Function on Empty Iterable
+- **Correct Answer:** **(B)** True
+- **Explanation:** all() returns True if all elements of the iterable are true, or if the iterable is empty (vacuous truth).
+
+#### Q15. Lambda Sorting by Key
+- **Correct Answer:** **(B)** [(4, 1), (2, 2), (1, 3)]
+- **Explanation:** The key extracts the second element of each tuple: 1, 2, 3. The sorted order is [(4, 1), (2, 2), (1, 3)].
+
+#### Q16. Enumerate Start Index
+- **Correct Answer:** **(B)** (1, "apple")
+- **Explanation:** enumerate(iterable, start=1) starts the counter at 1, yielding (1, "apple") first.
+
+#### Q17. String Splitting with Maxsplit
+- **Correct Answer:** **(A)** ["a", "b", "c,d"]
+- **Explanation:** split(",", 2) splits at most 2 times, producing 3 chunks: ["a", "b", "c,d"].
+
+#### Q18. Dict Keys Union (Python 3.9+)
+- **Correct Answer:** **(B)** d1 | d2
+- **Explanation:** Python 3.9 introduced the dictionary union operator |: d1 | d2 creates a merged dictionary.
+
+#### Q19. Zip with Unequal Lengths
+- **Correct Answer:** **(B)** 2
+- **Explanation:** zip() stops when the shortest input iterable is exhausted. ["a", "b"] has length 2, so the result has length 2.
+
+#### Q20. Global Variable Modification Without Declaration
+- **Correct Answer:** **(B)** UnboundLocalError: local variable referenced before assignment
+- **Explanation:** Assigning to x makes it local to f(). Attempting to read x before assignment (in +=) raises UnboundLocalError.
+
+---
+
+## Round 1 — Set 3
+
+### Quick Answer Key (Set 3)
+
+| Q# | C++ Key | Java Key | Python Key |
+|:---:|:---:|:---:|:---:||
+| Q1 | **B** | **B** | **B** |
+| Q2 | **C** | **A** | **B** |
+| Q3 | **B** | **B** | **B** |
+| Q4 | **B** | **A** | **B** |
+| Q5 | **C** | **B** | **B** |
+| Q6 | **A** | **C** | **B** |
+| Q7 | **A** | **B** | **B** |
+| Q8 | **B** | **C** | **A** |
+| Q9 | **C** | **B** | **B** |
+| Q10 | **C** | **B** | **B** |
+| Q11 | **B** | **B** | **B** |
+| Q12 | **C** | **A** | **B** |
+| Q13 | **B** | **B** | **B** |
+| Q14 | **B** | **B** | **B** |
+| Q15 | **B** | **B** | **B** |
+| Q16 | **B** | **B** | **A** |
+| Q17 | **B** | **C** | **B** |
+| Q18 | **B** | **B** | **A** |
+| Q19 | **B** | **B** | **B** |
+| Q20 | **B** | **B** | **B** |
+
+### Set 3 — C++ Explanations
+
+#### Q1. Array Pointer Arithmetic
+- **Correct Answer:** **(B)** 20
+- **Explanation:** arr + 3 points to arr[3] (40). (ptr - 2) points to arr[1], so *(ptr - 2) is 20.
+
+#### Q2. Const Pointer vs Pointer to Const
+- **Correct Answer:** **(C)** int* const p = &x;
+- **Explanation:** int* const p declares a const pointer to an int; the pointer address cannot be reassigned.
+
+#### Q3. Enum Class Type Safety
+- **Correct Answer:** **(B)** enum class is strongly typed and does not implicitly convert to int
+- **Explanation:** Scoped enums (enum class) are strongly typed and do not implicitly convert to integers without static_cast.
+
+#### Q4. Bitwise Shift Operator
+- **Correct Answer:** **(B)** 24
+- **Explanation:** Left-shifting by 3 multiplies by 2^3 = 8: 3 * 8 = 24.
+
+#### Q5. Switch Case Fallthrough
+- **Correct Answer:** **(C)** 23D
+- **Explanation:** Because there are no break statements, execution falls through from case 2 all the way through default, printing 23D.
+
+#### Q6. Typeid and Polymorphism
+- **Correct Answer:** **(A)** Base class must have at least one virtual function
+- **Explanation:** Runtime Type Information (RTTI) via typeid on dereferenced pointers only queries runtime type if the class has a virtual table (at least one virtual method).
+
+#### Q7. String substr Parameters
+- **Correct Answer:** **(A)** CDE
+- **Explanation:** substr(pos, count) takes the start index (2) and character count (3). Indices 2, 3, 4 are 'C', 'D', 'E'.
+
+#### Q8. Vector Capacity vs Size
+- **Correct Answer:** **(B)** The total allocated storage capacity without needing reallocation
+- **Explanation:** capacity() returns the number of elements the vector can hold before a new memory reallocation is required.
+
+#### Q9. Auto Type Deduction with References
+- **Correct Answer:** **(C)** int
+- **Explanation:** auto drops top-level const and reference qualifiers by default. To preserve them, auto& or const auto& must be used.
+
+#### Q10. Comma Operator Evaluation
+- **Correct Answer:** **(C)** 45
+- **Explanation:** The comma operator evaluates expressions from left to right and returns the value of the last expression: a = 5, b = 9, 5 * 9 = 45.
+
+#### Q11. Smart Pointer Cycle Memory Leak
+- **Correct Answer:** **(B)** Circular reference causing reference counts never to reach zero (memory leak)
+- **Explanation:** Cyclic dependencies between shared_ptrs prevent reference counts from ever reaching 0, resulting in memory leaks. std::weak_ptr solves this.
+
+#### Q12. Set Insertion Duplicate Behavior
+- **Correct Answer:** **(C)** Does nothing and returns pair<iterator, bool> where bool is false
+- **Explanation:** std::set contains unique elements. Inserting a duplicate fails silently; the returned pair.second is false.
+
+#### Q13. Friend Function Access
+- **Correct Answer:** **(B)** It has access to private and protected members of Box
+- **Explanation:** A friend function is a non-member function granted access to the private and protected members of the class declaring it.
+
+#### Q14. Constexpr Function Evaluation
+- **Correct Answer:** **(B)** Can be evaluated at compile time
+- **Explanation:** constexpr indicates that the function can be evaluated at compile time if all arguments are known compile-time constants.
+
+#### Q15. Char Array Null Terminator Off-by-One
+- **Correct Answer:** **(B)** Compile error or lacks null terminator because "HELLO" needs 6 bytes
+- **Explanation:** "HELLO" consists of 5 letters plus 1 null terminator ('\0'). Storing it in char str[5] causes an initializer string too long error in C++.
+
+#### Q16. Vector pop_back on Empty Vector
+- **Correct Answer:** **(B)** Undefined Behavior
+- **Explanation:** Calling pop_back() or back() on an empty container in C++ results in Undefined Behavior.
+
+#### Q17. Destructor Call Order in Inheritance
+- **Correct Answer:** **(B)** Derived first, then Base
+- **Explanation:** Destructors are executed in reverse order of constructors: the Derived destructor runs first, followed by the Base destructor.
+
+#### Q18. std::move State After Move
+- **Correct Answer:** **(B)** s1 is in a valid but unspecified state
+- **Explanation:** The C++ standard guarantees that a moved-from standard library object is in a valid but unspecified state.
+
+#### Q19. Float to Int Conversion Truncation
+- **Correct Answer:** **(B)** -3
+- **Explanation:** Floating-point to integer conversion in C++ truncates towards zero. Truncating -3.75 towards zero gives -3.
+
+#### Q20. Priority Queue Default Ordering
+- **Correct Answer:** **(B)** Max-heap (largest element on top)
+- **Explanation:** std::priority_queue uses std::less<T> by default, creating a max-heap where the largest element is at the top.
+
+### Set 3 — Java Explanations
+
+#### Q1. Pass-by-Value Object Reference Reassignment
+- **Correct Answer:** **(B)** Hello World
+- **Explanation:** Java is strictly pass-by-value. The method receives a copy of the reference. Modifying the referenced object mutates it, but reassigning the local reference does not affect main.
+
+#### Q2. Static Initializer Block Order
+- **Correct Answer:** **(A)** S I C
+- **Explanation:** When the class is loaded, static initializers run once (S). Then for each new instance, instance initializers run (I), followed by the constructor (C).
+
+#### Q3. Array Equality Check
+- **Correct Answer:** **(B)** false
+- **Explanation:** Arrays do not override Object.equals(); therefore a1.equals(a2) performs reference equality (a1 == a2), which is false. Use Arrays.equals(a1, a2) for content equality.
+
+#### Q4. Polymorphism with Instance Variables
+- **Correct Answer:** **(A)** 10
+- **Explanation:** In Java, variables are not polymorphic; they are resolved at compile time based on the declared reference type (Parent), so p.x is 10.
+
+#### Q5. Super Constructor Call Constraint
+- **Correct Answer:** **(B)** Must be the very first statement
+- **Explanation:** In Java, if super(...) or this(...) is explicitly invoked, it must unconditionally be the first statement in the constructor.
+
+#### Q6. TreeMap Natural Ordering Key Requirement
+- **Correct Answer:** **(C)** Comparable
+- **Explanation:** Default TreeMap relies on natural ordering, requiring key objects to implement java.lang.Comparable (or provide an explicit Comparator in constructor).
+
+#### Q7. Character Arithmetic Output
+- **Correct Answer:** **(B)** 66
+- **Explanation:** Binary operator + promotes char to int. 'A' has ASCII value 65, so 65 + 1 = 66.
+
+#### Q8. Checked vs Unchecked Exceptions
+- **Correct Answer:** **(C)** NullPointerException
+- **Explanation:** NullPointerException extends RuntimeException and is an unchecked exception; the compiler does not force callers to declare or catch it.
+
+#### Q9. Short-Circuit Bitwise vs Logical Operator
+- **Correct Answer:** **(B)** 6
+- **Explanation:** Single & is a non-short-circuiting logical operator; it always evaluates both operands. Thus ++x executes and x becomes 6.
+
+#### Q10. Abstract Class Instantiation
+- **Correct Answer:** **(B)** Yes, called during subclass instantiation via super()
+- **Explanation:** Abstract classes can have constructors. They cannot be instantiated directly with new, but their constructors are called by subclass constructors.
+
+#### Q11. Collections.sort Algorithm Complexity
+- **Correct Answer:** **(B)** TimSort (adaptive, stable, O(N log N) worst case)
+- **Explanation:** Java uses TimSort for object collections and arrays, which is a hybrid of MergeSort and InsertionSort with guaranteed O(N log N) worst-case time.
+
+#### Q12. Method Reference Syntax
+- **Correct Answer:** **(A)** System.out::println
+- **Explanation:** System.out::println is an instance method reference on an existing object (System.out) matching Consumer<String>.
+
+#### Q13. Thread start vs run
+- **Correct Answer:** **(B)** Executes run() synchronously on the current calling thread without starting a new thread
+- **Explanation:** Calling run() directly is just a regular synchronous method call within the current thread. start() is required to spawn a new native thread.
+
+#### Q14. Finalize Method Deprecation
+- **Correct Answer:** **(B)** Unpredictable execution timing, performance overhead, thread safety issues, and better alternatives like AutoCloseable/Cleaner exist
+- **Explanation:** Finalizers are notoriously unpredictable, slow, and dangerous; they provide no guarantee of timely execution.
+
+#### Q15. Optional get on Empty
+- **Correct Answer:** **(B)** NoSuchElementException
+- **Explanation:** Calling get() on an empty Optional throws java.util.NoSuchElementException: No value present.
+
+#### Q16. List.of Immutability
+- **Correct Answer:** **(B)** Throws UnsupportedOperationException
+- **Explanation:** List.of() returns an unmodifiable (immutable) list. Any mutating operation like add() or remove() throws UnsupportedOperationException.
+
+#### Q17. Package-Private Default Access
+- **Correct Answer:** **(C)** Accessible only by classes in the same package (package-private)
+- **Explanation:** Default access in Java is package-private: accessible only by code within the exact same package.
+
+#### Q18. Record Classes in Java 16+
+- **Correct Answer:** **(B)** Private final fields, canonical constructor, accessors x() and y(), equals(), hashCode(), and toString()
+- **Explanation:** Records are transparent carriers for immutable data; the compiler generates private final fields, constructor, x()/y() accessors, equals, hashCode, and toString.
+
+#### Q19. Narrowing Primitive Conversion Overflow
+- **Correct Answer:** **(B)** -126
+- **Explanation:** byte range is -128 to 127. 130 exceeds 127: 130 - 256 = -126 in 8-bit signed two complement representation.
+
+#### Q20. Stream Intermediate vs Terminal Operations
+- **Correct Answer:** **(B)** Lazily, only when a terminal operation (like collect or forEach) is invoked
+- **Explanation:** Java streams are lazy; intermediate operations are not evaluated until a terminal operation is initiated on the pipeline.
+
+### Set 3 — Python Explanations
+
+#### Q1. Shallow Copy List Multiplication
+- **Correct Answer:** **(B)** [[7, 0], [7, 0]]
+- **Explanation:** Multiplying a list containing a mutable list [[0]*2] * 2 creates references to the exact same inner list. Modifying matrix[0][0] modifies all rows: [[7, 0], [7, 0]].
+
+#### Q2. String Reverse Slice
+- **Correct Answer:** **(B)** Reverses the string s
+- **Explanation:** A step of -1 traverses the sequence backwards, reversing it.
+
+#### Q3. Floor Division with Negatives
+- **Correct Answer:** **(B)** -4
+- **Explanation:** Python floor division // rounds down towards negative infinity (floor): floor(-3.5) is -4.
+
+#### Q4. Dunder Repr vs Str
+- **Correct Answer:** **(B)** __repr__
+- **Explanation:** repr(obj) invokes obj.__repr__(). If __str__ is missing, str() also falls back to __repr__().
+
+#### Q5. Walrus Operator (Python 3.8+)
+- **Correct Answer:** **(B)** Assigns a value to a variable as part of an expression
+- **Explanation:** The := assignment expression (walrus) operator allows assignment of variables within an expression.
+
+#### Q6. Filter Function Output Type
+- **Correct Answer:** **(B)** filter object (iterator)
+- **Explanation:** In Python 3, filter() returns an iterator of type filter, not a list. To get a list, list(f) must be called.
+
+#### Q7. Class Variable vs Instance Variable Shadowing
+- **Correct Answer:** **(B)** hound canine canine
+- **Explanation:** d1.kind = 'hound' binds an instance variable to d1, shadowing the class variable. d2 and Dog still refer to the class variable 'canine'.
+
+#### Q8. Args and Kwargs Unpacking
+- **Correct Answer:** **(A)** args collects positional arguments as a tuple; kwargs collects keyword arguments as a dict
+- **Explanation:** *args bundles extra positional arguments into a tuple, while **kwargs bundles extra keyword arguments into a dictionary.
+
+#### Q9. Any Function on Falsy Values
+- **Correct Answer:** **(B)** False
+- **Explanation:** any() returns True if at least one element is truthy. Since all elements in the list are falsy (0, False, "", None), it returns False.
+
+#### Q10. Multiple Inheritance and MRO
+- **Correct Answer:** **(B)** C.mro() or C.__mro__
+- **Explanation:** C.mro() returns the C3 superclass linearization list representing the Method Resolution Order.
+
+#### Q11. Set Difference Operator
+- **Correct Answer:** **(B)** {1, 3}
+- **Explanation:** The difference operator - returns elements in the first set that are not in the second set: {1, 3}.
+
+#### Q12. Modulo of Negative Integer in Python
+- **Correct Answer:** **(B)** 1
+- **Explanation:** In Python, the modulo operator always shares the sign of the divisor (3 > 0). -5 = (-2 * 3) + 1, so the remainder is 1.
+
+#### Q13. Pass Statement Purpose
+- **Correct Answer:** **(B)** A null statement used as a placeholder where syntactically code is required
+- **Explanation:** pass is a null operation; nothing happens when it executes. It serves as a syntactic placeholder.
+
+#### Q14. Dictionary Keys View Dynamic Reflection
+- **Correct Answer:** **(B)** True
+- **Explanation:** d.keys() returns a dynamic dictionary view. When the dictionary changes, the view automatically reflects those changes (True).
+
+#### Q15. Decorators Wrapping Function
+- **Correct Answer:** **(B)** Equivalent to hello = my_dec(hello)
+- **Explanation:** The @decorator syntax is syntactic sugar for passing the defined function into the decorator and rebinding the name: hello = my_dec(hello).
+
+#### Q16. Chained Comparison Evaluation
+- **Correct Answer:** **(A)** True
+- **Explanation:** Python supports chained comparisons: (1 < 2) and (2 < 3) and (3 == 3). All evaluate to True, so result is True.
+
+#### Q17. String Isdigit vs Isnumeric
+- **Correct Answer:** **(B)** True True
+- **Explanation:** Unicode superscript digits like "²" are recognized as digits by both isdigit() and isnumeric().
+
+#### Q18. Iter Function with Sentinel
+- **Correct Answer:** **(A)** Calls callable repeatedly until it returns sentinel
+- **Explanation:** The two-argument form iter(callable, sentinel) creates an iterator that invokes callable on each next() call until it returns sentinel.
+
+#### Q19. F-Strings Formatting Specifier
+- **Correct Answer:** **(B)** 123.46
+- **Explanation:** The .2f format specifier rounds to 2 decimal places with standard half-to-even rounding: 123.46.
+
+#### Q20. Recursion Limit Error
+- **Correct Answer:** **(B)** RecursionError
+- **Explanation:** Python raises RecursionError (a subclass of RuntimeError) when the maximum recursion depth (default 1000) is exceeded.
+
+---
+
+## Round 1 — Set 4
+
+### Quick Answer Key (Set 4)
+
+| Q# | C++ Key | Java Key | Python Key |
+|:---:|:---:|:---:|:---:||
+| Q1 | **B** | **A** | **B** |
+| Q2 | **A** | **B** | **B** |
+| Q3 | **A** | **B** | **B** |
+| Q4 | **A** | **B** | **B** |
+| Q5 | **B** | **B** | **A** |
+| Q6 | **B** | **B** | **B** |
+| Q7 | **A** | **B** | **B** |
+| Q8 | **A** | **B** | **B** |
+| Q9 | **B** | **B** | **B** |
+| Q10 | **B** | **B** | **B** |
+| Q11 | **B** | **B** | **B** |
+| Q12 | **B** | **A** | **B** |
+| Q13 | **B** | **B** | **B** |
+| Q14 | **B** | **B** | **B** |
+| Q15 | **B** | **A** | **B** |
+| Q16 | **A** | **B** | **B** |
+| Q17 | **A** | **A** | **B** |
+| Q18 | **B** | **B** | **B** |
+| Q19 | **B** | **B** | **A** |
+| Q20 | **B** | **B** | **B** |
+
+### Set 4 — C++ Explanations
+
+#### Q1. C-Style String Length vs Sizeof
+- **Correct Answer:** **(B)** 4 5
+- **Explanation:** strlen counts characters before '\0' (4). sizeof includes the null terminator byte (5).
+
+#### Q2. Default Member Access in Struct vs Class
+- **Correct Answer:** **(A)** struct: public; class: private
+- **Explanation:** In C++, struct members default to public, while class members default to private.
+
+#### Q3. Multiple Catch Blocks Ordering
+- **Correct Answer:** **(A)** Compilation warning or runtime_error block is unreachable
+- **Explanation:** Catch blocks are tested in order. Since runtime_error inherits from exception, the first block catches it, making the second block dead code.
+
+#### Q4. Pointer Difference
+- **Correct Answer:** **(A)** 3
+- **Explanation:** Pointer subtraction yields the number of elements between them: 4 - 1 = 3 (not bytes).
+
+#### Q5. Unsigned Underflow Wrap
+- **Correct Answer:** **(B)** 4294967295 (UINT_MAX)
+- **Explanation:** Unsigned arithmetic wraps modulo 2^N. 0u - 1u results in UINT_MAX (4294967295 on 32-bit uint).
+
+#### Q6. Dynamic Cast Downcasting Failure
+- **Correct Answer:** **(B)** Returns nullptr
+- **Explanation:** When dynamic_cast fails on a pointer type, it returns nullptr. (If cast on reference types, it throws std::bad_cast).
+
+#### Q7. Logical OR Short-Circuit
+- **Correct Answer:** **(A)** 11 2
+- **Explanation:** Since a == 1 is true, logical OR short-circuits and ++b is not evaluated. a becomes 11 and b remains 2.
+
+#### Q8. Copy Elision / RVO
+- **Correct Answer:** **(A)** A compiler optimization that avoids copying or moving temporary return objects
+- **Explanation:** RVO allows the compiler to construct the returned object directly in the storage allocated for the callers receiving variable.
+
+#### Q9. Pure Virtual Function Syntax
+- **Correct Answer:** **(B)** virtual void draw() = 0;
+- **Explanation:** In C++, appending = 0 to a virtual function declaration marks it as pure virtual, making the class abstract.
+
+#### Q10. Map Key Ordering
+- **Correct Answer:** **(B)** Sorted ascending by key
+- **Explanation:** std::map is implemented as a Red-Black Tree and stores keys in sorted ascending order (via std::less by default).
+
+#### Q11. Static Member Initialization
+- **Correct Answer:** **(B)** Outside the class definition at namespace scope
+- **Explanation:** Non-inline, non-const static data members must be defined outside the class body at namespace scope (e.g. int Widget::count = 0;).
+
+#### Q12. Function Overloading by Return Type
+- **Correct Answer:** **(B)** No, causes compilation error
+- **Explanation:** Function overloading requires different parameter lists. Return type alone is insufficient to distinguish overloads.
+
+#### Q13. Vector clear vs shrink_to_fit
+- **Correct Answer:** **(B)** Reduces size to 0 but keeps capacity unchanged
+- **Explanation:** clear() destroys the elements and sets size to 0, but does not deallocate storage. capacity remains unchanged.
+
+#### Q14. Bitwise NOT of Zero
+- **Correct Answer:** **(B)** -1
+- **Explanation:** In two complement, all 1s bits represent -1. Bitwise NOT of 0 (all 0s) is all 1s, which is -1.
+
+#### Q15. Initialization Order of Members
+- **Correct Answer:** **(B)** In the order they are declared in the class definition
+- **Explanation:** Class members are always initialized in the order of their declaration in the class definition (here b before a), regardless of initializer list order.
+
+#### Q16. Mutable Keyword Purpose
+- **Correct Answer:** **(A)** Allows modification inside const member functions
+- **Explanation:** mutable allows a member variable of a class to be modified even within const member functions.
+
+#### Q17. String find First Occurrence
+- **Correct Answer:** **(A)** 1 5
+- **Explanation:** s.find('a') finds the first occurrence at index 1. s.rfind('a') finds the last occurrence at index 5.
+
+#### Q18. Dangling Reference to Local
+- **Correct Answer:** **(B)** Dangling reference and undefined behavior when accessed
+- **Explanation:** The local variable x is destroyed when getVal() returns. Returning a reference to it results in a dangling reference and undefined behavior.
+
+#### Q19. Std All_of Algorithm
+- **Correct Answer:** **(B)** true
+- **Explanation:** Vacuous truth: std::all_of returns true if the range is empty, regardless of the predicate.
+
+#### Q20. Explicit Constructor Purpose
+- **Correct Answer:** **(B)** Prevents implicit type conversion and copy-initialization from int
+- **Explanation:** explicit prevents the compiler from using the constructor for implicit conversions (e.g. MyInt m = 5; becomes invalid).
+
+### Set 4 — Java Explanations
+
+#### Q1. String Substring Indices
+- **Correct Answer:** **(A)** IGRA
+- **Explanation:** substring(beginIndex, endIndex) is half-open [beginIndex, endIndex). Characters from index 4 to 7 are 'I', 'G', 'R', 'A'.
+
+#### Q2. Static Variable Shared Across Instances
+- **Correct Answer:** **(B)** 2 2
+- **Explanation:** static variables are shared across all instances of the class. Two instances increment count twice, so count is 2.
+
+#### Q3. Catching Exception Order
+- **Correct Answer:** **(B)** IOException has already been caught (unreachable catch block)
+- **Explanation:** Subclasses of Exception cannot follow Exception in catch clauses because they are completely shadowed and unreachable, triggering a compile error.
+
+#### Q4. Floating Point Precision Representation
+- **Correct Answer:** **(B)** false
+- **Explanation:** Due to IEEE 754 binary floating-point representation limits, 0.1 + 0.2 equals 0.30000000000000004, which is not equal to 0.3 (false).
+
+#### Q5. Synchronized Method Lock Target
+- **Correct Answer:** **(B)** The current instance object (this)
+- **Explanation:** A non-static synchronized method synchronizes on the instance object on which it was called (this). Static synchronized methods lock on the Class object.
+
+#### Q6. Anonymous Inner Class Variable Capture
+- **Correct Answer:** **(B)** Must be explicitly or effectively final
+- **Explanation:** Variables captured from an enclosing scope must be final or effectively final (never modified after initialization).
+
+#### Q7. Queue peek vs poll
+- **Correct Answer:** **(B)** peek() inspects and returns null; poll() retrieves and removes the head (or returns null)
+- **Explanation:** peek() returns the head element without removing it; poll() removes and returns the head element. Both return null on an empty queue.
+
+#### Q8. Transient Keyword Purpose
+- **Correct Answer:** **(B)** The variable will not be serialized when the object is serialized
+- **Explanation:** transient marks a member field not to be included in the serialized binary representation when the object is written to an ObjectOutputStream.
+
+#### Q9. Enum values() Return Type
+- **Correct Answer:** **(B)** Color[] array containing all enum constants in order of declaration
+- **Explanation:** The compiler automatically creates a static values() method on every enum that returns an array containing all enum constants in declaration order.
+
+#### Q10. StringBuilder vs StringBuffer Thread Safety
+- **Correct Answer:** **(B)** StringBuffer is synchronized and thread-safe; StringBuilder is unsynchronized and faster for single-threaded use
+- **Explanation:** StringBuffer methods are synchronized for thread-safety. StringBuilder is non-synchronized, providing higher performance in single-threaded code.
+
+#### Q11. Arrays asList Fixed Size
+- **Correct Answer:** **(B)** Throws UnsupportedOperationException
+- **Explanation:** Arrays.asList() returns a fixed-size list backed by the array. Structural modifications like add() or remove() throw UnsupportedOperationException.
+
+#### Q12. Polymorphic Method Resolution with super Reference
+- **Correct Answer:** **(A)** BC
+- **Explanation:** In C, super.print() calls B.print(), which prints "B". Then C prints "C", yielding "BC".
+
+#### Q13. Functional Interface Annotation
+- **Correct Answer:** **(B)** It has exactly one abstract method (SAM)
+- **Explanation:** A functional interface has exactly one abstract method (Single Abstract Method). It may contain any number of default or static methods.
+
+#### Q14. HashSet Internal Implementation
+- **Correct Answer:** **(B)** A HashMap instance (elements stored as keys with a dummy Object as value)
+- **Explanation:** HashSet is backed internally by a HashMap. When you call set.add(e), it executes map.put(e, PRESENT).
+
+#### Q15. Strictfp Keyword Meaning
+- **Correct Answer:** **(A)** Forces IEEE 754 strict floating-point calculation rules across all hardware architectures
+- **Explanation:** strictfp ensures that floating-point calculations adhere strictly to IEEE 754 standards across all platforms, ensuring reproducibility.
+
+#### Q16. Comparable compareTo Contract
+- **Correct Answer:** **(B)** A positive integer (> 0)
+- **Explanation:** The compareTo method returns a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
+
+#### Q17. String repeat Method in Java 11+
+- **Correct Answer:** **(A)** ababab
+- **Explanation:** String.repeat(int count) concatenates the string count times: "ab" * 3 = "ababab".
+
+#### Q18. Deadlock Condition in Multithreading
+- **Correct Answer:** **(B)** Circular wait condition between two threads holding mutually requested locks
+- **Explanation:** Circular wait occurs when Thread 1 holds lock A waiting for lock B, while Thread 2 holds lock B waiting for lock A.
+
+#### Q19. Generics Wildcard Lower Bound
+- **Correct Answer:** **(B)** List<Integer>, List<Number>, or List<Object>
+- **Explanation:** ? super Integer specifies a lower bound: it accepts Integer and any of its superclasses (Number, Object).
+
+#### Q20. System.exit in Try-Finally
+- **Correct Answer:** **(B)** No, System.exit immediately halts JVM execution and finally does NOT run
+- **Explanation:** System.exit(0) terminates the running Java Virtual Machine immediately; pending finally blocks will not execute.
+
+### Set 4 — Python Explanations
+
+#### Q1. Copy vs Deepcopy
+- **Correct Answer:** **(B)** Recursively copies all nested objects, creating completely independent data structures
+- **Explanation:** deepcopy recursively copies all compound objects and everything they contain, completely detaching the new object from the original.
+
+#### Q2. List Insert at Negative Index
+- **Correct Answer:** **(B)** [1, 2, 99, 3]
+- **Explanation:** insert(i, x) inserts BEFORE the specified index. Index -1 refers to the last element (3), so 99 is inserted before 3: [1, 2, 99, 3].
+
+#### Q3. Dict Comprehension Inversion
+- **Correct Answer:** **(B)** {1: "a", 2: "b"}
+- **Explanation:** This dictionary comprehension inverts keys and values, producing {1: "a", 2: "b"}.
+
+#### Q4. Staticmethod vs Classmethod Decorators
+- **Correct Answer:** **(B)** The class object itself (cls)
+- **Explanation:** A method decorated with @classmethod receives the class itself as its first argument (usually named cls), whereas regular methods receive self.
+
+#### Q5. String Strip Characters Parameter
+- **Correct Answer:** **(A)** Hello World
+- **Explanation:** strip(chars) strips all characters present in the chars argument from both ends until a non-matching character is met: "Hello World".
+
+#### Q6. Zip Longest from itertools
+- **Correct Answer:** **(B)** itertools
+- **Explanation:** zip_longest is part of the standard itertools module.
+
+#### Q7. Identity Comparison of Empty Collections
+- **Correct Answer:** **(B)** False
+- **Explanation:** Each empty list literal creates a brand new list object in heap memory. Because they have different memory addresses, [] is [] is False.
+
+#### Q8. Context Manager Dunder Methods
+- **Correct Answer:** **(B)** __enter__ and __exit__
+- **Explanation:** The Python context management protocol requires __enter__(self) and __exit__(self, exc_type, exc_val, exc_tb).
+
+#### Q9. Defaultdict from collections
+- **Correct Answer:** **(B)** Returns 0 and inserts ("hits", 0) into the dict
+- **Explanation:** defaultdict calls the factory function (int() -> 0), inserts the key with this default value, and returns 0.
+
+#### Q10. Truthy Value of Empty Custom Class
+- **Correct Answer:** **(B)** True
+- **Explanation:** By default, instances of user-defined classes are considered truthy unless the class defines __bool__() or __len__() returning False/0.
+
+#### Q11. Lambda Closure Binding Late Evaluation
+- **Correct Answer:** **(B)** [2, 2, 2]
+- **Explanation:** Python closures bind by reference (late binding). When the lambdas are called, i has its final loop value 2. To fix this, use default argument: lambda i=i: i.
+
+#### Q12. Set Symmetric Difference
+- **Correct Answer:** **(B)** s1 ^ s2
+- **Explanation:** The bitwise XOR operator ^ computes the symmetric difference between two sets: {1, 2} ^ {2, 3} = {1, 3}.
+
+#### Q13. Round Function Half to Even
+- **Correct Answer:** **(B)** 2 4
+- **Explanation:** Python 3 uses banker rounding (round half to even): round(2.5) rounds to nearest even integer 2; round(3.5) rounds to nearest even integer 4.
+
+#### Q14. String Join Non-String TypeError
+- **Correct Answer:** **(B)** TypeError: sequence item 0: expected str instance, int found
+- **Explanation:** str.join() requires all elements of the iterable to be strings. Passing integers raises a TypeError.
+
+#### Q15. Functools Lru Cache
+- **Correct Answer:** **(B)** Memoizes function calls by caching previous return values based on input arguments
+- **Explanation:** lru_cache wraps a function with a memoizing callable that saves up to maxsize recent results, turning exponential recursion into linear time.
+
+#### Q16. Tuple Unpacking with Star Target
+- **Correct Answer:** **(B)** [2, 3, 4]
+- **Explanation:** Extended iterable unpacking collects intermediate values into a list: a = 1, rest = [2, 3, 4], b = 5.
+
+#### Q17. Assert Statement Disabled with Flag
+- **Correct Answer:** **(B)** -O (optimize flag)
+- **Explanation:** Running Python with -O or -OO enables basic optimizations and strips all assert statements and __debug__ code.
+
+#### Q18. Dunder Eq and Dunder Hash Relationship
+- **Correct Answer:** **(B)** __hash__
+- **Explanation:** If a class overrides __eq__, Python sets its __hash__ to None, making instances unhashable unless __hash__ is explicitly defined.
+
+#### Q19. Re Match vs Re Search
+- **Correct Answer:** **(A)** re.match checks only at the beginning of the string; re.search searches throughout the entire string
+- **Explanation:** re.match() matches only at the beginning of the string, while re.search() scans the entire string looking for the first location where the pattern matches.
+
+#### Q20. Sort List In-Place vs Sorted Builtin
+- **Correct Answer:** **(B)** None
+- **Explanation:** In-place mutating methods in Python (like list.sort() or list.reverse()) return None to emphasize that the list was mutated in-place.
+
+---
+
+## Round 1 — Set 5
+
+### Quick Answer Key (Set 5)
+
+| Q# | C++ Key | Java Key | Python Key |
+|:---:|:---:|:---:|:---:||
+| Q1 | **B** | **B** | **B** |
+| Q2 | **C** | **B** | **A** |
+| Q3 | **A** | **B** | **B** |
+| Q4 | **B** | **B** | **B** |
+| Q5 | **B** | **B** | **B** |
+| Q6 | **B** | **B** | **B** |
+| Q7 | **B** | **B** | **A** |
+| Q8 | **B** | **B** | **B** |
+| Q9 | **B** | **A** | **B** |
+| Q10 | **B** | **C** | **B** |
+| Q11 | **B** | **B** | **B** |
+| Q12 | **B** | **B** | **B** |
+| Q13 | **C** | **A** | **A** |
+| Q14 | **B** | **A** | **B** |
+| Q15 | **B** | **B** | **B** |
+| Q16 | **A** | **B** | **B** |
+| Q17 | **B** | **A** | **B** |
+| Q18 | **B** | **B** | **B** |
+| Q19 | **A** | **B** | **B** |
+| Q20 | **C** | **B** | **A** |
+
+### Set 5 — C++ Explanations
+
+#### Q1. Bitwise AND Power of Two Check
+- **Correct Answer:** **(B)** Whether n is a power of 2
+- **Explanation:** Subtracting 1 flips the least significant set bit. If n is a power of 2 (exactly one 1-bit), n & (n - 1) is 0.
+
+#### Q2. Array Bound Indexing Undefined Behavior
+- **Correct Answer:** **(C)** Undefined Behavior (out-of-bounds access)
+- **Explanation:** C++ does not perform runtime array bounds checking on native arrays or operator[]; out-of-bounds access is Undefined Behavior.
+
+#### Q3. Precedence of Dereference vs Increment
+- **Correct Answer:** **(A)** 10 20
+- **Explanation:** Postfix ++ has higher precedence than *. *ptr++ yields *ptr (10), then increments the pointer ptr to point to arr[1] (20).
+
+#### Q4. Static Cast vs C-Style Cast
+- **Correct Answer:** **(B)** static_cast performs compile-time type checks and avoids accidental dangerous conversions
+- **Explanation:** Named casts like static_cast are explicit, searchable, and prevent accidental casts between unrelated pointer types.
+
+#### Q5. String View Advantage
+- **Correct Answer:** **(B)** It provides a non-owning reference avoiding dynamic heap allocation for substrings and char arrays
+- **Explanation:** std::string_view is a lightweight non-owning view (pointer + length) that avoids heap allocations when passing substrings or char* literals.
+
+#### Q6. Volatile Keyword in C++
+- **Correct Answer:** **(B)** The variable may be modified externally (e.g. hardware) so do not optimize away reads/writes
+- **Explanation:** volatile prevents compiler optimizations that cache reads/writes in registers, typically used for memory-mapped hardware I/O or signal handlers.
+
+#### Q7. Override Keyword Benefit
+- **Correct Answer:** **(B)** Compilation error
+- **Explanation:** override instructs the compiler to verify that the method overrides an exact matching virtual method in a base class; otherwise it triggers a compile error.
+
+#### Q8. Vector Iterators Invalidation
+- **Correct Answer:** **(B)** When a reallocation occurs due to capacity exceeded, or elements before the iterator are erased/inserted
+- **Explanation:** Reallocation invalidates all iterators. Even without reallocation, insertions and erasures invalidate iterators at and after the insertion/erasure point.
+
+#### Q9. Auto Deduction with Initializer List
+- **Correct Answer:** **(B)** std::initializer_list<int>
+- **Explanation:** Direct list initialization with auto deduces std::initializer_list<T>.
+
+#### Q10. Const Member Function Guarantee
+- **Correct Answer:** **(B)** Modify any non-mutable member variables of the object
+- **Explanation:** A const member function treats *this as const ClassName*, prohibiting modifications to member variables unless marked mutable.
+
+#### Q11. Nullptr vs NULL
+- **Correct Answer:** **(B)** nullptr is a strongly typed std::nullptr_t that avoids overload ambiguity with integer 0
+- **Explanation:** NULL is typically defined as 0 or 0L, which can mistakenly bind to integer overloads. nullptr has type nullptr_t and only binds to pointer types.
+
+#### Q12. Default Copy Constructor Behavior
+- **Correct Answer:** **(B)** Shallow (member-wise) bitwise copy of member variables
+- **Explanation:** The compiler-generated copy constructor performs a shallow copy, simply copying pointer addresses, which can lead to double-free bugs without custom handling.
+
+#### Q13. De Bruijn / Bit Count Builtin
+- **Correct Answer:** **(C)** 3
+- **Explanation:** 14 in binary is 1110_2, which has three 1-bits. popcount counts the number of set bits (3).
+
+#### Q14. Structured Exception Handling vs C++ Exceptions
+- **Correct Answer:** **(B)** No, division by zero is undefined behavior and not a C++ throw
+- **Explanation:** Division by zero is undefined behavior in ISO C++; standard C++ try/catch only catches values thrown with throw expressions.
+
+#### Q15. Recursive Factorial Overflow
+- **Correct Answer:** **(B)** 13
+- **Explanation:** 12! = 479,001,600 fits in 32-bit signed int, but 13! = 6,227,020,800 overflows 2^31 - 1.
+
+#### Q16. Vector Resize vs Reserve
+- **Correct Answer:** **(A)** reserve changes capacity without adding elements; resize changes size and default-constructs elements
+- **Explanation:** reserve(n) pre-allocates memory so capacity >= n (size remains 0). resize(n) creates n elements and sets size = n.
+
+#### Q17. String find_first_of
+- **Correct Answer:** **(B)** The first occurrence of ANY vowel character present in "aeiou"
+- **Explanation:** find_first_of searches for the first character in the string that equals ANY character in the provided set.
+
+#### Q18. Inline Function Keyword Meaning in Modern C++
+- **Correct Answer:** **(B)** Allows a function definition to appear in multiple translation units without ODR violation
+- **Explanation:** While historically a hint for inlining, modern C++ uses inline primarily to permit multiple identical definitions across header files under One Definition Rule (ODR).
+
+#### Q19. Lambda State with Mutable
+- **Correct Answer:** **(A)** 6 7 5
+- **Explanation:** a is captured by value. mutable allows the lambda to modify its internal copy of a across invocations (6, 7). The original a in main remains 5.
+
+#### Q20. Unordered Map Hash Collisions Complexity
+- **Correct Answer:** **(C)** O(N)
+- **Explanation:** When all keys collide into the same bucket, std::unordered_map degrades to a linear search across the collision chain, resulting in O(N) worst-case.
+
+### Set 5 — Java Explanations
+
+#### Q1. ThreadLocal Storage Isolation
+- **Correct Answer:** **(B)** Provides thread-local variables where each accessing thread has its own independently initialized copy
+- **Explanation:** ThreadLocal provides thread-confined state: each thread that accesses get() or set() accesses its own independent copy.
+
+#### Q2. Sealed Classes (Java 17)
+- **Correct Answer:** **(B)** sealed
+- **Explanation:** sealed classes restrict subtyping by explicitly declaring permitted subtypes using the permits clause.
+
+#### Q3. Happens-Before Relationship
+- **Correct Answer:** **(B)** A write to a volatile variable happens-before every subsequent read of that same volatile variable
+- **Explanation:** Writing to a volatile variable establishes a memory barrier ensuring all preceding writes are visible to subsequent reads of that volatile variable.
+
+#### Q4. Equals and HashCode Contract Violation
+- **Correct Answer:** **(B)** HashSet may treat them as distinct elements and add both, violating set uniqueness
+- **Explanation:** If equals() is true, hashCode() MUST return the same integer; otherwise hash containers place equal objects into different buckets.
+
+#### Q5. Stream Reduce Identity Element
+- **Correct Answer:** **(B)** 20
+- **Explanation:** The identity element 10 is the initial value of the accumulation: 10 + 1 + 2 + 3 + 4 = 20.
+
+#### Q6. Pattern Matching for Instanceof (Java 16+)
+- **Correct Answer:** **(B)** Automatically casts and binds obj to pattern variable s if the type matches
+- **Explanation:** Pattern matching for instanceof combines the type check and variable binding into a single concise expression without explicit casting.
+
+#### Q7. AtomicInteger Compare-And-Set (CAS)
+- **Correct Answer:** **(B)** Atomically sets the value to update if and only if the current value equals expected, returning true
+- **Explanation:** CAS is a lock-free hardware-level atomic instruction that updates the value only if it currently equals the expected value.
+
+#### Q8. CompletableFuture supplyAsync
+- **Correct Answer:** **(B)** ForkJoinPool.commonPool()
+- **Explanation:** supplyAsync() defaults to using ForkJoinPool.commonPool() for asynchronous task execution unless an explicit Executor is passed.
+
+#### Q9. Reflection setAccessible Meaning
+- **Correct Answer:** **(A)** Allows reading and modifying private or protected fields bypassing Java language access control checks
+- **Explanation:** setAccessible(true) suppresses Java language access checks, permitting access to private members (subject to SecurityManager / module permissions).
+
+#### Q10. Classloader Hierarchy Delegation
+- **Correct Answer:** **(C)** Bootstrap ClassLoader
+- **Explanation:** The Bootstrap ClassLoader is the parent of all class loaders and loads the core Java runtime classes (like java.lang.*).
+
+#### Q11. ArrayDeque vs LinkedList for Queue
+- **Correct Answer:** **(B)** ArrayDeque uses contiguous array memory offering better cache locality and avoiding per-node object allocation overhead
+- **Explanation:** ArrayDeque stores elements in a contiguous circular array, eliminating node allocation overhead and providing superior CPU cache locality.
+
+#### Q12. Enum Singleton Safety
+- **Correct Answer:** **(B)** It provides unconditional guarantees against multiple instantiations, even through serialization or reflection attacks
+- **Explanation:** Enum singletons are inherently serializable, thread-safe, and immune to reflection attacks, as JVM prevents reflective instantiation of enums.
+
+#### Q13. Static Nested vs Inner Class
+- **Correct Answer:** **(A)** A static nested class does not have an implicit reference to an enclosing instance of Outer
+- **Explanation:** Non-static inner classes retain an implicit reference to Outer.this, preventing garbage collection of the outer object if the inner instance lives longer.
+
+#### Q14. Cleaner vs Finalizer
+- **Correct Answer:** **(A)** Cleaning actions are managed in separate threads without holding strong references to the object being reclaimed
+- **Explanation:** Cleaner decouples the phantom-reachable cleanup action from the target object, avoiding finalizer resurrection bugs and memory leaks.
+
+#### Q15. SoftReference vs WeakReference
+- **Correct Answer:** **(B)** WeakReferences are cleared during the next GC cycle; SoftReferences are retained until memory pressure requires reclamation
+- **Explanation:** SoftReference objects are cleared at the discretion of the garbage collector in response to memory demand, making them ideal for memory-sensitive caches.
+
+#### Q16. String.join Delimiter Behavior
+- **Correct Answer:** **(B)** A-B-C
+- **Explanation:** String.join(delimiter, elements) places the delimiter between elements without leading or trailing delimiters: "A-B-C".
+
+#### Q17. Text Blocks in Java 15+
+- **Correct Answer:** **(A)** Enclosed with triple double-quotes """ with opening delimiter followed by a line break
+- **Explanation:** Java Text Blocks use triple double-quotes (""") and require a newline immediately following the opening delimiter.
+
+#### Q18. Var Local Variable Type Inference (Java 10+)
+- **Correct Answer:** **(B)** For method parameters, return types, and class fields
+- **Explanation:** var is strictly for local variable declarations with initializers; it cannot be used for class fields, method parameter types, or return types.
+
+#### Q19. HashMap Load Factor and Rehash
+- **Correct Answer:** **(B)** 0.75 (resizes when size exceeds 75% of current capacity)
+- **Explanation:** The default load factor is 0.75, which offers a good tradeoff between time and space costs. Resizing doubles capacity when size > capacity * 0.75.
+
+#### Q20. Record Component Immutability Caveat
+- **Correct Answer:** **(B)** No, while the reference members is final, the list contents remain mutable unless explicitly wrapped in Collections.unmodifiableList
+- **Explanation:** Shallow immutability: record fields are final references, but mutable objects (like ArrayList) pointed to by those fields can still be modified directly.
+
+### Set 5 — Python Explanations
+
+#### Q1. Chainmap from Collections
+- **Correct Answer:** **(B)** Groups multiple dictionaries together into a single updateable view with precedence given to the first map
+- **Explanation:** ChainMap groups multiple dicts into a single view without copying data. Lookups search through each mapping in sequence.
+
+#### Q2. Counter Most Common
+- **Correct Answer:** **(A)** [("a", 5), ("b", 2)]
+- **Explanation:** 'a' appears 5 times, 'b' appears 2 times, 'r' appears 2 times. most_common(2) returns a list of the 2 highest frequency tuples: [('a', 5), ('b', 2)].
+
+#### Q3. String Formatted Raw String
+- **Correct Answer:** **(B)** Treats backslashes as literal characters without escape interpretation
+- **Explanation:** Prefixing a string literal with r marks it as a raw string where backslashes are treated as literal characters and not escape sequences.
+
+#### Q4. Bitwise NOT of Integer
+- **Correct Answer:** **(B)** -6
+- **Explanation:** In Python, bitwise NOT of x is defined as -(x + 1). So ~5 = -(5 + 1) = -6.
+
+#### Q5. List Clear vs New List Assignment
+- **Correct Answer:** **(B)** lst.clear() empties the list in-place affecting b; lst = [] rebinds lst, leaving b unchanged
+- **Explanation:** lst.clear() mutates the underlying list object in-place so all references see an empty list. lst = [] simply reassigns the local variable name to a new empty list.
+
+#### Q6. Type of Type in Python
+- **Correct Answer:** **(B)** <class "type">
+- **Explanation:** type is the metaclass for classes in Python, and type is an instance of itself: type(type) is <class 'type'>.
+
+#### Q7. Slots Optimization Benefit
+- **Correct Answer:** **(A)** Restricts instance attributes, eliminating per-instance __dict__ and drastically reducing memory usage
+- **Explanation:** __slots__ prevents the automatic creation of an internal __dict__ for each instance, saving significant memory when creating millions of objects.
+
+#### Q8. Yield From Syntax (Python 3.3+)
+- **Correct Answer:** **(B)** Delegates yielding elements and two-way communication directly to the sub-generator/iterable
+- **Explanation:** yield from transparently delegates generator operations and yields every item from an iterable or sub-generator.
+
+#### Q9. Frozenset Immutability
+- **Correct Answer:** **(B)** Yes, because frozenset is immutable and hashable
+- **Explanation:** frozenset is an immutable, hashable variant of set, allowing it to be used as a set element or dictionary key.
+
+#### Q10. Operator Itemgetter Performance
+- **Correct Answer:** **(B)** 20
+- **Explanation:** operator.itemgetter(1) constructs a fast C-level callable that fetches item index 1 from its operand: 20.
+
+#### Q11. Property Decorator Getter and Setter
+- **Correct Answer:** **(B)** A managed attribute that can be read with dot notation without parentheses circle.radius
+- **Explanation:** @property allows a method to be accessed as if it were a simple attribute (e.g. c.radius instead of c.radius()).
+
+#### Q12. Keyword-Only Arguments Syntax
+- **Correct Answer:** **(B)** By placing them after a bare asterisk * in the parameter list
+- **Explanation:** Parameters placed after a bare * can only be passed as keyword arguments (e.g., process(data, timeout=5)), never positionally.
+
+#### Q13. Itertools Combinations vs Permutations
+- **Correct Answer:** **(A)** 3 and 6
+- **Explanation:** combinations has 3 pairs (order does not matter: 3C2 = 3). permutations has 6 pairs (order matters: 3P2 = 6).
+
+#### Q14. Dunder Call Callable Instances
+- **Correct Answer:** **(B)** Defining the __call__ special method
+- **Explanation:** Implementing __call__(self, *args, **kwargs) allows class instances to behave like functions when invoked with ().
+
+#### Q15. Zip Strict Parameter (Python 3.10+)
+- **Correct Answer:** **(B)** Raises ValueError: zip() argument 2 is longer than argument 1
+- **Explanation:** Python 3.10 added strict=True to zip(), raising a ValueError if the iterables are not of equal length.
+
+#### Q16. Math Isclose Floating Tolerance
+- **Correct Answer:** **(B)** It compares equality within a small relative/absolute numerical tolerance (epsilon) avoiding IEEE 754 precision issues
+- **Explanation:** Floating point arithmetic incurs rounding errors; math.isclose() tests whether values are close within a defined tolerance.
+
+#### Q17. String Translation Table
+- **Correct Answer:** **(B)** str.maketrans and str.translate
+- **Explanation:** str.maketrans() creates a 1-to-1 character translation dictionary, which is consumed by str.translate().
+
+#### Q18. Collections Deque O(1) Appends
+- **Correct Answer:** **(B)** deque provides O(1) time complexity for appends and pops from both ends, whereas list.pop(0) is O(N)
+- **Explanation:** list.pop(0) requires shifting all N elements in memory (O(N)), whereas deque is a doubly-linked list/block buffer with O(1) popleft().
+
+#### Q19. Weakref Non-Owning References
+- **Correct Answer:** **(B)** Creates references to objects without increasing their reference count, avoiding circular reference leaks
+- **Explanation:** weakref creates non-owning references that allow objects to be garbage collected when only weak references remain.
+
+#### Q20. Hash Invariance Requirement
+- **Correct Answer:** **(A)** If two objects are equal (a == b), their hash values MUST be equal
+- **Explanation:** The hash contract requires that if a == b is True, hash(a) MUST equal hash(b); otherwise, hash table lookups in dict and set break.
+
+---
+
+<a name="round-2-medium-solutions"></a>
+# Round 2: Medium Debugging Solutions (Sets 1 - 7)
+
+## Set 1: Maximum Subarray Sum with At Most K Distinct Elements
+
+**Points:** 20 | **Category:** Medium Debugging
+
+### Problem Statement Summary
+Given an array of n integers and an integer k, find the maximum sum of a contiguous subarray such that the subarray contains at most k distinct elements.
+
+### Root Cause Analysis (Bug Diagnostic)
+In the sliding window loop, left is incremented before arr[left] is subtracted from windowSum, which subtracts the element at the new left position instead of the element being removed.
+
+### Fix Description
+Subtract arr[left] from windowSum BEFORE advancing the left pointer.
+
+#### C++ Reference Solution
 
 ```cpp
 #include <iostream>
+#include <vector>
+#include <unordered_map>
+#include <climits>
 using namespace std;
 
 int main() {
-    int a = 7, b = 2;
-    cout << a / b << endl;
+    int n, k;
+    if (!(cin >> n >> k)) return 0;
+    vector<int> arr(n);
+    for (int i = 0; i < n; i++) cin >> arr[i];
+
+    unordered_map<int, int> freq;
+    int left = 0;
+    long long windowSum = 0;
+    long long maxSum = LLONG_MIN;
+
+    for (int right = 0; right < n; right++) {
+        freq[arr[right]]++;
+        windowSum += arr[right];
+
+        while (freq.size() > (size_t)k) {
+            freq[arr[left]]--;
+            if (freq[arr[left]] == 0) freq.erase(arr[left]);
+            windowSum -= arr[left];
+            left++;
+        }
+
+        if (windowSum > maxSum) maxSum = windowSum;
+    }
+
+    cout << maxSum << endl;
     return 0;
 }
 ```
 
-A. 3.5  
-B. 3  
-C. 4  
-D. 3.0  
+#### Java Reference Solution
 
-**Correct Answer:** B  
+```java
+import java.util.*;
 
-**Explanation:** In C++, dividing two integers performs integer division, which truncates the fractional part towards zero. Thus, `7 / 2` equals `3`.
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
+
+        Map<Integer, Integer> freq = new HashMap<>();
+        int left = 0;
+        long windowSum = 0;
+        long maxSum = Long.MIN_VALUE;
+
+        for (int right = 0; right < n; right++) {
+            freq.merge(arr[right], 1, Integer::sum);
+            windowSum += arr[right];
+
+            while (freq.size() > k) {
+                freq.merge(arr[left], -1, Integer::sum);
+                if (freq.get(arr[left]) == 0) freq.remove(arr[left]);
+                windowSum -= arr[left];
+                left++;
+            }
+
+            if (windowSum > maxSum) maxSum = windowSum;
+        }
+
+        System.out.println(maxSum);
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+from collections import defaultdict
+
+def solve():
+    data = sys.stdin.read().split()
+    if not data: return
+    n = int(data[0])
+    k = int(data[1])
+    arr = [int(x) for x in data[2:2+n]]
+
+    freq = defaultdict(int)
+    left = 0
+    window_sum = 0
+    max_sum = float('-inf')
+
+    for right in range(n):
+        freq[arr[right]] += 1
+        window_sum += arr[right]
+
+        while len(freq) > k:
+            freq[arr[left]] -= 1
+            if freq[arr[left]] == 0:
+                del freq[arr[left]]
+            window_sum -= arr[left]
+            left += 1
+
+        if window_sum > max_sum:
+            max_sum = window_sum
+
+    print(max_sum)
+
+if __name__ == '__main__':
+    solve()
+```
 
 ---
 
-#### Q2. What is the output?
+## Set 2: Container With Most Water
+
+**Points:** 20 | **Category:** Medium Debugging
+
+### Problem Statement Summary
+Given n non-negative integers representing heights of vertical lines on the x-axis, find two lines that together with the x-axis form a container that stores the maximum water volume.
+
+### Root Cause Analysis (Bug Diagnostic)
+The two-pointer approach compares heights but advances the pointer with the LARGER height instead of the shorter height.
+
+### Fix Description
+Advance the pointer with the smaller height (left++ if height[left] < height[right], else right--).
+
+#### C++ Reference Solution
 
 ```cpp
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
 int main() {
-    int x = 5;
-    int y = x++;
-    cout << x << " " << y << endl;
+    int n;
+    if (!(cin >> n)) return 0;
+    vector<long long> h(n);
+    for (int i = 0; i < n; i++) cin >> h[i];
+
+    long long left = 0, right = n - 1;
+    long long maxWater = 0;
+
+    while (left < right) {
+        long long width = right - left;
+        long long height = min(h[left], h[right]);
+        maxWater = max(maxWater, width * height);
+
+        if (h[left] < h[right]) {
+            left++;
+        } else {
+            right--;
+        }
+    }
+
+    cout << maxWater << endl;
     return 0;
 }
 ```
 
-A. 5 5  
-B. 6 6  
-C. 6 5  
-D. 5 6  
+#### Java Reference Solution
 
-**Correct Answer:** C  
+```java
+import java.util.Scanner;
 
-**Explanation:** The post-increment operator (`x++`) assigns the current value of `x` (5) to `y`, and then increments `x` to 6.
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        long[] h = new long[n];
+        for (int i = 0; i < n; i++) h[i] = sc.nextLong();
 
----
+        int left = 0, right = n - 1;
+        long maxWater = 0;
 
-#### Q3. What is the output?
+        while (left < right) {
+            long width = right - left;
+            long height = Math.min(h[left], h[right]);
+            maxWater = Math.max(maxWater, width * height);
 
-```cpp
-#include <iostream>
-using namespace std;
+            if (h[left] < h[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
 
-void addTen(int x) {
-    x += 10;
-}
-
-int main() {
-    int num = 20;
-    addTen(num);
-    cout << num << endl;
-    return 0;
-}
-```
-
-A. 30  
-B. 20  
-C. 10  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** `x` is passed by value into `addTen()`. The function modifies a local copy of the variable, so `num` in `main()` remains 20.
-
----
-
-#### Q4. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int arr[] = {10, 20, 30, 40, 50};
-    cout << arr[3] << endl;
-    return 0;
+        System.out.println(maxWater);
+    }
 }
 ```
 
-A. 30  
-B. 40  
-C. 50  
-D. 20  
+#### Python Reference Solution
 
-**Correct Answer:** B  
+```python
+import sys
 
-**Explanation:** Arrays in C++ are 0-indexed. `arr[0]` is 10, `arr[1]` is 20, `arr[2]` is 30, and `arr[3]` is 40.
+def solve():
+    data = sys.stdin.read().split()
+    if not data: return
+    n = int(data[0])
+    h = [int(x) for x in data[1:1+n]]
+
+    left = 0
+    right = n - 1
+    max_water = 0
+
+    while left < right:
+        width = right - left
+        height = min(h[left], h[right])
+        max_water = max(max_water, width * height)
+
+        if h[left] < h[right]:
+            left += 1
+        else:
+            right -= 1
+
+    print(max_water)
+
+if __name__ == '__main__':
+    solve()
+```
 
 ---
 
-#### Q5. What is the output?
+## Set 3: Longest Substring Without Repeating Characters
+
+**Points:** 20 | **Category:** Medium Debugging
+
+### Problem Statement Summary
+Given a string s on stdin, find the length of the longest substring without duplicate characters.
+
+### Root Cause Analysis (Bug Diagnostic)
+When a repeated character is encountered, the left pointer is updated directly to lastSeen[c] + 1 without taking max(left, lastSeen[c] + 1), which causes the window to mistakenly move backwards.
+
+### Fix Description
+Use left = max(left, lastSeen[c] + 1) to ensure left pointer never moves backward.
+
+#### C++ Reference Solution
 
 ```cpp
 #include <iostream>
 #include <string>
+#include <unordered_map>
+#include <algorithm>
 using namespace std;
 
 int main() {
-    string s = "Hello";
-    cout << s.length() << " " << s[1] << endl;
+    string s;
+    if (!getline(cin, s)) {
+        cout << 0 << endl;
+        return 0;
+    }
+
+    unordered_map<char, int> lastSeen;
+    int left = 0;
+    int maxLen = 0;
+
+    for (int right = 0; right < (int)s.length(); right++) {
+        char c = s[right];
+        if (lastSeen.find(c) != lastSeen.end()) {
+            left = max(left, lastSeen[c] + 1);
+        }
+        lastSeen[c] = right;
+        maxLen = max(maxLen, right - left + 1);
+    }
+
+    cout << maxLen << endl;
     return 0;
 }
 ```
 
-A. 5 e  
-B. 5 H  
-C. 4 e  
-D. 5 l  
-
-**Correct Answer:** A  
-
-**Explanation:** The length of `"Hello"` is 5 characters. `s[1]` accesses the character at 0-based index 1, which is `'e'`.
-
----
-
-### Java (Set 1)
-
-#### Q6. What is the output?
+#### Java Reference Solution
 
 ```java
+import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Sum: " + 10 + 20);
-    }
-}
-```
+        Scanner sc = new Scanner(System.in);
+        String s = sc.hasNextLine() ? sc.nextLine() : "";
 
-A. Sum: 30  
-B. Sum: 1020  
-C. Sum: 10 20  
-D. Compilation error  
+        Map<Character, Integer> lastSeen = new HashMap<>();
+        int left = 0;
+        int maxLen = 0;
 
-**Correct Answer:** B  
-
-**Explanation:** Operators evaluate from left to right. `"Sum: " + 10` evaluates to `"Sum: 10"` (string concatenation), and `"Sum: 10" + 20` yields `"Sum: 1020"`.
-
----
-
-#### Q7. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String s1 = "hello";
-        String s2 = new String("hello");
-        System.out.println(s1.equals(s2) + " " + (s1 == s2));
-    }
-}
-```
-
-A. true true  
-B. false false  
-C. true false  
-D. false true  
-
-**Correct Answer:** C  
-
-**Explanation:** `.equals()` compares the actual text content (both are `"hello"`, so `true`). `==` compares reference memory addresses (`s2` was created using `new`, so `false`).
-
----
-
-#### Q8. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int[] nums = {1, 2, 3, 4, 5};
-        System.out.println(nums.length);
-    }
-}
-```
-
-A. 4  
-B. 5  
-C. Compilation error  
-D. 6  
-
-**Correct Answer:** B  
-
-**Explanation:** In Java, arrays have a built-in `length` property that returns the total count of elements, which is 5.
-
----
-
-#### Q9. What is the output?
-
-```java
-public class Main {
-    static void modify(int a) {
-        a = 100;
-    }
-
-    public static void main(String[] args) {
-        int x = 25;
-        modify(x);
-        System.out.println(x);
-    }
-}
-```
-
-A. 100  
-B. 25  
-C. 0  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** Java is strictly pass-by-value. Passing primitive `x` copies its value into parameter `a`, leaving `x` unmodified.
-
----
-
-#### Q10. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int count = 1;
-        while (count < 4) {
-            count++;
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            if (lastSeen.containsKey(c)) {
+                left = Math.max(left, lastSeen.get(c) + 1);
+            }
+            lastSeen.put(c, right);
+            maxLen = Math.max(maxLen, right - left + 1);
         }
+
+        System.out.println(maxLen);
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+
+def solve():
+    s = sys.stdin.read().rstrip('
+')
+    last_seen = {}
+    left = 0
+    max_len = 0
+
+    for right, c in enumerate(s):
+        if c in last_seen:
+            left = max(left, last_seen[c] + 1)
+        last_seen[c] = right
+        max_len = max(max_len, right - left + 1)
+
+    print(max_len)
+
+if __name__ == '__main__':
+    solve()
+```
+
+---
+
+## Set 4: Product of Array Except Self Without Division
+
+**Points:** 20 | **Category:** Medium Debugging
+
+### Problem Statement Summary
+Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+The algorithm must run in O(n) time without using the division operator.
+
+### Root Cause Analysis (Bug Diagnostic)
+The running prefix product array updates curr *= nums[i] before setting res[i], multiplying by the current element instead of holding the product of all elements to its left.
+
+### Fix Description
+Store res[i] = curr FIRST, then update curr *= nums[i].
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<long long> nums;
+    long long val;
+    while (cin >> val) nums.push_back(val);
+    if (nums.empty()) return 0;
+
+    int n = nums.size();
+    vector<long long> res(n, 1);
+
+    long long curr = 1;
+    for (int i = 0; i < n; i++) {
+        res[i] = curr;
+        curr *= nums[i];
+    }
+
+    curr = 1;
+    for (int i = n - 1; i >= 0; i--) {
+        res[i] *= curr;
+        curr *= nums[i];
+    }
+
+    for (int i = 0; i < n; i++) {
+        cout << res[i] << (i == n - 1 ? "" : " ");
+    }
+    cout << endl;
+    return 0;
+}
+```
+
+#### Java Reference Solution
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        List<Long> list = new ArrayList<>();
+        while (sc.hasNextLong()) list.add(sc.nextLong());
+        if (list.isEmpty()) return;
+
+        int n = list.size();
+        long[] res = new long[n];
+        long curr = 1;
+
+        for (int i = 0; i < n; i++) {
+            res[i] = curr;
+            curr *= list.get(i);
+        }
+
+        curr = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            res[i] *= curr;
+            curr *= list.get(i);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < n; i++) {
+            sb.append(res[i]).append(i == n - 1 ? "" : " ");
+        }
+        System.out.println(sb.toString());
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+
+def solve():
+    nums = list(map(int, sys.stdin.read().split()))
+    if not nums: return
+    n = len(nums)
+    res = [1] * n
+
+    curr = 1
+    for i in range(n):
+        res[i] = curr
+        curr *= nums[i]
+
+    curr = 1
+    for i in range(n - 1, -1, -1):
+        res[i] *= curr
+        curr *= nums[i]
+
+    print(" ".join(map(str, res)))
+
+if __name__ == '__main__':
+    solve()
+```
+
+---
+
+## Set 5: Search in Rotated Sorted Array
+
+**Points:** 20 | **Category:** Medium Debugging
+
+### Problem Statement Summary
+Given an integer array nums sorted in ascending order with distinct values, rotated at some unknown pivot index, and a target value, return the 0-based index of target if it is in nums, or -1 if not.
+Algorithm must achieve O(log n) time complexity.
+
+### Root Cause Analysis (Bug Diagnostic)
+The binary search condition checks if (nums[low] < nums[mid]) instead of (nums[low] <= nums[mid]), causing the algorithm to misclassify the sorted half when low == mid.
+
+### Fix Description
+Use if (nums[low] <= nums[mid]) to correctly include single-element sub-ranges.
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int search(vector<int>& nums, int target) {
+    int low = 0, high = (int)nums.size() - 1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (nums[mid] == target) return mid;
+
+        if (nums[low] <= nums[mid]) {
+            if (nums[low] <= target && target < nums[mid]) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        } else {
+            if (nums[mid] < target && target <= nums[high]) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+    }
+    return -1;
+}
+
+int main() {
+    int target;
+    if (!(cin >> target)) return 0;
+    vector<int> nums;
+    int x;
+    while (cin >> x) nums.push_back(x);
+    cout << search(nums, target) << endl;
+    return 0;
+}
+```
+
+#### Java Reference Solution
+
+```java
+import java.util.*;
+
+public class Main {
+    public static int search(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (nums[mid] == target) return mid;
+
+            if (nums[low] <= nums[mid]) {
+                if (nums[low] <= target && target < nums[mid]) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            } else {
+                if (nums[mid] < target && target <= nums[high]) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int target = sc.nextInt();
+        List<Integer> list = new ArrayList<>();
+        while (sc.hasNextInt()) list.add(sc.nextInt());
+        int[] nums = new int[list.size()];
+        for (int i = 0; i < list.size(); i++) nums[i] = list.get(i);
+        System.out.println(search(nums, target));
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+
+def search(nums, target):
+    low = 0
+    high = len(nums) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if nums[mid] == target:
+            return mid
+
+        if nums[low] <= nums[mid]:
+            if nums[low] <= target < nums[mid]:
+                high = mid - 1
+            else:
+                low = mid + 1
+        else:
+            if nums[mid] < target <= nums[high]:
+                low = mid + 1
+            else:
+                high = mid - 1
+    return -1
+
+def solve():
+    data = sys.stdin.read().split()
+    if not data: return
+    target = int(data[0])
+    nums = [int(x) for x in data[1:]]
+    print(search(nums, target))
+
+if __name__ == '__main__':
+    solve()
+```
+
+---
+
+## Set 6: 3Sum Triplets with Zero Sum
+
+**Points:** 20 | **Category:** Medium Debugging
+
+### Problem Statement Summary
+Given an integer array nums, return the count of unique triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+### Root Cause Analysis (Bug Diagnostic)
+When a valid triplet is found, the inner while loops to skip duplicate values check arr[left] == arr[left + 1] without initially stepping pointers, leading to infinite loops or skipping unique elements.
+
+### Fix Description
+Advance pointers first: left++; right--; while (left < right && nums[left] == nums[left - 1]) left++; while (left < right && nums[right] == nums[right + 1]) right--;
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    vector<long long> nums;
+    long long x;
+    while (cin >> x) nums.push_back(x);
+    if (nums.size() < 3) {
+        cout << 0 << endl;
+        return 0;
+    }
+
+    sort(nums.begin(), nums.end());
+    int n = nums.size();
+    int count = 0;
+
+    for (int i = 0; i < n - 2; i++) {
+        if (i > 0 && nums[i] == nums[i - 1]) continue;
+        int left = i + 1, right = n - 1;
+
+        while (left < right) {
+            long long sum = nums[i] + nums[left] + nums[right];
+            if (sum == 0) {
+                count++;
+                left++;
+                right--;
+                while (left < right && nums[left] == nums[left - 1]) left++;
+                while (left < right && nums[right] == nums[right + 1]) right--;
+            } else if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+
+    cout << count << endl;
+    return 0;
+}
+```
+
+#### Java Reference Solution
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        List<Long> list = new ArrayList<>();
+        while (sc.hasNextLong()) list.add(sc.nextLong());
+        if (list.size() < 3) {
+            System.out.println(0);
+            return;
+        }
+
+        Collections.sort(list);
+        int n = list.size();
+        int count = 0;
+
+        for (int i = 0; i < n - 2; i++) {
+            if (i > 0 && Objects.equals(list.get(i), list.get(i - 1))) continue;
+            int left = i + 1, right = n - 1;
+
+            while (left < right) {
+                long sum = list.get(i) + list.get(left) + list.get(right);
+                if (sum == 0) {
+                    count++;
+                    left++;
+                    right--;
+                    while (left < right && Objects.equals(list.get(left), list.get(left - 1))) left++;
+                    while (left < right && Objects.equals(list.get(right), list.get(right + 1))) right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+
         System.out.println(count);
     }
 }
 ```
 
-A. 3  
-B. 4  
-C. 5  
-D. 1  
-
-**Correct Answer:** B  
-
-**Explanation:** `count` increments on each iteration: 1 -> 2 -> 3 -> 4. When `count` reaches 4, `4 < 4` is false and the loop terminates, printing 4.
-
----
-
-### Python (Set 1)
-
-#### Q11. What is the output?
+#### Python Reference Solution
 
 ```python
-print(9 // 2, 9 / 2)
+import sys
+
+def solve():
+    nums = list(map(int, sys.stdin.read().split()))
+    if len(nums) < 3:
+        print(0)
+        return
+
+    nums.sort()
+    n = len(nums)
+    count = 0
+
+    for i in range(n - 2):
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+        left = i + 1
+        right = n - 1
+
+        while left < right:
+            s = nums[i] + nums[left] + nums[right]
+            if s == 0:
+                count += 1
+                left += 1
+                right -= 1
+                while left < right and nums[left] == nums[left - 1]:
+                    left += 1
+                while left < right and nums[right] == nums[right + 1]:
+                    right -= 1
+            elif s < 0:
+                left += 1
+            else:
+                right -= 1
+
+    print(count)
+
+if __name__ == '__main__':
+    solve()
 ```
 
-A. 4 4.5  
-B. 4.5 4  
-C. 4 4  
-D. 4.5 4.5  
-
-**Correct Answer:** A  
-
-**Explanation:** `//` is integer floor division returning `4`, while `/` is float division returning `4.5`.
-
 ---
 
-#### Q12. What is the output?
+## Set 7: Minimum Size Subarray Sum Exceeding Target
 
-```python
-text = "Go!"
-print(text * 3)
-```
+**Points:** 20 | **Category:** Medium Debugging
 
-A. Go! Go! Go!  
-B. Go!3  
-C. Go!Go!Go!  
-D. TypeError  
+### Problem Statement Summary
+Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray [nums[l], ..., nums[r]] of which the sum is greater than or equal to target. If there is no such subarray, return 0.
 
-**Correct Answer:** C  
+### Root Cause Analysis (Bug Diagnostic)
+The sliding window shrinking condition uses (windowSum > target) instead of (windowSum >= target), failing to record minimal windows where the sum is exactly equal to target.
 
-**Explanation:** In Python, multiplying a string by an integer repeats the string that many times without added spaces.
+### Fix Description
+Change while condition to while (windowSum >= target).
 
----
-
-#### Q13. What is the output?
-
-```python
-nums = [10, 20, 30, 40, 50]
-print(nums[1:4])
-```
-
-A. [20, 30, 40, 50]  
-B. [20, 30, 40]  
-C. [10, 20, 30]  
-D. [20, 30]  
-
-**Correct Answer:** B  
-
-**Explanation:** Slicing `[1:4]` starts at index 1 (20) and stops before index 4 (50), yielding `[20, 30, 40]`.
-
----
-
-#### Q14. What is the output?
-
-```python
-fruits = ["apple", "banana", "cherry"]
-print(fruits[-1])
-```
-
-A. apple  
-B. banana  
-C. cherry  
-D. IndexError  
-
-**Correct Answer:** C  
-
-**Explanation:** Negative index `-1` retrieves the last element of the list, `"cherry"`.
-
----
-
-#### Q15. What is the output?
-
-```python
-scores = {"Alice": 90, "Bob": 85}
-print(scores.get("Charlie", 0))
-```
-
-A. None  
-B. 0  
-C. KeyError  
-D. 85  
-
-**Correct Answer:** B  
-
-**Explanation:** `dict.get(key, default)` returns the default value `0` if the key `"Charlie"` is not found, avoiding a `KeyError`.
-
----
-
-### C++ (Set 1 - Continued)
-
-#### Q16. What is the output of the following C++ code?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 10;
-    int &ref = x;
-    ref = 25;
-    cout << x << " " << ref << endl;
-    return 0;
-}
-```
-
-A. 10 25  
-B. 25 25  
-C. 10 10  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** In C++, `ref` is a reference (alias) to `x`. Modifying `ref` directly changes the value of `x`, so both output `25`.
-
----
-
-#### Q17. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 5;
-    cout << (a > 3 ? (a < 10 ? 1 : 2) : 3) << endl;
-    return 0;
-}
-```
-
-A. 1  
-B. 2  
-C. 3  
-D. 0  
-
-**Correct Answer:** A  
-
-**Explanation:** The outer condition `a > 3` is true (`5 > 3`), so the inner expression `(a < 10 ? 1 : 2)` is evaluated. Since `5 < 10` is true, it outputs `1`.
-
----
-
-#### Q18. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int val = 2;
-    switch (val) {
-        case 1: cout << "One ";
-        case 2: cout << "Two ";
-        case 3: cout << "Three ";
-            break;
-        default: cout << "Default";
-    }
-    return 0;
-}
-```
-
-A. Two  
-B. Two Three  
-C. Two Three Default  
-D. One Two Three  
-
-**Correct Answer:** B  
-
-**Explanation:** Because there is no `break` statement after `case 2`, execution falls through to `case 3`, printing `"Two Three "` before encountering the `break`.
-
----
-
-### Java (Set 1 - Continued)
-
-#### Q19. What is the output of the following Java code?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int x = 5;
-        System.out.println(++x + x++);
-    }
-}
-```
-
-A. 11  
-B. 12  
-C. 13  
-D. 10  
-
-**Correct Answer:** B  
-
-**Explanation:** `++x` pre-increments `x` from 5 to 6 and returns 6. Then `x++` post-increments: it uses the current value (6) in addition, and then increments `x` to 7. Thus `6 + 6 = 12`.
-
----
-
-#### Q20. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String str = "Debugging";
-        System.out.println(str.substring(3, 7));
-    }
-}
-```
-
-A. bugg  
-B. uggi  
-C. buggi  
-D. eggi  
-
-**Correct Answer:** B  
-
-**Explanation:** `substring(beginIndex, endIndex)` extracts characters from index 3 up to index 6 inclusive (7 is exclusive). Indices 3 to 6 are `'u'`, `'g'`, `'g'`, `'i'`.
-
----
-
-#### Q21. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        boolean flag = true;
-        if (flag = false) {
-            System.out.println("Yes");
-        } else {
-            System.out.println("No");
-        }
-    }
-}
-```
-
-A. Yes  
-B. No  
-C. Compilation error  
-D. Runtime error  
-
-**Correct Answer:** B  
-
-**Explanation:** In `if (flag = false)`, the assignment operator `=` assigns `false` to `flag` and evaluates to `false`, executing the `else` block to print `"No"`.
-
----
-
-### Python (Set 1 - Continued)
-
-#### Q22. What is the output of the following Python code?
-
-```python
-nums = [1, 2, 3, 4, 5]
-print(nums[1:4])
-```
-
-A. [1, 2, 3]  
-B. [2, 3, 4]  
-C. [2, 3, 4, 5]  
-D. [1, 2, 3, 4]  
-
-**Correct Answer:** B  
-
-**Explanation:** Python slicing `[1:4]` starts at index 1 and stops before index 4, producing elements at indices 1, 2, and 3: `[2, 3, 4]`.
-
----
-
-#### Q23. What is the output?
-
-```python
-def greet(name, msg="Hello"):
-    return f"{msg}, {name}!"
-
-print(greet("Bob"))
-```
-
-A. Hello, Bob!  
-B. Bob, Hello!  
-C. Error  
-D. None  
-
-**Correct Answer:** A  
-
-**Explanation:** The default parameter `msg="Hello"` is used since only the positional argument `"Bob"` was passed for `name`.
-
----
-
-#### Q24. What is the output?
-
-```python
-x = [1, 2, 3]
-y = x
-y.append(4)
-print(len(x))
-```
-
-A. 3  
-B. 4  
-C. 1  
-D. AttributeError  
-
-**Correct Answer:** B  
-
-**Explanation:** `y = x` copies the reference to the list. Mutating `y` modifies the underlying list in-place, so `len(x)` is also 4.
-
----
-
-#### Q25. What is the output?
-
-```python
-vals = [x * 2 for x in range(4) if x % 2 == 0]
-print(vals)
-```
-
-A. [0, 4]  
-B. [0, 2, 4]  
-C. [0, 4, 8]  
-D. [2, 4]  
-
-**Correct Answer:** A  
-
-**Explanation:** `range(4)` generates 0, 1, 2, 3. The condition `x % 2 == 0` keeps 0 and 2. Multiplying by 2 produces `[0, 4]`.
-
----
-
-### ANSWER KEY — SET 1
-
-| Question | Language | Answer |
-| -------- | -------- | ------ |
-| 1        | C++      | B      |
-| 2        | C++      | C      |
-| 3        | C++      | B      |
-| 4        | C++      | B      |
-| 5        | C++      | A      |
-| 6        | Java     | B      |
-| 7        | Java     | C      |
-| 8        | Java     | B      |
-| 9        | Java     | B      |
-| 10       | Java     | B      |
-| 11       | Python   | A      |
-| 12       | Python   | C      |
-| 13       | Python   | B      |
-| 14       | Python   | C      |
-| 15       | Python   | B      |
-| 16       | C++      | B      |
-| 17       | C++      | A      |
-| 18       | C++      | B      |
-| 19       | Java     | B      |
-| 20       | Java     | B      |
-| 21       | Java     | B      |
-| 22       | Python   | B      |
-| 23       | Python   | A      |
-| 24       | Python   | B      |
-| 25       | Python   | A      |
-
----
-
-## SET 2
-
-### C++ (Set 2)
-
-#### Q1. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 14, b = 4;
-    cout << a % b << endl;
-    return 0;
-}
-```
-
-A. 3  
-B. 2  
-C. 0  
-D. 3.5  
-
-**Correct Answer:** B  
-
-**Explanation:** The `%` modulo operator returns the remainder of integer division: 14 divided by 4 is 3 with remainder 2.
-
----
-
-#### Q2. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int sum = 0;
-    for (int i = 1; i <= 4; i++) {
-        sum += i;
-    }
-    cout << sum << endl;
-    return 0;
-}
-```
-
-A. 10  
-B. 6  
-C. 15  
-D. 4  
-
-**Correct Answer:** A  
-
-**Explanation:** The loop iterates for i = 1, 2, 3, 4. Total sum = 1 + 2 + 3 + 4 = 10.
-
----
-
-#### Q3. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 15, b = 25;
-    int maxVal = (a > b) ? a : b;
-    cout << maxVal << endl;
-    return 0;
-}
-```
-
-A. 15  
-B. 25  
-C. 1  
-D. 0  
-
-**Correct Answer:** B  
-
-**Explanation:** The condition `15 > 25` is false, so the ternary operator selects the second expression `b` (25).
-
----
-
-#### Q4. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    bool p = true;
-    bool q = false;
-    cout << (p && q) << " " << (p || q) << endl;
-    return 0;
-}
-```
-
-A. 1 0  
-B. 0 1  
-C. 1 1  
-D. 0 0  
-
-**Correct Answer:** B  
-
-**Explanation:** `true && false` is `false` (prints `0`), while `true || false` is `true` (prints `1`).
-
----
-
-#### Q5. What is the output?
+#### C++ Reference Solution
 
 ```cpp
 #include <iostream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 int main() {
-    vector<int> v;
-    v.push_back(100);
-    v.push_back(200);
-    cout << v.size() << " " << v[0] << endl;
-    return 0;
-}
-```
-
-A. 2 100  
-B. 2 200  
-C. 1 100  
-D. 0 100  
-
-**Correct Answer:** A  
-
-**Explanation:** `push_back()` adds 2 items, making `v.size()` 2. `v[0]` accesses the first inserted element, 100.
-
----
-
-### Java (Set 2)
-
-#### Q6. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int result = 15 / 4;
-        System.out.println(result);
-    }
-}
-```
-
-A. 3.75  
-B. 3  
-C. 4  
-D. 3.0  
-
-**Correct Answer:** B  
-
-**Explanation:** Since both 15 and 4 are integers, Java performs integer division and truncates the decimal to 3.
-
----
-
-#### Q7. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String s = "hello";
-        s.toUpperCase();
-        System.out.println(s);
-    }
-}
-```
-
-A. HELLO  
-B. hello  
-C. Hello  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** Strings in Java are immutable. `s.toUpperCase()` returns a new string but does not modify `s`. Since the return value is ignored, `s` remains `"hello"`.
-
----
-
-#### Q8. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int sum = 0;
-        for (int i = 1; i <= 5; i++) {
-            if (i == 3) break;
-            sum += i;
-        }
-        System.out.println(sum);
-    }
-}
-```
-
-A. 15  
-B. 3  
-C. 6  
-D. 1  
-
-**Correct Answer:** B  
-
-**Explanation:** When i = 1, sum = 1. When i = 2, sum = 3. When i = 3, `break` immediately exits the loop, leaving sum as 3.
-
----
-
-#### Q9. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        System.out.println(Math.max(42, 17));
-    }
-}
-```
-
-A. 17  
-B. 42  
-C. 59  
-D. 25  
-
-**Correct Answer:** B  
-
-**Explanation:** `Math.max(a, b)` returns the greater of the two numbers, 42.
-
----
-
-#### Q10. What is the output?
-
-```java
-public class Main {
-    static boolean flag;
-
-    public static void main(String[] args) {
-        System.out.println(flag);
-    }
-}
-```
-
-A. true  
-B. false  
-C. null  
-D. 0  
-
-**Correct Answer:** B  
-
-**Explanation:** Class-level `boolean` member fields in Java default to `false`.
-
----
-
-### Python (Set 2)
-
-#### Q11. What is the output?
-
-```python
-animals = ["dog", "cat", "bird", "fish"]
-print(len(animals))
-```
-
-A. 3  
-B. 4  
-C. 5  
-D. 16  
-
-**Correct Answer:** B  
-
-**Explanation:** `len()` returns the number of elements in the list, which is 4.
-
----
-
-#### Q12. What is the output?
-
-```python
-word = "PYTHON"
-print(word.lower())
-```
-
-A. python  
-B. PYTHON  
-C. Python  
-D. TypeError  
-
-**Correct Answer:** A  
-
-**Explanation:** `.lower()` converts all uppercase characters in the string to lowercase.
-
----
-
-#### Q13. What is the output?
-
-```python
-nums = [1, 2, 3]
-nums.append(4)
-print(nums)
-```
-
-A. [4, 1, 2, 3]  
-B. [1, 2, 3, 4]  
-C. [1, 2, 3]  
-D. 4  
-
-**Correct Answer:** B  
-
-**Explanation:** `append()` adds the item `4` to the end of the existing list in-place.
-
----
-
-#### Q14. What is the output?
-
-```python
-print(list(range(1, 5)))
-```
-
-A. [1, 2, 3, 4, 5]  
-B. [1, 2, 3, 4]  
-C. [0, 1, 2, 3, 4]  
-D. [1, 5]  
-
-**Correct Answer:** B  
-
-**Explanation:** `range(1, 5)` starts at 1 and stops before 5: `[1, 2, 3, 4]`.
-
----
-
-#### Q15. What is the output?
-
-```python
-x = 10
-y = 20
-x, y = y, x
-print(x, y)
-```
-
-A. 10 20  
-B. 20 10  
-C. 20 20  
-D. 10 10  
-
-**Correct Answer:** B  
-
-**Explanation:** Python's tuple packing and unpacking swaps `x` and `y` simultaneously, setting `x = 20` and `y = 10`.
-
----
-
-### C++ (Set 2 - Continued)
-
-#### Q16. What is the output of the following C++ code?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 42;
-    int *ptr = &a;
-    *ptr = *ptr + 8;
-    cout << a << endl;
-    return 0;
-}
-```
-
-A. 42  
-B. 50  
-C. Garbage value  
-D. Memory address  
-
-**Correct Answer:** B  
-
-**Explanation:** `ptr` holds the memory address of `a`. Dereferencing `*ptr` and adding 8 directly modifies `a` to `50`.
-
----
-
-#### Q17. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-void counter() {
-    static int c = 0;
-    c++;
-    cout << c << " ";
-}
-
-int main() {
-    counter();
-    counter();
-    counter();
-    return 0;
-}
-```
-
-A. 1 1 1  
-B. 1 2 3  
-C. 0 1 2  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** A `static` local variable persists across function calls and retains its value. It increments to 1, then 2, then 3.
-
----
-
-#### Q18. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 0, y = 5;
-    if (x != 0 && ++y > 5) {
-        cout << "Inside ";
-    }
-    cout << y << endl;
-    return 0;
-}
-```
-
-A. Inside 6  
-B. 5  
-C. 6  
-D. Inside 5  
-
-**Correct Answer:** B  
-
-**Explanation:** In the logical AND (`&&`) expression, the first operand `x != 0` evaluates to `false`. Execution short-circuits, so `++y` is never evaluated and `y` remains `5`.
-
----
-
-#### Q19. What is the output?
-
-```cpp
-#include <iostream>
-#include <vector>
-using namespace std;
-
-int main() {
-    vector<int> v = {10, 20};
-    v.push_back(30);
-    v.pop_back();
-    cout << v.size() << " " << v.back() << endl;
-    return 0;
-}
-```
-
-A. 2 20  
-B. 3 30  
-C. 2 30  
-D. 3 20  
-
-**Correct Answer:** A  
-
-**Explanation:** `push_back(30)` inserts 30, but `pop_back()` immediately deletes it. The vector size is 2, and `v.back()` returns the last remaining element `20`.
-
----
-
-### Java (Set 2 - Continued)
-
-#### Q20. What is the output of the following Java code?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String s = "Algorithm";
-        System.out.println(s.charAt(0) + "" + s.charAt(s.length() - 1));
-    }
-}
-```
-
-A. Am  
-B. Ah  
-C. Algorithm  
-D. Compilation error  
-
-**Correct Answer:** A  
-
-**Explanation:** `s.charAt(0)` is `'A'` and `s.charAt(s.length() - 1)` is `'m'`. Concatenating them with `""` produces `"Am"`.
-
----
-
-#### Q21. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int[] arr = {2, 4, 6};
-        int total = 0;
-        for (int n : arr) {
-            total += n;
-        }
-        System.out.println(total);
-    }
-}
-```
-
-A. 12  
-B. 6  
-C. 0  
-D. Compilation error  
-
-**Correct Answer:** A  
-
-**Explanation:** The enhanced for loop iterates over all items in `arr`: 2 + 4 + 6 = 12.
-
----
-
-#### Q22. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int a = 15, b = 25, c = 10;
-        int result = Math.max(a, Math.min(b, c));
-        System.out.println(result);
-    }
-}
-```
-
-A. 25  
-B. 15  
-C. 10  
-D. 20  
-
-**Correct Answer:** B  
-
-**Explanation:** `Math.min(25, 10)` evaluates to `10`. Then `Math.max(15, 10)` returns `15`.
-
----
-
-### Python (Set 2 - Continued)
-
-#### Q23. What is the output of the following Python code?
-
-```python
-words = ["cat", "elephant", "dog"]
-short = [w.upper() for w in words if len(w) <= 3]
-print(short)
-```
-
-A. ['CAT', 'ELEPHANT', 'DOG']  
-B. ['CAT', 'DOG']  
-C. ['cat', 'dog']  
-D. ['ELEPHANT']  
-
-**Correct Answer:** B  
-
-**Explanation:** The list comprehension filters for elements whose length is <= 3 (`"cat"` and `"dog"`) and converts them to uppercase: `['CAT', 'DOG']`.
-
----
-
-#### Q24. What is the output?
-
-```python
-data = {"a": 1, "b": 2}
-print("a" in data, 1 in data)
-```
-
-A. True True  
-B. True False  
-C. False True  
-D. False False  
-
-**Correct Answer:** B  
-
-**Explanation:** The `in` operator on dictionaries checks membership among keys, not values. `"a"` is a key (True), but `1` is a value, not a key (False).
-
----
-
-#### Q25. What is the output?
-
-```python
-text = "apple-banana-orange"
-parts = text.split("-")
-print("/".join(parts[:2]))
-```
-
-A. apple/banana/orange  
-B. apple/banana  
-C. apple-banana  
-D. banana/orange  
-
-**Correct Answer:** B  
-
-**Explanation:** `split("-")` produces `['apple', 'banana', 'orange']`. Slice `[:2]` takes the first two items `['apple', 'banana']`, which joined by `"/"` outputs `"apple/banana"`.
-
----
-
-### ANSWER KEY — SET 2
-
-| Question | Language | Answer |
-| -------- | -------- | ------ |
-| 1        | C++      | B      |
-| 2        | C++      | A      |
-| 3        | C++      | B      |
-| 4        | C++      | B      |
-| 5        | C++      | A      |
-| 6        | Java     | B      |
-| 7        | Java     | B      |
-| 8        | Java     | B      |
-| 9        | Java     | B      |
-| 10       | Java     | B      |
-| 11       | Python   | B      |
-| 12       | Python   | A      |
-| 13       | Python   | B      |
-| 14       | Python   | B      |
-| 15       | Python   | B      |
-| 16       | C++      | B      |
-| 17       | C++      | B      |
-| 18       | C++      | B      |
-| 19       | C++      | A      |
-| 20       | Java     | A      |
-| 21       | Java     | A      |
-| 22       | Java     | B      |
-| 23       | Python   | B      |
-| 24       | Python   | B      |
-| 25       | Python   | B      |
-
----
-
-## SET 3
-
-### C++ (Set 3)
-
-#### Q1. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-void doubleVal(int &x) {
-    x *= 2;
-}
-
-int main() {
-    int num = 7;
-    doubleVal(num);
-    cout << num << endl;
-    return 0;
-}
-```
-
-A. 7  
-B. 14  
-C. 2  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** `int &x` is passed by reference. Changes made to `x` directly modify `num` in `main()`, doubling it to 14.
-
----
-
-#### Q2. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    char c = 'A';
-    c = c + 1;
-    cout << c << endl;
-    return 0;
-}
-```
-
-A. A1  
-B. B  
-C. 66  
-D. Error  
-
-**Correct Answer:** B  
-
-**Explanation:** In ASCII, `'A'` is 65. Adding 1 gives 66, which is the character code for `'B'`.
-
----
-
-#### Q3. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int n = 3;
-    while (n > 0) {
-        cout << n << " ";
-        n--;
-    }
-    return 0;
-}
-```
-
-A. 3 2 1   
-B. 3 2 1 0   
-C. 2 1 0   
-D. 3 2   
-
-**Correct Answer:** A  
-
-**Explanation:** The loop prints 3, 2, and 1. When `n` reaches 0, `n > 0` becomes false and the loop terminates.
-
----
-
-#### Q4. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int arr[] = {5, 10, 15};
-    int count = sizeof(arr) / sizeof(arr[0]);
-    cout << count << endl;
-    return 0;
-}
-```
-
-A. 3  
-B. 12  
-C. 4  
-D. 1  
-
-**Correct Answer:** A  
-
-**Explanation:** `sizeof(arr)` is the total bytes allocated for the array, and `sizeof(arr[0])` is the byte size of one element. Dividing gives 3 elements.
-
----
-
-#### Q5. What is the output?
-
-```cpp
-#include <iostream>
-#include <string>
-using namespace std;
-
-int main() {
-    string greeting = "Hi";
-    greeting += "!";
-    cout << greeting << endl;
-    return 0;
-}
-```
-
-A. Hi!  
-B. Hi  
-C. !  
-D. Error  
-
-**Correct Answer:** A  
-
-**Explanation:** The `+=` operator appends `"!"` to the string `"Hi"`, producing `"Hi!"`.
-
----
-
-### Java (Set 3)
-
-#### Q6. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int x = 22 % 5;
-        System.out.println(x);
-    }
-}
-```
-
-A. 4  
-B. 2  
-C. 0  
-D. 4.4  
-
-**Correct Answer:** B  
-
-**Explanation:** 22 divided by 5 equals 4 with a remainder of 2.
-
----
-
-#### Q7. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int[] arr = new int[3];
-        arr[0] = 10;
-        arr[1] = 20;
-        arr[2] = 30;
-        System.out.println(arr[1]);
-    }
-}
-```
-
-A. 10  
-B. 20  
-C. 30  
-D. ArrayIndexOutOfBoundsException  
-
-**Correct Answer:** B  
-
-**Explanation:** Index 1 holds the second element, which is 20.
-
----
-
-#### Q8. What is the output?
-
-```java
-public class Main {
-    static int add(int a, int b) {
-        return a + b;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(add(8, 12));
-    }
-}
-```
-
-A. 20  
-B. 812  
-C. 96  
-D. Error  
-
-**Correct Answer:** A  
-
-**Explanation:** The static method `add(8, 12)` computes `8 + 12 = 20` and returns it.
-
----
-
-#### Q9. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        char ch = 'C';
-        System.out.println((int) ch == 67);
-    }
-}
-```
-
-A. true  
-B. false  
-C. Compilation error  
-D. 67  
-
-**Correct Answer:** A  
-
-**Explanation:** In Unicode/ASCII, `'A'=65`, `'B'=66`, `'C'=67`. Casting `'C'` to `int` yields 67, so `67 == 67` is `true`.
-
----
-
-#### Q10. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int x = 0;
-        for (int i = 0; i < 3; i++) {
-            x++;
-        }
-        System.out.println(x);
-    }
-}
-```
-
-A. 0  
-B. 2  
-C. 3  
-D. 4  
-
-**Correct Answer:** C  
-
-**Explanation:** The loop executes 3 times (i = 0, 1, 2), incrementing `x` by 1 each time from 0 to 3.
-
----
-
-### Python (Set 3)
-
-#### Q11. What is the output?
-
-```python
-name = "Antigravity"
-print(len(name))
-```
-
-A. 10  
-B. 11  
-C. 12  
-D. 9  
-
-**Correct Answer:** B  
-
-**Explanation:** `"Antigravity"` contains exactly 11 characters.
-
----
-
-#### Q12. What is the output?
-
-```python
-fruits = ["apple", "banana", "cherry"]
-print("banana" in fruits, "mango" in fruits)
-```
-
-A. True False  
-B. True True  
-C. False True  
-D. False False  
-
-**Correct Answer:** A  
-
-**Explanation:** `"banana"` exists in `fruits` (`True`), whereas `"mango"` does not (`False`).
-
----
-
-#### Q13. What is the output?
-
-```python
-nums = [10, 20, 30]
-val = nums.pop()
-print(val, nums)
-```
-
-A. 10 [20, 30]  
-B. 30 [10, 20]  
-C. 30 [10, 20, 30]  
-D. 20 [10, 30]  
-
-**Correct Answer:** B  
-
-**Explanation:** `pop()` removes and returns the last element (30), leaving `[10, 20]`.
-
----
-
-#### Q14. What is the output?
-
-```python
-val = int(8.75)
-print(val)
-```
-
-A. 8  
-B. 9  
-C. 8.0  
-D. ValueError  
-
-**Correct Answer:** A  
-
-**Explanation:** `int()` on a float truncates the decimal portion towards zero, yielding integer `8`.
-
----
-
-#### Q15. What is the output?
-
-```python
-print(bool([]), bool([0]))
-```
-
-A. False False  
-B. False True  
-C. True False  
-D. True True  
-
-**Correct Answer:** B  
-
-**Explanation:** An empty list `[]` evaluates to `False`, while any non-empty list like `[0]` evaluates to `True`.
-
----
-
-### C++ (Set 3 - Continued)
-
-#### Q16. What is the output of the following C++ code?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int arr[] = {4, 8, 12, 16, 20, 24};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    cout << n << endl;
-    return 0;
-}
-```
-
-A. 24  
-B. 6  
-C. 4  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** `sizeof(arr)` calculates the total byte size of the array, and `sizeof(arr[0])` is the byte size of a single integer. Dividing them yields the number of elements: 6.
-
----
-
-#### Q17. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 10;
-    do {
-        x += 5;
-    } while (x < 10);
-    cout << x << endl;
-    return 0;
-}
-```
-
-A. 10  
-B. 15  
-C. 20  
-D. Infinite loop  
-
-**Correct Answer:** B  
-
-**Explanation:** A `do-while` loop executes the body once before evaluating the condition. `x` becomes 15, then `15 < 10` is false, terminating the loop.
-
----
-
-#### Q18. What is the output?
-
-```cpp
-#include <iostream>
-#include <string>
-using namespace std;
-
-int main() {
-    string str = "competitor";
-    if (str.find("pet") != string::npos) {
-        cout << "Found at " << str.find("pet") << endl;
-    } else {
-        cout << "Not found" << endl;
-    }
-    return 0;
-}
-```
-
-A. Found at 3  
-B. Found at 4  
-C. Not found  
-D. Found at 2  
-
-**Correct Answer:** A  
-
-**Explanation:** `"competitor"` contains substring `"pet"` starting at 0-based index 3 (`'c'`=0, `'o'`=1, `'m'`=2, `'p'`=3).
-
----
-
-### Java (Set 3 - Continued)
-
-#### Q19. What is the output of the following Java code?
-
-```java
-import java.util.ArrayList;
-
-public class Main {
-    public static void main(String[] args) {
-        ArrayList<Integer> list = new ArrayList<>();
-        list.add(10);
-        list.add(20);
-        list.add(30);
-        list.remove(1);
-        System.out.println(list);
-    }
-}
-```
-
-A. [20, 30]  
-B. [10, 30]  
-C. [10, 20]  
-D. [10]  
-
-**Correct Answer:** B  
-
-**Explanation:** `remove(1)` removes the item at index 1, which is `20`. The remaining list is `[10, 30]`.
-
----
-
-#### Q20. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int a = 10, b = 20;
-        int max = (a > b) ? a : b;
-        System.out.println(max * 2);
-    }
-}
-```
-
-A. 20  
-B. 40  
-C. 10  
-D. 30  
-
-**Correct Answer:** B  
-
-**Explanation:** The condition `(10 > 20)` evaluates to false, so `max` takes the value of `b` (20). `20 * 2 = 40`.
-
----
-
-#### Q21. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        StringBuilder sb = new StringBuilder("code");
-        sb.append("123");
-        System.out.println(sb.length() + " " + sb.charAt(0));
-    }
-}
-```
-
-A. 7 c  
-B. 4 c  
-C. 7 1  
-D. 6 c  
-
-**Correct Answer:** A  
-
-**Explanation:** Appending `"123"` to `"code"` produces `"code123"` with length 7. The character at index 0 is `'c'`.
-
----
-
-#### Q22. What is the output?
-
-```java
-public class Main {
-    static int x = 10;
-    static {
-        x += 5;
-    }
-    public static void main(String[] args) {
-        System.out.println(x);
-    }
-}
-```
-
-A. 10  
-B. 15  
-C. 5  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** The static initialization block executes when the class is initialized, modifying `x` to 15 prior to `main()` running.
-
----
-
-### Python (Set 3 - Continued)
-
-#### Q23. What is the output of the following Python code?
-
-```python
-names = ["A", "B", "C"]
-scores = [100, 90, 80]
-pairs = list(zip(names, scores))
-print(pairs[1])
-```
-
-A. ('A', 100)  
-B. ('B', 90)  
-C. ('C', 80)  
-D. ['B', 90]  
-
-**Correct Answer:** B  
-
-**Explanation:** `zip(names, scores)` pairs corresponding elements into tuples. Index 1 accesses the second pair `('B', 90)`.
-
----
-
-#### Q24. What is the output?
-
-```python
-s1 = {1, 2, 3, 4}
-s2 = {3, 4, 5, 6}
-print(s1 - s2)
-```
-
-A. {1, 2}  
-B. {5, 6}  
-C. {3, 4}  
-D. {1, 2, 5, 6}  
-
-**Correct Answer:** A  
-
-**Explanation:** The set difference `s1 - s2` yields elements present in `s1` but absent from `s2`, which is `{1, 2}`.
-
----
-
-#### Q25. What is the output?
-
-```python
-text = "banana"
-print(text.count("an"))
-```
-
-A. 1  
-B. 2  
-C. 3  
-D. 0  
-
-**Correct Answer:** B  
-
-**Explanation:** `"banana"` contains the substring `"an"` non-overlapping at index 1 and index 3, returning `2`.
-
----
-
-### ANSWER KEY — SET 3
-
-| Question | Language | Answer |
-| -------- | -------- | ------ |
-| 1        | C++      | B      |
-| 2        | C++      | B      |
-| 3        | C++      | A      |
-| 4        | C++      | A      |
-| 5        | C++      | A      |
-| 6        | Java     | B      |
-| 7        | Java     | B      |
-| 8        | Java     | A      |
-| 9        | Java     | A      |
-| 10       | Java     | C      |
-| 11       | Python   | B      |
-| 12       | Python   | A      |
-| 13       | Python   | B      |
-| 14       | Python   | A      |
-| 15       | Python   | B      |
-| 16       | C++      | B      |
-| 17       | C++      | B      |
-| 18       | C++      | A      |
-| 19       | Java     | B      |
-| 20       | Java     | B      |
-| 21       | Java     | A      |
-| 22       | Java     | B      |
-| 23       | Python   | B      |
-| 24       | Python   | A      |
-| 25       | Python   | B      |
-
----
-
-## SET 4
-
-### C++ (Set 4)
-
-#### Q1. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int choice = 2;
-    switch (choice) {
-        case 1: cout << "One"; break;
-        case 2: cout << "Two"; break;
-        case 3: cout << "Three"; break;
-        default: cout << "Other";
-    }
-    return 0;
-}
-```
-
-A. One  
-B. Two  
-C. Three  
-D. Other  
-
-**Correct Answer:** B  
-
-**Explanation:** `choice` is 2, which matches `case 2:`. It prints `"Two"` and encounters `break`, exiting the switch statement.
-
----
-
-#### Q2. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 5;
-    int b = ++a;
-    cout << a << " " << b << endl;
-    return 0;
-}
-```
-
-A. 6 6  
-B. 6 5  
-C. 5 5  
-D. 5 6  
-
-**Correct Answer:** A  
-
-**Explanation:** Pre-increment (`++a`) increments `a` to 6 first, then evaluates to 6, which is assigned to `b`. Both are 6.
-
----
-
-#### Q3. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int count = 0;
-    for (int i = 0; i < 10; i += 2) {
-        count++;
-    }
-    cout << count << endl;
-    return 0;
-}
-```
-
-A. 10  
-B. 5  
-C. 4  
-D. 6  
-
-**Correct Answer:** B  
-
-**Explanation:** `i` takes the values 0, 2, 4, 6, 8 (5 iterations). When `i = 10`, `10 < 10` is false.
-
----
-
-#### Q4. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int arr[] = {2, 4, 6};
-    int total = 0;
-    for (int x : arr) {
-        total += x;
-    }
-    cout << total << endl;
-    return 0;
-}
-```
-
-A. 12  
-B. 6  
-C. 8  
-D. 10  
-
-**Correct Answer:** A  
-
-**Explanation:** The range-based for loop sums each element: 2 + 4 + 6 = 12.
-
----
-
-#### Q5. What is the output?
-
-```cpp
-#include <iostream>
-#include <string>
-using namespace std;
-
-int main() {
-    string s = "";
-    cout << s.empty() << endl;
-    return 0;
-}
-```
-
-A. 1  
-B. 0  
-C. true  
-D. Error  
-
-**Correct Answer:** A  
-
-**Explanation:** `s.empty()` returns `true` because string `s` has length 0. In C++, boolean `true` outputs as `1`.
-
----
-
-### Java (Set 4)
-
-#### Q6. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        boolean active = false;
-        System.out.println(!active);
-    }
-}
-```
-
-A. false  
-B. true  
-C. 1  
-D. null  
-
-**Correct Answer:** B  
-
-**Explanation:** The logical NOT operator `!` inverts `false` to `true`.
-
----
-
-#### Q7. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String lang = "Java";
-        System.out.println(lang.charAt(2));
-    }
-}
-```
-
-A. J  
-B. a  
-C. v  
-D. IndexOutOfBoundsException  
-
-**Correct Answer:** C  
-
-**Explanation:** Zero-based index 2 of `"Java"` is `'v'` (0: 'J', 1: 'a', 2: 'v', 3: 'a').
-
----
-
-#### Q8. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int[] vals = {3, 5, 7};
-        int sum = 0;
-        for (int v : vals) {
-            sum += v;
-        }
-        System.out.println(sum);
-    }
-}
-```
-
-A. 15  
-B. 8  
-C. 12  
-D. 7  
-
-**Correct Answer:** A  
-
-**Explanation:** The enhanced for-each loop sums 3 + 5 + 7 = 15.
-
----
-
-#### Q9. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int score = 75;
-        String status = score >= 60 ? "Pass" : "Fail";
-        System.out.println(status);
-    }
-}
-```
-
-A. Pass  
-B. Fail  
-C. true  
-D. 75  
-
-**Correct Answer:** A  
-
-**Explanation:** `75 >= 60` is true, so the ternary operator evaluates to `"Pass"`.
-
----
-
-#### Q10. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int num = Integer.parseInt("123");
-        System.out.println(num + 1);
-    }
-}
-```
-
-A. 1231  
-B. 124  
-C. "124"  
-D. Error  
-
-**Correct Answer:** B  
-
-**Explanation:** `Integer.parseInt("123")` parses the string into integer 123; `123 + 1` produces integer 124.
-
----
-
-### Python (Set 4)
-
-#### Q11. What is the output?
-
-```python
-sentence = "learn code build"
-words = sentence.split()
-print(len(words))
-```
-
-A. 16  
-B. 3  
-C. 2  
-D. 1  
-
-**Correct Answer:** B  
-
-**Explanation:** `split()` divides the string by whitespace into a list of 3 strings: `['learn', 'code', 'build']`.
-
----
-
-#### Q12. What is the output?
-
-```python
-nums = [1, 2, 2, 3, 3, 3]
-unique = set(nums)
-print(len(unique))
-```
-
-A. 6  
-B. 3  
-C. 1  
-D. 2  
-
-**Correct Answer:** B  
-
-**Explanation:** A `set` stores only unique items `{1, 2, 3}`, so its length is 3.
-
----
-
-#### Q13. What is the output?
-
-```python
-items = ["a", "b", "a", "c", "a"]
-print(items.count("a"))
-```
-
-A. 1  
-B. 2  
-C. 3  
-D. 5  
-
-**Correct Answer:** C  
-
-**Explanation:** `.count("a")` counts the occurrences of element `"a"`, which appears 3 times.
-
----
-
-#### Q14. What is the output?
-
-```python
-print(2 ** 4)
-```
-
-A. 8  
-B. 16  
-C. 6  
-D. 24  
-
-**Correct Answer:** B  
-
-**Explanation:** `**` is the power/exponentiation operator: $2^4 = 16$.
-
----
-
-#### Q15. What is the output?
-
-```python
-info = {"name": "Alex", "age": 20}
-info["age"] = 21
-print(info["age"])
-```
-
-A. 20  
-B. 21  
-C. 41  
-D. KeyError  
-
-**Correct Answer:** B  
-
-**Explanation:** Setting `info["age"] = 21` mutates the existing key's value to 21.
-
----
-
-### C++ (Set 4 - Continued)
-
-#### Q16. What is the output of the following C++ code?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-struct Point {
-    int x;
-    int y;
-};
-
-int main() {
-    Point p = {10, 20};
-    p.x += 5;
-    cout << p.x << " " << p.y << endl;
-    return 0;
-}
-```
-
-A. 10 20  
-B. 15 20  
-C. 15 25  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** `p` is initialized with `x = 10` and `y = 20`. Adding 5 to `p.x` makes it 15, while `p.y` remains 20.
-
----
-
-#### Q17. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 3;
-    int y = x << 2;
-    cout << y << endl;
-    return 0;
-}
-```
-
-A. 6  
-B. 12  
-C. 9  
-D. 5  
-
-**Correct Answer:** B  
-
-**Explanation:** Left-shifting by 2 bits (`x << 2`) is equivalent to multiplying by $2^2 = 4$. Thus, $3 \times 4 = 12$.
-
----
-
-#### Q18. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int a = 10, b = 20;
-    const int *ptr = &a;
-    ptr = &b;
-    cout << *ptr << endl;
-    return 0;
-}
-```
-
-A. 10  
-B. 20  
-C. Compilation error  
-D. Undefined behavior  
-
-**Correct Answer:** B  
-
-**Explanation:** `const int *ptr` is a pointer to a constant integer. The integer value cannot be altered via `ptr`, but the pointer itself can be reassigned to point to `b`. Dereferencing prints 20.
-
----
-
-### Java (Set 4 - Continued)
-
-#### Q19. What is the output of the following Java code?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int[] a = {1, 2, 3};
-        int[] b = a.clone();
-        b[0] = 99;
-        System.out.println(a[0] + " " + b[0]);
-    }
-}
-```
-
-A. 99 99  
-B. 1 99  
-C. 1 1  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** Calling `.clone()` on a primitive array creates an independent copy. Mutating `b[0]` does not affect `a[0]`.
-
----
-
-#### Q20. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        char ch = '7';
-        int num = Character.getNumericValue(ch);
-        System.out.println(num + 3);
-    }
-}
-```
-
-A. 55  
-B. 10  
-C. 73  
-D. 7  
-
-**Correct Answer:** B  
-
-**Explanation:** `Character.getNumericValue('7')` returns the numeric digit value `7`. Then `7 + 3 = 10`.
-
----
-
-#### Q21. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        double val = Math.pow(2, 3);
-        System.out.println(val);
-    }
-}
-```
-
-A. 8  
-B. 8.0  
-C. 6.0  
-D. 9.0  
-
-**Correct Answer:** B  
-
-**Explanation:** `Math.pow()` computes $2^3$ and returns a `double`, resulting in `8.0`.
-
----
-
-### Python (Set 4 - Continued)
-
-#### Q22. What is the output of the following Python code?
-
-```python
-text = "hello world"
-print(text.title())
-```
-
-A. Hello world  
-B. Hello World  
-C. HELLO WORLD  
-D. hello World  
-
-**Correct Answer:** B  
-
-**Explanation:** The `.title()` method capitalizes the first letter of each word in the string, producing `"Hello World"`.
-
----
-
-#### Q23. What is the output?
-
-```python
-words = ["python", "c", "javascript", "go"]
-print(min(words, key=len))
-```
-
-A. c  
-B. go  
-C. python  
-D. javascript  
-
-**Correct Answer:** A  
-
-**Explanation:** `min(..., key=len)` finds the element with the minimum length. `"c"` has length 1.
-
----
-
-#### Q24. What is the output?
-
-```python
-items = ["apple", "banana"]
-for i, item in enumerate(items, start=1):
-    print(f"{i}:{item}", end=" ")
-```
-
-A. 0:apple 1:banana   
-B. 1:apple 2:banana   
-C. 1:apple 1:banana   
-D. apple:1 banana:2   
-
-**Correct Answer:** B  
-
-**Explanation:** `enumerate(items, start=1)` numbers items starting from 1, outputting `"1:apple 2:banana "`.
-
----
-
-#### Q25. What is the output?
-
-```python
-nums = [1, 3, 4]
-nums.insert(1, 2)
-print(nums)
-```
-
-A. [2, 1, 3, 4]  
-B. [1, 2, 3, 4]  
-C. [1, 3, 2, 4]  
-D. [1, 2, 4]  
-
-**Correct Answer:** B  
-
-**Explanation:** `insert(1, 2)` places value `2` at index `1`, yielding `[1, 2, 3, 4]`.
-
----
-
-### ANSWER KEY — SET 4
-
-| Question | Language | Answer |
-| -------- | -------- | ------ |
-| 1        | C++      | B      |
-| 2        | C++      | A      |
-| 3        | C++      | B      |
-| 4        | C++      | A      |
-| 5        | C++      | A      |
-| 6        | Java     | B      |
-| 7        | Java     | C      |
-| 8        | Java     | A      |
-| 9        | Java     | A      |
-| 10       | Java     | B      |
-| 11       | Python   | B      |
-| 12       | Python   | B      |
-| 13       | Python   | C      |
-| 14       | Python   | B      |
-| 15       | Python   | B      |
-| 16       | C++      | B      |
-| 17       | C++      | B      |
-| 18       | C++      | B      |
-| 19       | Java     | B      |
-| 20       | Java     | B      |
-| 21       | Java     | B      |
-| 22       | Python   | B      |
-| 23       | Python   | A      |
-| 24       | Python   | B      |
-| 25       | Python   | B      |
-
----
-
-## SET 5
-
-### C++ (Set 5)
-
-#### Q1. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 10;
-    if (x > 5) {
-        cout << "Greater";
-    } else {
-        cout << "Smaller";
-    }
-    return 0;
-}
-```
-
-A. Greater  
-B. Smaller  
-C. 10  
-D. Nothing  
-
-**Correct Answer:** A  
-
-**Explanation:** The condition `10 > 5` evaluates to true, so the `if` block executes, printing `"Greater"`.
-
----
-
-#### Q2. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int multiply(int a, int b = 2) {
-    return a * b;
-}
-
-int main() {
-    cout << multiply(5) << endl;
-    return 0;
-}
-```
-
-A. 5  
-B. 10  
-C. 7  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** Since only argument 5 is provided for parameter `a`, the default value `b = 2` is used: `5 * 2 = 10`.
-
----
-
-#### Q3. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    char ch = 'm';
-    bool isUpper = (ch >= 'A' && ch <= 'Z');
-    cout << isUpper << endl;
-    return 0;
-}
-```
-
-A. 1  
-B. 0  
-C. true  
-D. Error  
-
-**Correct Answer:** B  
-
-**Explanation:** `'m'` is a lowercase letter, so the uppercase check condition is `false`, which prints as `0`.
-
----
-
-#### Q4. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int i = 10;
-    do {
-        cout << i;
-        i++;
-    } while (i < 5);
-    return 0;
-}
-```
-
-A. 10  
-B. Nothing  
-C. Infinite loop  
-D. 101112...  
-
-**Correct Answer:** A  
-
-**Explanation:** A `do-while` loop always executes its body at least once before testing the condition. It prints 10, increments `i` to 11, and since `11 < 5` is false, it exits.
-
----
-
-#### Q5. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int main() {
-    int arr[] = {100, 200, 300};
-    cout << arr[0] + arr[2] << endl;
-    return 0;
-}
-```
-
-A. 300  
-B. 400  
-C. 500  
-D. 600  
-
-**Correct Answer:** B  
-
-**Explanation:** `arr[0]` is 100, and `arr[2]` is 300. `100 + 300 = 400`.
-
----
-
-### Java (Set 5)
-
-#### Q6. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int temp = 32;
-        if (temp > 30) {
-            System.out.println("Hot");
-        } else {
-            System.out.println("Cold");
-        }
-    }
-}
-```
-
-A. Hot  
-B. Cold  
-C. 32  
-D. Compilation error  
-
-**Correct Answer:** A  
-
-**Explanation:** `32 > 30` is true, so the program prints `"Hot"`.
-
----
-
-#### Q7. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        System.out.println(Math.abs(-15));
-    }
-}
-```
-
-A. -15  
-B. 15  
-C. 0  
-D. Error  
-
-**Correct Answer:** B  
-
-**Explanation:** `Math.abs()` returns the non-negative absolute value of the argument, which is 15.
-
----
-
-#### Q8. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String title = "Competitive Programming";
-        System.out.println(title.startsWith("Comp"));
-    }
-}
-```
-
-A. true  
-B. false  
-C. Comp  
-D. Compilation error  
-
-**Correct Answer:** A  
-
-**Explanation:** `"Competitive Programming"` begins with `"Comp"`, so `.startsWith("Comp")` returns `true`.
-
----
-
-#### Q9. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int n = 0;
-        while (n < 4) {
-            n += 2;
-        }
-        System.out.println(n);
-    }
-}
-```
-
-A. 2  
-B. 4  
-C. 6  
-D. 0  
-
-**Correct Answer:** B  
-
-**Explanation:** `n` starts at 0, increases to 2, then increases to 4. Since `4 < 4` is false, the loop ends and prints 4.
-
----
-
-#### Q10. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String[] colors = {"red", "green", "blue"};
-        System.out.println(colors[colors.length - 1]);
-    }
-}
-```
-
-A. red  
-B. green  
-C. blue  
-D. ArrayIndexOutOfBoundsException  
-
-**Correct Answer:** C  
-
-**Explanation:** `colors.length` is 3, so `colors.length - 1` is 2. `colors[2]` retrieves the last element, `"blue"`.
-
----
-
-### Python (Set 5)
-
-#### Q11. What is the output?
-
-```python
-text = "hello world"
-print(text.title())
-```
-
-A. hello world  
-B. Hello World  
-C. HELLO WORLD  
-D. Hello world  
-
-**Correct Answer:** B  
-
-**Explanation:** `.title()` capitalizes the first character of each word in the string.
-
----
-
-#### Q12. What is the output?
-
-```python
-nums = [1, 2, 3]
-print(nums[::-1])
-```
-
-A. [1, 2, 3]  
-B. [3, 2, 1]  
-C. [3, 1, 2]  
-D. [-1, -2, -3]  
-
-**Correct Answer:** B  
-
-**Explanation:** Slice step `-1` reverses the elements of the list.
-
----
-
-#### Q13. What is the output?
-
-```python
-scores = [45, 88, 72, 95, 60]
-print(max(scores))
-```
-
-A. 45  
-B. 88  
-C. 95  
-D. 72  
-
-**Correct Answer:** C  
-
-**Explanation:** `max()` finds and returns the largest value in the list, which is 95.
-
----
-
-#### Q14. What is the output?
-
-```python
-nums = [5, 10, 15]
-print(sum(nums))
-```
-
-A. 30  
-B. 15  
-C. 25  
-D. 50  
-
-**Correct Answer:** A  
-
-**Explanation:** `sum()` adds all elements in the list: 5 + 10 + 15 = 30.
-
----
-
-#### Q15. What is the output?
-
-```python
-user = "Sam"
-score = 98
-print(f"{user}: {score}")
-```
-
-A. {user}: {score}  
-B. Sam: 98  
-C. Sam 98  
-D. Error  
-
-**Correct Answer:** B  
-
-**Explanation:** An f-string evaluates expressions inside `{}` and formats them directly into the string.
-
----
-
-### C++ (Set 5 - Continued)
-
-#### Q16. What is the output of the following C++ code?
-
-```cpp
-#include <iostream>
-#include <utility>
-using namespace std;
-
-int main() {
-    pair<string, int> p = make_pair("Score", 95);
-    cout << p.first << ": " << p.second << endl;
-    return 0;
-}
-```
-
-A. Score: 95  
-B. 95: Score  
-C. ("Score", 95)  
-D. Compilation error  
-
-**Correct Answer:** A  
-
-**Explanation:** `std::pair` members are accessed via `.first` (the string `"Score"`) and `.second` (the integer `95`).
-
----
-
-#### Q17. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int multiply(int a, int b = 2, int c = 3) {
-    return a * b * c;
-}
-
-int main() {
-    cout << multiply(4, 5) << endl;
-    return 0;
-}
-```
-
-A. 24  
-B. 60  
-C. 40  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** The call supplies `a = 4` and `b = 5`. The default argument `c = 3` is used. $4 \times 5 \times 3 = 60$.
-
----
-
-#### Q18. What is the output?
-
-```cpp
-#include <iostream>
-#include <vector>
-using namespace std;
-
-int main() {
-    vector<int> v = {1, 2, 3};
-    for (int &x : v) {
-        x *= 2;
-    }
-    cout << v[0] << " " << v[1] << " " << v[2] << endl;
-    return 0;
-}
-```
-
-A. 1 2 3  
-B. 2 4 6  
-C. 2 2 3  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** In `for (int &x : v)`, `x` is a reference to each element. Modifying `x` doubles each element in `v` directly: 2, 4, 6.
-
----
-
-#### Q19. What is the output?
-
-```cpp
-#include <iostream>
-using namespace std;
-
-int x = 50;
-
-int main() {
-    int x = 10;
-    cout << ::x + x << endl;
-    return 0;
-}
-```
-
-A. 20  
-B. 60  
-C. 100  
-D. Compilation error  
-
-**Correct Answer:** B  
-
-**Explanation:** `::x` refers to the global variable (50), while `x` refers to the local variable in `main()` (10). $50 + 10 = 60$.
-
----
-
-### Java (Set 5 - Continued)
-
-#### Q20. What is the output of the following Java code?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String word = "Java";
-        char[] chars = word.toCharArray();
-        System.out.println(chars.length + " " + chars[2]);
-    }
-}
-```
-
-A. 4 v  
-B. 4 a  
-C. 3 v  
-D. Compilation error  
-
-**Correct Answer:** A  
-
-**Explanation:** `toCharArray()` creates an array of 4 characters `['J', 'a', 'v', 'a']`. Index 2 accesses `'v'`.
-
----
-
-#### Q21. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        int decimal = Integer.parseInt("1010", 2);
-        System.out.println(decimal);
-    }
-}
-```
-
-A. 1010  
-B. 10  
-C. 12  
-D. NumberFormatException  
-
-**Correct Answer:** B  
-
-**Explanation:** `Integer.parseInt("1010", 2)` interprets the string in base 2 (binary): $1\times 8 + 0\times 4 + 1\times 2 + 0\times 1 = 10$.
-
----
-
-#### Q22. What is the output?
-
-```java
-public class Main {
-    public static void main(String[] args) {
-        String role = "ADMIN";
-        switch (role) {
-            case "USER": System.out.print("U"); break;
-            case "ADMIN": System.out.print("A");
-            case "GUEST": System.out.print("G"); break;
-            default: System.out.print("D");
-        }
-    }
-}
-```
-
-A. A  
-B. AG  
-C. AD  
-D. AGD  
-
-**Correct Answer:** B  
-
-**Explanation:** `role` matches `"ADMIN"`. Because there is no `break` under that case, execution falls through to `case "GUEST"`, printing `"AG"` before hitting the `break`.
-
----
-
-### Python (Set 5 - Continued)
-
-#### Q23. What is the output of the following Python code?
-
-```python
-info = {"x": 10, "y": 20}
-total = 0
-for k, v in info.items():
-    total += v
-print(total)
-```
-
-A. 30  
-B. 10  
-C. 20  
-D. TypeError  
-
-**Correct Answer:** A  
-
-**Explanation:** `.items()` yields key-value pairs. Summing `v`: 10 + 20 = 30.
-
----
-
-#### Q24. What is the output?
-
-```python
-items = [10, 20, 30, 40]
-removed = items.pop(1)
-print(removed, items)
-```
-
-A. 20 [10, 30, 40]  
-B. 10 [20, 30, 40]  
-C. 20 [10, 20, 30, 40]  
-D. 40 [10, 20, 30]  
-
-**Correct Answer:** A  
-
-**Explanation:** `items.pop(1)` removes the item at index 1 (`20`) and returns it, leaving `[10, 30, 40]`.
-
----
-
-#### Q25. What is the output?
-
-```python
-flags = [True, True, False]
-print(any(flags), all(flags))
-```
-
-A. True True  
-B. True False  
-C. False True  
-D. False False  
-
-**Correct Answer:** B  
-
-**Explanation:** `any(flags)` is `True` because at least one item is True. `all(flags)` is `False` because not all items are True.
-
----
-
-### ANSWER KEY — SET 5
-
-| Question | Language | Answer |
-| -------- | -------- | ------ |
-| 1        | C++      | A      |
-| 2        | C++      | B      |
-| 3        | C++      | B      |
-| 4        | C++      | A      |
-| 5        | C++      | B      |
-| 6        | Java     | A      |
-| 7        | Java     | B      |
-| 8        | Java     | A      |
-| 9        | Java     | B      |
-| 10       | Java     | C      |
-| 11       | Python   | B      |
-| 12       | Python   | B      |
-| 13       | Python   | C      |
-| 14       | Python   | A      |
-| 15       | Python   | B      |
-| 16       | C++      | A      |
-| 17       | C++      | B      |
-| 18       | C++      | B      |
-| 19       | C++      | B      |
-| 20       | Java     | A      |
-| 21       | Java     | B      |
-| 22       | Java     | B      |
-| 23       | Python   | A      |
-| 24       | Python   | A      |
-| 25       | Python   | B      |
-
----
-
-
-# ROUND 2 — MEDIUM DEBUGGING
-
-## Problem Title: Maximum Subarray Sum with At Most K Distinct Elements
-
-### Difficulty
-
-Medium
-
-### Problem Statement
-
-Given an array of `n` integers and an integer `k`, find the maximum sum of a contiguous subarray such that the subarray contains **at most `k` distinct elements**.
-
-**Input Format:**
-
-- First line: Two integers `n` and `k` (`1 ≤ n ≤ 10^5`, `1 ≤ k ≤ n`)
-- Second line: `n` space-separated integers `arr[0], arr[1], ..., arr[n-1]` (`-10^4 ≤ arr[i] ≤ 10^4`)
-
-**Output Format:**
-
-- A single integer: the maximum sum of a contiguous subarray with at most `k` distinct elements.
-
-**Example 1:**
-
-```
-Input:
-7 2
-1 2 1 2 3 4 5
-
-Output:
-6
-```
-
-*Explanation:* The subarray `[1, 2, 1, 2]` has sum 6 and contains 2 distinct elements.
-
-**Example 2:**
-
-```
-Input:
-5 1
-3 3 3 3 3
-
-Output:
-15
-```
-
-*Explanation:* The entire array has only 1 distinct element. Sum = 15.
-
-**Example 3:**
-
-```
-Input:
-5 3
--1 -2 -3 -4 -5
-
-Output:
--1
-```
-
-*Explanation:* The best subarray is `[-1]` with sum -1 (all elements are negative).
-
-### Expected Algorithm
-
-Use a **sliding window** approach with a frequency map to maintain at most `k` distinct elements. Expand the right pointer and track the window sum. When distinct elements exceed `k`, shrink from the left. Track the maximum sum seen.
-
----
-
-### C++ Buggy Code
-
-```cpp
-#include <iostream>
-#include <unordered_map>
-#include <climits>
-using namespace std;
-
-int main() {
-    int n, k;
-    cin >> n >> k;
-    
-    int arr[n];
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    
-    unordered_map<int, int> freq;
-    int left = 0;
+    long long target;
+    if (!(cin >> target)) return 0;
+    vector<long long> nums;
+    long long val;
+    while (cin >> val) nums.push_back(val);
+
+    int n = nums.size();
     long long windowSum = 0;
-    long long maxSum = LLONG_MIN;
-    
+    int left = 0;
+    int minLen = n + 1;
+
     for (int right = 0; right < n; right++) {
-        freq[arr[right]]++;
-        windowSum += arr[right];
-        
-        while (freq.size() > (size_t)k) {
-            freq[arr[left]]--;
-            if (freq[arr[left]] == 0) {
-                freq.erase(arr[left]);
-            }
-            left++;
-            windowSum -= arr[left];
-        }
-        
-        if (windowSum > maxSum) {
-            maxSum = windowSum;
+        windowSum += nums[right];
+        while (windowSum >= target) {
+            minLen = min(minLen, right - left + 1);
+            windowSum -= nums[left++];
         }
     }
-    
-    cout << maxSum << endl;
+
+    cout << (minLen > n ? 0 : minLen) << endl;
     return 0;
 }
 ```
 
-### Java Buggy Code
+#### Java Reference Solution
 
 ```java
 import java.util.*;
@@ -3219,1182 +2188,1251 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int k = sc.nextInt();
-        
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
-        }
-        
-        Map<Integer, Integer> freq = new HashMap<>();
-        int left = 0;
+        if (!sc.hasNextLong()) return;
+        long target = sc.nextLong();
+        List<Long> list = new ArrayList<>();
+        while (sc.hasNextLong()) list.add(sc.nextLong());
+
+        int n = list.size();
         long windowSum = 0;
-        long maxSum = Long.MIN_VALUE;
-        
+        int left = 0;
+        int minLen = n + 1;
+
         for (int right = 0; right < n; right++) {
-            freq.merge(arr[right], 1, Integer::sum);
-            windowSum += arr[right];
-            
-            while (freq.size() > k) {
-                freq.merge(arr[left], -1, Integer::sum);
-                if (freq.get(arr[left]) == 0) {
-                    freq.remove(arr[left]);
-                }
-                left++;
-                windowSum -= arr[left];
-            }
-            
-            if (windowSum > maxSum) {
-                maxSum = windowSum;
+            windowSum += list.get(right);
+            while (windowSum >= target) {
+                minLen = Math.min(minLen, right - left + 1);
+                windowSum -= list.get(left++);
             }
         }
-        
-        System.out.println(maxSum);
+
+        System.out.println(minLen > n ? 0 : minLen);
     }
 }
 ```
 
-### Python Buggy Code
+#### Python Reference Solution
 
 ```python
 import sys
-from collections import defaultdict
 
 def solve():
     data = sys.stdin.read().split()
-    idx = 0
-    n = int(data[idx]); idx += 1
-    k = int(data[idx]); idx += 1
-    
-    arr = []
-    for i in range(n):
-        arr.append(int(data[idx])); idx += 1
-    
-    freq = defaultdict(int)
-    left = 0
+    if not data: return
+    target = int(data[0])
+    nums = [int(x) for x in data[1:]]
+
+    n = len(nums)
     window_sum = 0
-    max_sum = float('-inf')
-    
-    for right in range(n):
-        freq[arr[right]] += 1
-        window_sum += arr[right]
-        
-        while len(freq) > k:
-            freq[arr[left]] -= 1
-            if freq[arr[left]] == 0:
-                del freq[arr[left]]
-            left += 1
-            window_sum -= arr[left]
-        
-        if window_sum > max_sum:
-            max_sum = window_sum
-    
-    print(max_sum)
-
-solve()
-```
-
----
-
-## Round 2 — Root Cause & Fix
-
-### Root Cause
-
-In the window-shrinking loop, `left` is incremented **before** subtracting `arr[left]` from `windowSum`. This means the wrong element is subtracted — the element at the new `left` position instead of the element being removed.
-
-**Incorrect order (buggy):**
-
-```
-freq[arr[left]]--        // correctly decrements the element being removed
-left++                   // advances left pointer too early
-windowSum -= arr[left]   // subtracts the WRONG element (new left, not old left)
-```
-
-**Correct order:**
-
-```
-freq[arr[left]]--
-windowSum -= arr[left]   // subtract the element being removed FIRST
-left++                   // THEN advance the pointer
-```
-
-### C++ Exact Fix
-
-**BEFORE:**
-
-```cpp
-left++;
-windowSum -= arr[left];
-```
-
-**AFTER:**
-
-```cpp
-windowSum -= arr[left];
-left++;
-```
-
-### Java Exact Fix
-
-**BEFORE:**
-
-```java
-left++;
-windowSum -= arr[left];
-```
-
-**AFTER:**
-
-```java
-windowSum -= arr[left];
-left++;
-```
-
-### Python Exact Fix
-
-**BEFORE:**
-
-```python
-left += 1
-window_sum -= arr[left]
-```
-
-**AFTER:**
-
-```python
-window_sum -= arr[left]
-left += 1
-```
-
----
-
-### Corrected C++ Code
-
-```cpp
-#include <iostream>
-#include <unordered_map>
-#include <climits>
-using namespace std;
-
-int main() {
-    int n, k;
-    cin >> n >> k;
-    
-    int arr[n];
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    
-    unordered_map<int, int> freq;
-    int left = 0;
-    long long windowSum = 0;
-    long long maxSum = LLONG_MIN;
-    
-    for (int right = 0; right < n; right++) {
-        freq[arr[right]]++;
-        windowSum += arr[right];
-        
-        while (freq.size() > (size_t)k) {
-            freq[arr[left]]--;
-            if (freq[arr[left]] == 0) {
-                freq.erase(arr[left]);
-            }
-            windowSum -= arr[left];
-            left++;
-        }
-        
-        if (windowSum > maxSum) {
-            maxSum = windowSum;
-        }
-    }
-    
-    cout << maxSum << endl;
-    return 0;
-}
-```
-
-### Corrected Java Code
-
-```java
-import java.util.*;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int k = sc.nextInt();
-        
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = sc.nextInt();
-        }
-        
-        Map<Integer, Integer> freq = new HashMap<>();
-        int left = 0;
-        long windowSum = 0;
-        long maxSum = Long.MIN_VALUE;
-        
-        for (int right = 0; right < n; right++) {
-            freq.merge(arr[right], 1, Integer::sum);
-            windowSum += arr[right];
-            
-            while (freq.size() > k) {
-                freq.merge(arr[left], -1, Integer::sum);
-                if (freq.get(arr[left]) == 0) {
-                    freq.remove(arr[left]);
-                }
-                windowSum -= arr[left];
-                left++;
-            }
-            
-            if (windowSum > maxSum) {
-                maxSum = windowSum;
-            }
-        }
-        
-        System.out.println(maxSum);
-    }
-}
-```
-
-### Corrected Python Code
-
-```python
-import sys
-from collections import defaultdict
-
-def solve():
-    data = sys.stdin.read().split()
-    idx = 0
-    n = int(data[idx]); idx += 1
-    k = int(data[idx]); idx += 1
-    
-    arr = []
-    for i in range(n):
-        arr.append(int(data[idx])); idx += 1
-    
-    freq = defaultdict(int)
     left = 0
-    window_sum = 0
-    max_sum = float('-inf')
-    
+    min_len = n + 1
+
     for right in range(n):
-        freq[arr[right]] += 1
-        window_sum += arr[right]
-        
-        while len(freq) > k:
-            freq[arr[left]] -= 1
-            if freq[arr[left]] == 0:
-                del freq[arr[left]]
-            window_sum -= arr[left]
+        window_sum += nums[right]
+        while window_sum >= target:
+            min_len = min(min_len, right - left + 1)
+            window_sum -= nums[left]
             left += 1
-        
-        if window_sum > max_sum:
-            max_sum = window_sum
-    
-    print(max_sum)
 
-solve()
+    print(0 if min_len > n else min_len)
+
+if __name__ == '__main__':
+    solve()
 ```
 
 ---
 
-## Round 2 — Hidden Test Cases
+<a name="round-3-hard-solutions"></a>
+# Round 3: Hard Debugging Solutions (Sets 1 - 7)
 
-### Hidden Test 1 — Boundary Case
+## Set 1: Shortest Path with Mandatory Checkpoints
 
-**Input:**
+**Points:** 30 | **Category:** Hard Debugging
 
-```text
-5 2
-1 2 3 2 1
-```
+### Problem Statement Summary
+You are given a weighted undirected graph with n vertices (0 to n-1) and m edges. You are also given a start vertex S, a destination vertex D, and a set of k mandatory checkpoint vertices.
+Find the minimum total distance to travel from S to D such that every mandatory checkpoint is visited at least once. If it is impossible, print -1.
 
-**Expected Output:**
+### Root Cause Analysis (Bug Diagnostic)
+In the priority queue state expansion, when transitioning to an adjacent node v, the bitmask is updated to new_mask, but the distance table check/update incorrectly uses the old mask dist[v][mask] instead of dist[v][new_mask], allowing outdated or suboptimal states to overwrite shorter distances.
 
-```text
-8
-```
+### Fix Description
+Update and check dist[v][new_mask] instead of dist[v][mask].
 
-**Why it catches the bug:** The window must shrink when encountering the 3rd distinct element (3). The buggy code increments `left` before subtracting, so it subtracts the wrong element. The correct subarray is `[2, 3, 2, 1]` with sum 8.
-
----
-
-### Hidden Test 2 — Edge Case (k = 1)
-
-**Input:**
-
-```text
-6 1
-1 1 2 2 1 1
-```
-
-**Expected Output:**
-
-```text
-2
-```
-
-**Why it catches the bug:** With k=1, the window must frequently shrink. Each time the window shrinks, the buggy code subtracts the wrong element (the new left instead of the old left), accumulating errors in the window sum.
-
----
-
-### Hidden Test 3 — Stress/Adversarial Case
-
-**Input:**
-
-```text
-10 2
-5 1 5 1 3 3 3 1 5 1
-```
-
-**Expected Output:**
-
-```text
-12
-```
-
-**Why it catches the bug:** Multiple shrink operations occur as the distinct element count fluctuates. The correct subarray with at most 2 distinct elements is `[5, 1, 5, 1]` with sum 12. The accumulation of incorrect subtractions produces a wrong answer.
-
----
-
-### Complexity
-
-**Before fix:**
-
-- Time: O(n) — produces wrong answers
-- Space: O(k)
-
-**After fix:**
-
-- Time: O(n)
-- Space: O(k)
-
----
-
-# ROUND 3 — HARD DEBUGGING
-
-## Problem Title: Shortest Path in Weighted Graph with Mandatory Checkpoints
-
-### Difficulty
-
-Hard
-
-### Problem Statement
-
-You are given a weighted **undirected** graph with `n` nodes (numbered 1 to n) and `m` edges. You are also given a source node `s`, a destination node `d`, and a list of `p` **mandatory checkpoint nodes** that must be visited on the path from `s` to `d`.
-
-Find the **minimum total weight** of a path from `s` to `d` that visits **all checkpoint nodes** (in any order). If no such path exists, output `-1`.
-
-**Input Format:**
-
-- Line 1: Four integers `n`, `m`, `s`, `d` (`2 ≤ n ≤ 1000`, `1 ≤ m ≤ 5000`, `1 ≤ s, d ≤ n`)
-- Next `m` lines: Three integers `u`, `v`, `w` (undirected edge between u and v with weight w, `1 ≤ w ≤ 10^6`)
-- Next line: Integer `p` (`0 ≤ p ≤ 10`)
-- Next line: `p` space-separated integers — the checkpoint nodes
-
-**Output Format:**
-
-- A single integer: the minimum path weight, or `-1` if impossible.
-
-**Constraints:**
-
-- The graph may have multiple edges between the same pair of nodes.
-- The path may revisit nodes.
-- `p ≤ 10` (allows bitmask DP approach).
-
-**Example 1:**
-
-```
-Input:
-4 4 1 4
-1 2 2
-2 3 3
-3 4 1
-1 4 100
-
-1
-3
-
-Output:
-6
-```
-
-*Explanation:* Must visit checkpoint 3. Path: 1 → 2 → 3 → 4. Cost: 2 + 3 + 1 = 6. The direct edge 1→4 costs 100 but skips checkpoint 3.
-
-**Example 2:**
-
-```
-Input:
-3 2 1 3
-1 2 5
-2 3 3
-
-0
-
-Output:
-8
-```
-
-*Explanation:* No mandatory checkpoints. Shortest path: 1 → 2 → 3. Cost: 5 + 3 = 8.
-
-### Expected Algorithm
-
-1. Build a list of "key nodes" = [checkpoints] + [source] + [destination].
-2. Run **Dijkstra's algorithm** from each key node to compute shortest distances to all other nodes.
-3. Use **bitmask DP** on the checkpoints: `dp[mask][i]` = minimum cost to have visited the subset of checkpoints indicated by `mask`, currently at key node `i`.
-4. Enumerate all orderings via DP transitions and find the minimum cost path that visits all checkpoints and reaches the destination.
-
----
-
-## C++17 Buggy Code
+#### C++ Reference Solution
 
 ```cpp
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <climits>
+#include <tuple>
 using namespace std;
-
-typedef pair<long long, int> pli;
 
 const long long INF = 1e18;
 
-vector<long long> dijkstra(int src, const vector<vector<pair<int, int>>>& adj, int n) {
-    vector<long long> dist(n + 1, INF);
-    priority_queue<pli, vector<pli>, greater<pli>> pq;
-    dist[src] = 0;
-    pq.push({0, src});
-    
-    while (!pq.empty()) {
-        auto [d, u] = pq.top();
-        pq.pop();
-        
-        if (d > dist[u]) continue;
-        
-        for (auto& [v, w] : adj[u]) {
-            if (dist[u] + w < dist[v]) {
-                dist[v] = dist[u] + w;
-                pq.push({dist[v], v});
-            }
-        }
-    }
-    return dist;
-}
+struct Edge {
+    int to;
+    long long w;
+};
 
 int main() {
-    int n, m, s, d;
-    cin >> n >> m >> s >> d;
-    
-    vector<vector<pair<int, int>>> adj(n + 1);
+    int n, m, k, S, D;
+    if (!(cin >> n >> m >> k >> S >> D)) return 0;
+
+    vector<int> chk(k);
+    vector<int> chkIndex(n, -1);
+    for (int i = 0; i < k; i++) {
+        cin >> chk[i];
+        chkIndex[chk[i]] = i;
+    }
+
+    vector<vector<Edge>> adj(n);
     for (int i = 0; i < m; i++) {
-        int u, v, w;
+        int u, v;
+        long long w;
         cin >> u >> v >> w;
         adj[u].push_back({v, w});
-        // BUG: missing adj[v].push_back({u, w}); for undirected graph
+        adj[v].push_back({u, w});
     }
-    
-    int p;
-    cin >> p;
-    vector<int> checkpoints(p);
-    for (int i = 0; i < p; i++) {
-        cin >> checkpoints[i];
-    }
-    
-    int totalKeys = p + 2;
-    vector<int> keyNodes(totalKeys);
-    for (int i = 0; i < p; i++) keyNodes[i] = checkpoints[i];
-    keyNodes[p] = s;
-    keyNodes[p + 1] = d;
-    
-    vector<vector<long long>> dist(totalKeys);
-    for (int i = 0; i < totalKeys; i++) {
-        dist[i] = dijkstra(keyNodes[i], adj, n);
-    }
-    
-    int fullMask = (1 << p) - 1;
-    vector<vector<long long>> dp(fullMask + 1, vector<long long>(totalKeys, INF));
-    
-    int srcIdx = p;
-    for (int i = 0; i < p; i++) {
-        if (dist[srcIdx][keyNodes[i]] < INF) {
-            dp[1 << i][i] = dist[srcIdx][keyNodes[i]];
-        }
-    }
-    
-    for (int mask = 1; mask <= fullMask; mask++) {
-        for (int i = 0; i < p; i++) {
-            if (!(mask & (1 << i))) continue;
-            if (dp[mask][i] >= INF) continue;
-            
-            for (int j = 0; j < p; j++) {
-                if (mask & (1 << j)) continue;
-                int newMask = mask | (1 << j);
-                if (dist[i][keyNodes[j]] < INF) {
-                    long long cost = dp[mask][i] + dist[i][keyNodes[j]];
-                    if (cost < dp[newMask][j]) {
-                        dp[newMask][j] = cost;
-                    }
-                }
+
+    int totalMasks = 1 << k;
+    vector<vector<long long>> dist(n, vector<long long>(totalMasks, INF));
+
+    int startMask = 0;
+    if (chkIndex[S] != -1) startMask |= (1 << chkIndex[S]);
+
+    dist[S][startMask] = 0;
+    priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, greater<tuple<long long, int, int>>> pq;
+    pq.push({0, S, startMask});
+
+    while (!pq.empty()) {
+        auto [d, u, mask] = pq.top();
+        pq.pop();
+
+        if (d > dist[u][mask]) continue;
+
+        for (auto& edge : adj[u]) {
+            int v = edge.to;
+            int new_mask = mask;
+            if (chkIndex[v] != -1) {
+                new_mask |= (1 << chkIndex[v]);
+            }
+
+            if (dist[u][mask] + edge.w < dist[v][new_mask]) {
+                dist[v][new_mask] = dist[u][mask] + edge.w;
+                pq.push({dist[v][new_mask], v, new_mask});
             }
         }
     }
-    
-    long long ans = INF;
-    int destIdx = p + 1;
-    if (p == 0) {
-        ans = dist[srcIdx][keyNodes[destIdx]];
-    } else {
-        for (int i = 0; i < p; i++) {
-            if (dp[fullMask][i] < INF && dist[i][keyNodes[destIdx]] < INF) {
-                ans = min(ans, dp[fullMask][i] + dist[i][keyNodes[destIdx]]);
-            }
-        }
-    }
-    
-    cout << (ans >= INF ? -1 : ans) << endl;
+
+    int fullMask = (1 << k) - 1;
+    long long ans = dist[D][fullMask];
+    if (ans >= INF) cout << -1 << endl;
+    else cout << ans << endl;
+
     return 0;
 }
 ```
 
-## Java 17 Buggy Code
+#### Java Reference Solution
 
 ```java
 import java.util.*;
 
 public class Main {
-    static final long INF = (long) 1e18;
-    
-    static long[] dijkstra(int src, List<List<int[]>> adj, int n) {
-        long[] dist = new long[n + 1];
-        Arrays.fill(dist, INF);
-        dist[src] = 0;
-        PriorityQueue<long[]> pq = new PriorityQueue<>((a, b) -> Long.compare(a[0], b[0]));
-        pq.offer(new long[]{0, src});
-        
-        while (!pq.isEmpty()) {
-            long[] top = pq.poll();
-            long d = top[0];
-            int u = (int) top[1];
-            
-            if (d > dist[u]) continue;
-            
-            for (int[] edge : adj.get(u)) {
-                int v = edge[0], w = edge[1];
-                if (dist[u] + w < dist[v]) {
-                    dist[v] = dist[u] + w;
-                    pq.offer(new long[]{dist[v], v});
-                }
-            }
-        }
-        return dist;
+    static class State implements Comparable<State> {
+        long d;
+        int u;
+        int mask;
+        State(long d, int u, int mask) { this.d = d; this.u = u; this.mask = mask; }
+        public int compareTo(State o) { return Long.compare(this.d, o.d); }
     }
-    
+
+    static class Edge {
+        int to;
+        long w;
+        Edge(int to, long w) { this.to = to; this.w = w; }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt(), m = sc.nextInt(), s = sc.nextInt(), d = sc.nextInt();
-        
-        List<List<int[]>> adj = new ArrayList<>();
-        for (int i = 0; i <= n; i++) adj.add(new ArrayList<>());
-        
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt(), m = sc.nextInt(), k = sc.nextInt(), S = sc.nextInt(), D = sc.nextInt();
+
+        int[] chkIndex = new int[n];
+        Arrays.fill(chkIndex, -1);
+        for (int i = 0; i < k; i++) {
+            chkIndex[sc.nextInt()] = i;
+        }
+
+        List<List<Edge>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+
         for (int i = 0; i < m; i++) {
-            int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
-            adj.get(u).add(new int[]{v, w});
-            // BUG: missing adj.get(v).add(new int[]{u, w}); for undirected graph
+            int u = sc.nextInt(), v = sc.nextInt();
+            long w = sc.nextLong();
+            adj.get(u).add(new Edge(v, w));
+            adj.get(v).add(new Edge(u, w));
         }
-        
-        int p = sc.nextInt();
-        int[] checkpoints = new int[p];
-        for (int i = 0; i < p; i++) checkpoints[i] = sc.nextInt();
-        
-        int totalKeys = p + 2;
-        int[] keyNodes = new int[totalKeys];
-        for (int i = 0; i < p; i++) keyNodes[i] = checkpoints[i];
-        keyNodes[p] = s;
-        keyNodes[p + 1] = d;
-        
-        long[][] dist = new long[totalKeys][];
-        for (int i = 0; i < totalKeys; i++) {
-            dist[i] = dijkstra(keyNodes[i], adj, n);
-        }
-        
-        int fullMask = (1 << p) - 1;
-        long[][] dp = new long[fullMask + 1][totalKeys];
-        for (long[] row : dp) Arrays.fill(row, INF);
-        
-        int srcIdx = p;
-        for (int i = 0; i < p; i++) {
-            if (dist[srcIdx][keyNodes[i]] < INF) {
-                dp[1 << i][i] = dist[srcIdx][keyNodes[i]];
-            }
-        }
-        
-        for (int mask = 1; mask <= fullMask; mask++) {
-            for (int i = 0; i < p; i++) {
-                if ((mask & (1 << i)) == 0) continue;
-                if (dp[mask][i] >= INF) continue;
-                
-                for (int j = 0; j < p; j++) {
-                    if ((mask & (1 << j)) != 0) continue;
-                    int newMask = mask | (1 << j);
-                    if (dist[i][keyNodes[j]] < INF) {
-                        long cost = dp[mask][i] + dist[i][keyNodes[j]];
-                        if (cost < dp[newMask][j]) {
-                            dp[newMask][j] = cost;
-                        }
-                    }
+
+        int totalMasks = 1 << k;
+        long INF = (long) 1e18;
+        long[][] dist = new long[n][totalMasks];
+        for (int i = 0; i < n; i++) Arrays.fill(dist[i], INF);
+
+        int startMask = 0;
+        if (chkIndex[S] != -1) startMask |= (1 << chkIndex[S]);
+        dist[S][startMask] = 0;
+
+        PriorityQueue<State> pq = new PriorityQueue<>();
+        pq.add(new State(0, S, startMask));
+
+        while (!pq.isEmpty()) {
+            State cur = pq.poll();
+            if (cur.d > dist[cur.u][cur.mask]) continue;
+
+            for (Edge e : adj.get(cur.u)) {
+                int newMask = cur.mask;
+                if (chkIndex[e.to] != -1) newMask |= (1 << chkIndex[e.to]);
+
+                if (dist[cur.u][cur.mask] + e.w < dist[e.to][newMask]) {
+                    dist[e.to][newMask] = dist[cur.u][cur.mask] + e.w;
+                    pq.add(new State(dist[e.to][newMask], e.to, newMask));
                 }
             }
         }
-        
-        long ans = INF;
-        int destIdx = p + 1;
-        if (p == 0) {
-            ans = dist[srcIdx][keyNodes[destIdx]];
-        } else {
-            for (int i = 0; i < p; i++) {
-                if (dp[fullMask][i] < INF && dist[i][keyNodes[destIdx]] < INF) {
-                    ans = Math.min(ans, dp[fullMask][i] + dist[i][keyNodes[destIdx]]);
-                }
-            }
-        }
-        
+
+        long ans = dist[D][(1 << k) - 1];
         System.out.println(ans >= INF ? -1 : ans);
     }
 }
 ```
 
-## Python 3.11+ Buggy Code
+#### Python Reference Solution
 
 ```python
 import sys
 import heapq
 
-def dijkstra(src, adj, n):
-    INF = float('inf')
-    dist = [INF] * (n + 1)
-    dist[src] = 0
-    pq = [(0, src)]
-    
-    while pq:
-        d, u = heapq.heappop(pq)
-        if d > dist[u]:
-            continue
-        for v, w in adj[u]:
-            if dist[u] + w < dist[v]:
-                dist[v] = dist[u] + w
-                heapq.heappush(pq, (dist[v], v))
-    
-    return dist
+def main():
+    lines = sys.stdin.read().split()
+    if not lines:
+        return
+    n = int(lines[0])
+    m = int(lines[1])
+    k = int(lines[2])
+    S = int(lines[3])
+    D = int(lines[4])
 
-def solve():
-    input_data = sys.stdin.read().split()
-    idx = 0
-    n = int(input_data[idx]); idx += 1
-    m = int(input_data[idx]); idx += 1
-    s = int(input_data[idx]); idx += 1
-    d = int(input_data[idx]); idx += 1
-    
-    adj = [[] for _ in range(n + 1)]
+    idx = 5
+    chkIndex = [-1] * n
+    for i in range(k):
+        chkIndex[int(lines[idx])] = i
+        idx += 1
+
+    adj = [[] for _ in range(n)]
     for _ in range(m):
-        u = int(input_data[idx]); idx += 1
-        v = int(input_data[idx]); idx += 1
-        w = int(input_data[idx]); idx += 1
+        u = int(lines[idx])
+        v = int(lines[idx+1])
+        w = int(lines[idx+2])
         adj[u].append((v, w))
-        # BUG: missing adj[v].append((u, w)) for undirected graph
-    
-    p = int(input_data[idx]); idx += 1
-    checkpoints = []
-    for _ in range(p):
-        checkpoints.append(int(input_data[idx])); idx += 1
-    
-    total_keys = p + 2
-    key_nodes = checkpoints + [s, d]
-    
+        adj[v].append((u, w))
+        idx += 3
+
     INF = float('inf')
-    
-    dist = []
-    for i in range(total_keys):
-        dist.append(dijkstra(key_nodes[i], adj, n))
-    
-    full_mask = (1 << p) - 1
-    dp = [[INF] * total_keys for _ in range(full_mask + 1)]
-    
-    src_idx = p
-    for i in range(p):
-        if dist[src_idx][key_nodes[i]] < INF:
-            dp[1 << i][i] = dist[src_idx][key_nodes[i]]
-    
-    for mask in range(1, full_mask + 1):
-        for i in range(p):
-            if not (mask & (1 << i)):
-                continue
-            if dp[mask][i] >= INF:
-                continue
-            
-            for j in range(p):
-                if mask & (1 << j):
-                    continue
-                new_mask = mask | (1 << j)
-                if dist[i][key_nodes[j]] < INF:
-                    cost = dp[mask][i] + dist[i][key_nodes[j]]
-                    if cost < dp[new_mask][j]:
-                        dp[new_mask][j] = cost
-    
-    dest_idx = p + 1
-    ans = INF
-    if p == 0:
-        ans = dist[src_idx][key_nodes[dest_idx]]
-    else:
-        for i in range(p):
-            if dp[full_mask][i] < INF and dist[i][key_nodes[dest_idx]] < INF:
-                ans = min(ans, dp[full_mask][i] + dist[i][key_nodes[dest_idx]])
-    
-    print(-1 if ans >= INF else int(ans))
+    total_masks = 1 << k
+    dist = [[INF] * total_masks for _ in range(n)]
 
-solve()
+    start_mask = 0
+    if chkIndex[S] != -1:
+        start_mask |= (1 << chkIndex[S])
+
+    dist[S][start_mask] = 0
+    pq = [(0, S, start_mask)]
+
+    while pq:
+        d, u, mask = heapq.heappop(pq)
+        if d > dist[u][mask]:
+            continue
+
+        for v, w in adj[u]:
+            new_mask = mask
+            if chkIndex[v] != -1:
+                new_mask |= (1 << chkIndex[v])
+
+            if dist[u][mask] + w < dist[v][new_mask]:
+                dist[v][new_mask] = dist[u][mask] + w
+                heapq.heappush(pq, (dist[v][new_mask], v, new_mask))
+
+    full_mask = (1 << k) - 1
+    ans = dist[D][full_mask]
+    print(-1 if ans == INF else ans)
+
+if __name__ == '__main__':
+    main()
 ```
 
 ---
 
-## Round 3 — Root Cause & Fix
+## Set 2: Word Ladder II - Shortest Transformation Sequences Count
 
-### Root Cause
+**Points:** 30 | **Category:** Hard Debugging
 
-The graph is described as **undirected**, but the code only adds each edge in **one direction** in the adjacency list. When reading edge `(u, v, w)`, the code adds `u → v` but NOT `v → u`.
+### Problem Statement Summary
+Given two words, beginWord and endWord, and a dictionary of words wordList, return the number of distinct shortest transformation sequences from beginWord to endWord modulo 10^9 + 7.
+A transformation sequence is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
+- Every adjacent pair of words differs by exactly one letter.
+- Every si for 1 <= i <= k is in wordList.
+- sk == endWord.
+If no such sequence exists, return 0.
 
-This means Dijkstra from a given node can only traverse edges in the direction they were read from input. Paths that require traversing an edge in the reverse direction are invisible to the algorithm, causing:
+### Root Cause Analysis (Bug Diagnostic)
+In the BFS loop, visited words are removed from the unvisited word set immediately when expanded from a parent node. This prevents other valid shortest paths from reaching the same intermediate word within the same BFS level, causing undercounting of shortest paths.
 
-- Incorrect shortest distances (longer paths or infinity)
-- Reachable nodes appearing unreachable
-- Wrong DP results and incorrect final answers
+### Fix Description
+Defer removing words from the unvisited set until the entire current BFS level has been processed (level-by-level deletion).
 
-### Why It Happens
-
-```
-Input edge: 1 2 5   (undirected: 1↔2)
-Buggy code only stores: 1 → 2
-Missing: 2 → 1
-
-When Dijkstra runs from node 2, it cannot traverse to node 1.
-```
-
-### C++ Fix
-
-**BEFORE:**
-
-```cpp
-adj[u].push_back({v, w});
-```
-
-**AFTER:**
-
-```cpp
-adj[u].push_back({v, w});
-adj[v].push_back({u, w});
-```
-
-### Java Fix
-
-**BEFORE:**
-
-```java
-adj.get(u).add(new int[]{v, w});
-```
-
-**AFTER:**
-
-```java
-adj.get(u).add(new int[]{v, w});
-adj.get(v).add(new int[]{u, w});
-```
-
-### Python Fix
-
-**BEFORE:**
-
-```python
-adj[u].append((v, w))
-```
-
-**AFTER:**
-
-```python
-adj[u].append((v, w))
-adj[v].append((u, w))
-```
-
----
-
-### Corrected C++ Code
+#### C++ Reference Solution
 
 ```cpp
 #include <iostream>
+#include <string>
 #include <vector>
+#include <unordered_set>
+#include <unordered_map>
 #include <queue>
-#include <climits>
 using namespace std;
 
-typedef pair<long long, int> pli;
-const long long INF = 1e18;
-
-vector<long long> dijkstra(int src, const vector<vector<pair<int, int>>>& adj, int n) {
-    vector<long long> dist(n + 1, INF);
-    priority_queue<pli, vector<pli>, greater<pli>> pq;
-    dist[src] = 0;
-    pq.push({0, src});
-    while (!pq.empty()) {
-        auto [d, u] = pq.top(); pq.pop();
-        if (d > dist[u]) continue;
-        for (auto& [v, w] : adj[u]) {
-            if (dist[u] + w < dist[v]) {
-                dist[v] = dist[u] + w;
-                pq.push({dist[v], v});
-            }
-        }
-    }
-    return dist;
-}
+const int MOD = 1000000007;
 
 int main() {
-    int n, m, s, d;
-    cin >> n >> m >> s >> d;
-    vector<vector<pair<int, int>>> adj(n + 1);
-    for (int i = 0; i < m; i++) {
-        int u, v, w; cin >> u >> v >> w;
-        adj[u].push_back({v, w});
-        adj[v].push_back({u, w});  // FIXED
+    string beginWord, endWord;
+    if (!(cin >> beginWord >> endWord)) return 0;
+    int n;
+    if (!(cin >> n)) return 0;
+
+    unordered_set<string> dict;
+    for (int i = 0; i < n; i++) {
+        string w;
+        cin >> w;
+        dict.insert(w);
     }
-    int p; cin >> p;
-    vector<int> checkpoints(p);
-    for (int i = 0; i < p; i++) cin >> checkpoints[i];
 
-    int totalKeys = p + 2;
-    vector<int> keyNodes(totalKeys);
-    for (int i = 0; i < p; i++) keyNodes[i] = checkpoints[i];
-    keyNodes[p] = s; keyNodes[p+1] = d;
+    if (dict.find(endWord) == dict.end()) {
+        cout << 0 << endl;
+        return 0;
+    }
 
-    vector<vector<long long>> dist(totalKeys);
-    for (int i = 0; i < totalKeys; i++) dist[i] = dijkstra(keyNodes[i], adj, n);
+    unordered_map<string, long long> paths;
+    paths[beginWord] = 1;
 
-    int fullMask = (1 << p) - 1;
-    vector<vector<long long>> dp(fullMask+1, vector<long long>(totalKeys, INF));
-    int srcIdx = p;
-    for (int i = 0; i < p; i++)
-        if (dist[srcIdx][keyNodes[i]] < INF) dp[1<<i][i] = dist[srcIdx][keyNodes[i]];
+    queue<string> q;
+    q.push(beginWord);
+    dict.erase(beginWord);
+    bool found = false;
 
-    for (int mask = 1; mask <= fullMask; mask++)
-        for (int i = 0; i < p; i++) {
-            if (!(mask & (1<<i)) || dp[mask][i] >= INF) continue;
-            for (int j = 0; j < p; j++) {
-                if (mask & (1<<j)) continue;
-                int nm = mask | (1<<j);
-                if (dist[i][keyNodes[j]] < INF) {
-                    long long c = dp[mask][i] + dist[i][keyNodes[j]];
-                    if (c < dp[nm][j]) dp[nm][j] = c;
+    while (!q.empty() && !found) {
+        int sz = q.size();
+        unordered_set<string> visitedThisLevel;
+        unordered_map<string, long long> newPaths;
+
+        for (int i = 0; i < sz; i++) {
+            string curr = q.front();
+            q.pop();
+
+            string nextWord = curr;
+            for (int pos = 0; pos < (int)nextWord.size(); pos++) {
+                char orig = nextWord[pos];
+                for (char c = 'a'; c <= 'z'; c++) {
+                    if (c == orig) continue;
+                    nextWord[pos] = c;
+                    if (dict.find(nextWord) != dict.end()) {
+                        visitedThisLevel.insert(nextWord);
+                        newPaths[nextWord] = (newPaths[nextWord] + paths[curr]) % MOD;
+                        if (nextWord == endWord) found = true;
+                    }
                 }
+                nextWord[pos] = orig;
             }
         }
 
-    long long ans = INF;
-    int destIdx = p + 1;
-    if (p == 0) ans = dist[srcIdx][keyNodes[destIdx]];
-    else for (int i = 0; i < p; i++)
-        if (dp[fullMask][i] < INF && dist[i][keyNodes[destIdx]] < INF)
-            ans = min(ans, dp[fullMask][i] + dist[i][keyNodes[destIdx]]);
+        for (const auto& w : visitedThisLevel) {
+            dict.erase(w);
+            q.push(w);
+            paths[w] = (paths[w] + newPaths[w]) % MOD;
+        }
+    }
 
-    cout << (ans >= INF ? -1 : ans) << endl;
+    cout << (found ? paths[endWord] : 0) << endl;
+    return 0;
 }
 ```
 
-### Corrected Java Code
+#### Java Reference Solution
 
 ```java
 import java.util.*;
 
 public class Main {
-    static final long INF = (long)1e18;
-    static long[] dijkstra(int src, List<List<int[]>> adj, int n) {
-        long[] dist = new long[n+1]; Arrays.fill(dist, INF); dist[src] = 0;
-        PriorityQueue<long[]> pq = new PriorityQueue<>((a,b)->Long.compare(a[0],b[0]));
-        pq.offer(new long[]{0, src});
-        while (!pq.isEmpty()) {
-            long[] top = pq.poll(); long d = top[0]; int u = (int)top[1];
-            if (d > dist[u]) continue;
-            for (int[] e : adj.get(u)) { int v=e[0], w=e[1];
-                if (dist[u]+w < dist[v]) { dist[v]=dist[u]+w; pq.offer(new long[]{dist[v],v}); }
-            }
-        }
-        return dist;
-    }
+    static final int MOD = 1000000007;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n=sc.nextInt(), m=sc.nextInt(), s=sc.nextInt(), d=sc.nextInt();
-        List<List<int[]>> adj = new ArrayList<>();
-        for (int i=0;i<=n;i++) adj.add(new ArrayList<>());
-        for (int i=0;i<m;i++) { int u=sc.nextInt(),v=sc.nextInt(),w=sc.nextInt();
-            adj.get(u).add(new int[]{v,w}); adj.get(v).add(new int[]{u,w}); // FIXED
+        if (!sc.hasNext()) return;
+        String beginWord = sc.next();
+        String endWord = sc.next();
+        int n = sc.nextInt();
+
+        Set<String> dict = new HashSet<>();
+        for (int i = 0; i < n; i++) dict.add(sc.next());
+
+        if (!dict.contains(endWord)) {
+            System.out.println(0);
+            return;
         }
-        int p = sc.nextInt(); int[] cp = new int[p];
-        for (int i=0;i<p;i++) cp[i]=sc.nextInt();
-        int tk=p+2; int[] kn=new int[tk];
-        for (int i=0;i<p;i++) kn[i]=cp[i]; kn[p]=s; kn[p+1]=d;
-        long[][] dist=new long[tk][];
-        for (int i=0;i<tk;i++) dist[i]=dijkstra(kn[i],adj,n);
-        int fm=(1<<p)-1; long[][] dp=new long[fm+1][tk];
-        for (long[] r:dp) Arrays.fill(r,INF);
-        for (int i=0;i<p;i++) if(dist[p][kn[i]]<INF) dp[1<<i][i]=dist[p][kn[i]];
-        for (int mask=1;mask<=fm;mask++)
-            for (int i=0;i<p;i++) { if((mask&(1<<i))==0||dp[mask][i]>=INF) continue;
-                for (int j=0;j<p;j++) { if((mask&(1<<j))!=0) continue;
-                    int nm=mask|(1<<j);
-                    if(dist[i][kn[j]]<INF){long c=dp[mask][i]+dist[i][kn[j]]; if(c<dp[nm][j]) dp[nm][j]=c;}
+
+        Map<String, Long> paths = new HashMap<>();
+        paths.put(beginWord, 1L);
+
+        Queue<String> q = new LinkedList<>();
+        q.add(beginWord);
+        dict.remove(beginWord);
+        boolean found = false;
+
+        while (!q.isEmpty() && !found) {
+            int sz = q.size();
+            Set<String> visitedThisLevel = new HashSet<>();
+            Map<String, Long> newPaths = new HashMap<>();
+
+            for (int i = 0; i < sz; i++) {
+                String curr = q.poll();
+                char[] chars = curr.toCharArray();
+
+                for (int pos = 0; pos < chars.length; pos++) {
+                    char orig = chars[pos];
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        if (c == orig) continue;
+                        chars[pos] = c;
+                        String nextWord = new String(chars);
+
+                        if (dict.contains(nextWord)) {
+                            visitedThisLevel.add(nextWord);
+                            newPaths.put(nextWord, (newPaths.getOrDefault(nextWord, 0L) + paths.get(curr)) % MOD);
+                            if (nextWord.equals(endWord)) found = true;
+                        }
+                    }
+                    chars[pos] = orig;
                 }
             }
-        long ans=INF; int di=p+1;
-        if(p==0) ans=dist[p][kn[di]];
-        else for(int i=0;i<p;i++) if(dp[fm][i]<INF&&dist[i][kn[di]]<INF) ans=Math.min(ans,dp[fm][i]+dist[i][kn[di]]);
-        System.out.println(ans>=INF?-1:ans);
+
+            for (String w : visitedThisLevel) {
+                dict.remove(w);
+                q.add(w);
+                paths.put(w, (paths.getOrDefault(w, 0L) + newPaths.get(w)) % MOD);
+            }
+        }
+
+        System.out.println(found ? paths.get(endWord) : 0);
     }
 }
 ```
 
-### Corrected Python Code
+#### Python Reference Solution
 
 ```python
-import sys, heapq
+import sys
+from collections import deque, defaultdict
 
-def dijkstra(src, adj, n):
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    begin_word = tokens[0]
+    end_word = tokens[1]
+    n = int(tokens[2])
+    word_list = set(tokens[3:3+n])
+
+    if end_word not in word_list:
+        print(0)
+        return
+
+    MOD = 1000000007
+    paths = defaultdict(int)
+    paths[begin_word] = 1
+
+    q = deque([begin_word])
+    word_list.discard(begin_word)
+    found = False
+
+    while q and not found:
+        sz = len(q)
+        visited_this_level = set()
+        new_paths = defaultdict(int)
+
+        for _ in range(sz):
+            curr = q.popleft()
+            chars = list(curr)
+            for pos in range(len(chars)):
+                orig = chars[pos]
+                for c in 'abcdefghijklmnopqrstuvwxyz':
+                    if c == orig:
+                        continue
+                    chars[pos] = c
+                    next_word = ''.join(chars)
+                    if next_word in word_list:
+                        visited_this_level.add(next_word)
+                        new_paths[next_word] = (new_paths[next_word] + paths[curr]) % MOD
+                        if next_word == end_word:
+                            found = True
+                chars[pos] = orig
+
+        for w in visited_this_level:
+            word_list.discard(w)
+            q.append(w)
+            paths[w] = (paths[w] + new_paths[w]) % MOD
+
+    print(paths[end_word] if found else 0)
+
+if __name__ == '__main__':
+    main()
+```
+
+---
+
+## Set 3: Median of Two Sorted Arrays
+
+**Points:** 30 | **Category:** Hard Debugging
+
+### Problem Statement Summary
+Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
+
+### Root Cause Analysis (Bug Diagnostic)
+Binary search boundary adjustment logic is inverted: when maxLeftA > minRightB, high should be adjusted to i - 1 (too far right in array A), but the code increments low = i + 1 instead, causing an infinite loop or wrong partition.
+
+### Fix Description
+Adjust high = i - 1 when maxLeftA > minRightB, and low = i + 1 when maxLeftB > minRightA.
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <iomanip>
+#include <climits>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int m, n;
+    if (!(cin >> m >> n)) return 0;
+    vector<int> A(m), B(n);
+    for (int i = 0; i < m; i++) cin >> A[i];
+    for (int i = 0; i < n; i++) cin >> B[i];
+
+    if (m > n) {
+        swap(A, B);
+        swap(m, n);
+    }
+
+    int low = 0, high = m;
+    while (low <= high) {
+        int i = low + (high - low) / 2;
+        int j = (m + n + 1) / 2 - i;
+
+        int maxLeftA = (i == 0) ? INT_MIN : A[i - 1];
+        int minRightA = (i == m) ? INT_MAX : A[i];
+
+        int maxLeftB = (j == 0) ? INT_MIN : B[j - 1];
+        int minRightB = (j == n) ? INT_MAX : B[j];
+
+        if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+            double median;
+            if ((m + n) % 2 == 1) {
+                median = max(maxLeftA, maxLeftB);
+            } else {
+                median = (max(maxLeftA, maxLeftB) + min(minRightA, minRightB)) / 2.0;
+            }
+            cout << fixed << setprecision(1) << median << endl;
+            return 0;
+        } else if (maxLeftA > minRightB) {
+            high = i - 1;
+        } else {
+            low = i + 1;
+        }
+    }
+    return 0;
+}
+```
+
+#### Java Reference Solution
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int m = sc.nextInt(), n = sc.nextInt();
+        int[] A = new int[m];
+        for (int i = 0; i < m; i++) A[i] = sc.nextInt();
+        int[] B = new int[n];
+        for (int i = 0; i < n; i++) B[i] = sc.nextInt();
+
+        if (m > n) {
+            int[] temp = A; A = B; B = temp;
+            int t = m; m = n; n = t;
+        }
+
+        int low = 0, high = m;
+        while (low <= high) {
+            int i = low + (high - low) / 2;
+            int j = (m + n + 1) / 2 - i;
+
+            int maxLeftA = (i == 0) ? Integer.MIN_VALUE : A[i - 1];
+            int minRightA = (i == m) ? Integer.MAX_VALUE : A[i];
+
+            int maxLeftB = (j == 0) ? Integer.MIN_VALUE : B[j - 1];
+            int minRightB = (j == n) ? Integer.MAX_VALUE : B[j];
+
+            if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+                double median;
+                if ((m + n) % 2 == 1) {
+                    median = Math.max(maxLeftA, maxLeftB);
+                } else {
+                    median = (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2.0;
+                }
+                System.out.printf(Locale.US, "%.1f\n", median);
+                return;
+            } else if (maxLeftA > minRightB) {
+                high = i - 1;
+            } else {
+                low = i + 1;
+            }
+        }
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    m = int(tokens[0])
+    n = int(tokens[1])
+    A = [int(x) for x in tokens[2:2+m]]
+    B = [int(x) for x in tokens[2+m:2+m+n]]
+
+    if m > n:
+        A, B = B, A
+        m, n = n, m
+
+    low, high = 0, m
     INF = float('inf')
-    dist = [INF]*(n+1); dist[src] = 0; pq = [(0, src)]
-    while pq:
-        d, u = heapq.heappop(pq)
-        if d > dist[u]: continue
-        for v, w in adj[u]:
-            if dist[u]+w < dist[v]: dist[v] = dist[u]+w; heapq.heappush(pq, (dist[v], v))
-    return dist
 
-def solve():
-    data = sys.stdin.read().split(); idx = 0
-    n=int(data[idx]);idx+=1; m=int(data[idx]);idx+=1; s=int(data[idx]);idx+=1; d=int(data[idx]);idx+=1
-    adj=[[] for _ in range(n+1)]
+    while low <= high:
+        i = (low + high) // 2
+        j = (m + n + 1) // 2 - i
+
+        maxLeftA = -INF if i == 0 else A[i - 1]
+        minRightA = INF if i == m else A[i]
+
+        maxLeftB = -INF if j == 0 else B[j - 1]
+        minRightB = INF if j == n else B[j]
+
+        if maxLeftA <= minRightB and maxLeftB <= minRightA:
+            if (m + n) % 2 == 1:
+                median = float(max(maxLeftA, maxLeftB))
+            else:
+                median = (max(maxLeftA, maxLeftB) + min(minRightA, minRightB)) / 2.0
+            print(f"{median:.1f}")
+            return
+        elif maxLeftA > minRightB:
+            high = i - 1
+        else:
+            low = i + 1
+
+if __name__ == '__main__':
+    main()
+```
+
+---
+
+## Set 4: Trapping Rain Water with Monotonic Stack
+
+**Points:** 30 | **Category:** Hard Debugging
+
+### Problem Statement Summary
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+
+### Root Cause Analysis (Bug Diagnostic)
+In the monotonic stack pop logic, bounded_height is calculated as min(height[current], height[st.top()]) - height[top], but the stack top index is retrieved before popping, and the code incorrectly computes width using the current element instead of distance between current and the new stack top: width = current - st.top() - 1, but uses current - top instead.
+
+### Fix Description
+After popping the bottom element, check if stack is empty (break if empty); width should be current - st.top() - 1.
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int n;
+    if (!(cin >> n)) return 0;
+    vector<int> height(n);
+    for (int i = 0; i < n; i++) cin >> height[i];
+
+    long long totalWater = 0;
+    stack<int> st;
+
+    for (int current = 0; current < n; current++) {
+        while (!st.empty() && height[current] > height[st.top()]) {
+            int top = st.top();
+            st.pop();
+            if (st.empty()) break;
+
+            long long distance = current - st.top() - 1;
+            long long bounded_height = min(height[current], height[st.top()]) - height[top];
+            totalWater += distance * bounded_height;
+        }
+        st.push(current);
+    }
+
+    cout << totalWater << endl;
+    return 0;
+}
+```
+
+#### Java Reference Solution
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        int[] height = new int[n];
+        for (int i = 0; i < n; i++) height[i] = sc.nextInt();
+
+        long totalWater = 0;
+        Deque<Integer> st = new ArrayDeque<>();
+
+        for (int current = 0; current < n; current++) {
+            while (!st.isEmpty() && height[current] > height[st.peek()]) {
+                int top = st.pop();
+                if (st.isEmpty()) break;
+
+                long distance = current - st.peek() - 1;
+                long boundedHeight = Math.min(height[current], height[st.peek()]) - height[top];
+                totalWater += distance * boundedHeight;
+            }
+            st.push(current);
+        }
+
+        System.out.println(totalWater);
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    n = int(tokens[0])
+    height = [int(x) for x in tokens[1:1+n]]
+
+    total_water = 0
+    st = []
+
+    for current in range(n):
+        while st and height[current] > height[st[-1]]:
+            top = st.pop()
+            if not st:
+                break
+            distance = current - st[-1] - 1
+            bounded_height = min(height[current], height[st[-1]]) - height[top]
+            total_water += distance * bounded_height
+        st.append(current)
+
+    print(total_water)
+
+if __name__ == '__main__':
+    main()
+```
+
+---
+
+## Set 5: Minimum Window Substring with Exact Multiplicities
+
+**Points:** 30 | **Category:** Hard Debugging
+
+### Problem Statement Summary
+Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return an empty string (or print -1).
+
+If there are multiple answers, return the substring that appears earliest.
+
+### Root Cause Analysis (Bug Diagnostic)
+When shrinking the window from the left pointer, the code decrements formed (the count of satisfied characters) if windowFreq[c] <= targetFreq[c] BEFORE updating windowFreq[c] -= 1, which triggers prematurely even when the window still had surplus characters.
+
+### Fix Description
+Check if windowFreq[c] == targetFreq[c] before decrementing windowFreq[c], and only then decrement formed.
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <climits>
+using namespace std;
+
+int main() {
+    string s, t;
+    if (!(cin >> s >> t)) return 0;
+
+    unordered_map<char, int> targetFreq;
+    for (char c : t) targetFreq[c]++;
+
+    int required = targetFreq.size();
+    unordered_map<char, int> windowFreq;
+    int formed = 0;
+
+    int minLen = INT_MAX;
+    int startIdx = -1;
+
+    int left = 0;
+    for (int right = 0; right < (int)s.size(); right++) {
+        char c = s[right];
+        windowFreq[c]++;
+
+        if (targetFreq.count(c) && windowFreq[c] == targetFreq[c]) {
+            formed++;
+        }
+
+        while (left <= right && formed == required) {
+            if (right - left + 1 < minLen) {
+                minLen = right - left + 1;
+                startIdx = left;
+            }
+
+            char leftChar = s[left];
+            if (targetFreq.count(leftChar) && windowFreq[leftChar] == targetFreq[leftChar]) {
+                formed--;
+            }
+            windowFreq[leftChar]--;
+            left++;
+        }
+    }
+
+    if (startIdx == -1) cout << -1 << endl;
+    else cout << s.substr(startIdx, minLen) << endl;
+
+    return 0;
+}
+```
+
+#### Java Reference Solution
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNext()) return;
+        String s = sc.next();
+        String t = sc.next();
+
+        Map<Character, Integer> targetFreq = new HashMap<>();
+        for (char c : t.toCharArray()) targetFreq.put(c, targetFreq.getOrDefault(c, 0) + 1);
+
+        int required = targetFreq.size();
+        Map<Character, Integer> windowFreq = new HashMap<>();
+        int formed = 0;
+
+        int minLen = Integer.MAX_VALUE;
+        int startIdx = -1;
+
+        int left = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            windowFreq.put(c, windowFreq.getOrDefault(c, 0) + 1);
+
+            if (targetFreq.containsKey(c) && windowFreq.get(c).intValue() == targetFreq.get(c).intValue()) {
+                formed++;
+            }
+
+            while (left <= right && formed == required) {
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    startIdx = left;
+                }
+
+                char leftChar = s.charAt(left);
+                if (targetFreq.containsKey(leftChar) && windowFreq.get(leftChar).intValue() == targetFreq.get(leftChar).intValue()) {
+                    formed--;
+                }
+                windowFreq.put(leftChar, windowFreq.get(leftChar) - 1);
+                left++;
+            }
+        }
+
+        System.out.println(startIdx == -1 ? "-1" : s.substring(startIdx, startIdx + minLen));
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+from collections import Counter, defaultdict
+
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    s = tokens[0]
+    t = tokens[1]
+
+    target_freq = Counter(t)
+    required = len(target_freq)
+    window_freq = defaultdict(int)
+    formed = 0
+
+    min_len = float('inf')
+    start_idx = -1
+
+    left = 0
+    for right in range(len(s)):
+        c = s[right]
+        window_freq[c] += 1
+
+        if c in target_freq and window_freq[c] == target_freq[c]:
+            formed += 1
+
+        while left <= right and formed == required:
+            if right - left + 1 < min_len:
+                min_len = right - left + 1
+                start_idx = left
+
+            left_char = s[left]
+            if left_char in target_freq and window_freq[left_char] == target_freq[left_char]:
+                formed -= 1
+            window_freq[left_char] -= 1
+            left += 1
+
+    print("-1" if start_idx == -1 else s[start_idx:start_idx + min_len])
+
+if __name__ == '__main__':
+    main()
+```
+
+---
+
+## Set 6: Lexicographically Smallest Course Schedule Topological Sort
+
+**Points:** 30 | **Category:** Hard Debugging
+
+### Problem Statement Summary
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b before taking course a.
+
+Return the ordering of courses you should take to finish all courses. If there are multiple valid answers, return the lexicographically smallest ordering. If it is impossible to finish all courses (a cycle exists), return "CYCLE DETECTED".
+
+### Root Cause Analysis (Bug Diagnostic)
+In Kahn algorithm with min-heap priority queue, when pushing initial courses with 0 prerequisites into the priority queue, the condition was written as inDegree[i] == 1 instead of inDegree[i] == 0.
+
+### Fix Description
+Initialize priority queue with courses having inDegree[i] == 0.
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int main() {
+    int n, m;
+    if (!(cin >> n >> m)) return 0;
+
+    vector<vector<int>> adj(n);
+    vector<int> inDegree(n, 0);
+
+    for (int i = 0; i < m; i++) {
+        int a, b;
+        cin >> a >> b;
+        adj[b].push_back(a);
+        inDegree[a]++;
+    }
+
+    priority_queue<int, vector<int>, greater<int>> pq;
+    for (int i = 0; i < n; i++) {
+        if (inDegree[i] == 0) {
+            pq.push(i);
+        }
+    }
+
+    vector<int> order;
+    while (!pq.empty()) {
+        int u = pq.top();
+        pq.pop();
+        order.push_back(u);
+
+        for (int v : adj[u]) {
+            inDegree[v]--;
+            if (inDegree[v] == 0) {
+                pq.push(v);
+            }
+        }
+    }
+
+    if ((int)order.size() != n) {
+        cout << "CYCLE DETECTED" << endl;
+    } else {
+        for (int i = 0; i < n; i++) {
+            cout << order[i] << (i == n - 1 ? "" : " ");
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+```
+
+#### Java Reference Solution
+
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+        int[] inDegree = new int[n];
+
+        for (int i = 0; i < m; i++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+            adj.get(b).add(a);
+            inDegree[a]++;
+        }
+
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for (int i = 0; i < n; i++) {
+            if (inDegree[i] == 0) pq.add(i);
+        }
+
+        List<Integer> order = new ArrayList<>();
+        while (!pq.isEmpty()) {
+            int u = pq.poll();
+            order.add(u);
+
+            for (int v : adj.get(u)) {
+                inDegree[v]--;
+                if (inDegree[v] == 0) pq.add(v);
+            }
+        }
+
+        if (order.size() != n) {
+            System.out.println("CYCLE DETECTED");
+        } else {
+            for (int i = 0; i < n; i++) {
+                System.out.print(order.get(i) + (i == n - 1 ? "" : " "));
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+#### Python Reference Solution
+
+```python
+import sys
+import heapq
+
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    n = int(tokens[0])
+    m = int(tokens[1])
+
+    adj = [[] for _ in range(n)]
+    in_degree = [0] * n
+
+    idx = 2
     for _ in range(m):
-        u=int(data[idx]);idx+=1; v=int(data[idx]);idx+=1; w=int(data[idx]);idx+=1
-        adj[u].append((v,w)); adj[v].append((u,w))  # FIXED
-    p=int(data[idx]);idx+=1; cp=[]
-    for _ in range(p): cp.append(int(data[idx]));idx+=1
-    kn = cp+[s,d]; tk=p+2; INF=float('inf')
-    dist=[dijkstra(kn[i],adj,n) for i in range(tk)]
-    fm=(1<<p)-1; dp=[[INF]*tk for _ in range(fm+1)]
-    for i in range(p):
-        if dist[p][kn[i]]<INF: dp[1<<i][i]=dist[p][kn[i]]
-    for mask in range(1,fm+1):
-        for i in range(p):
-            if not(mask&(1<<i)) or dp[mask][i]>=INF: continue
-            for j in range(p):
-                if mask&(1<<j): continue
-                nm=mask|(1<<j)
-                if dist[i][kn[j]]<INF:
-                    c=dp[mask][i]+dist[i][kn[j]]
-                    if c<dp[nm][j]: dp[nm][j]=c
-    di=p+1; ans=INF
-    if p==0: ans=dist[p][kn[di]]
+        a = int(tokens[idx])
+        b = int(tokens[idx+1])
+        adj[b].append(a)
+        in_degree[a] += 1
+        idx += 2
+
+    pq = []
+    for i in range(n):
+        if in_degree[i] == 0:
+            heapq.heappush(pq, i)
+
+    order = []
+    while pq:
+        u = heapq.heappop(pq)
+        order.append(u)
+
+        for v in adj[u]:
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                heapq.heappush(pq, v)
+
+    if len(order) != n:
+        print("CYCLE DETECTED")
     else:
-        for i in range(p):
-            if dp[fm][i]<INF and dist[i][kn[di]]<INF: ans=min(ans,dp[fm][i]+dist[i][kn[di]])
-    print(-1 if ans>=INF else int(ans))
+        print(*(order))
 
-solve()
+if __name__ == '__main__':
+    main()
 ```
 
 ---
 
-## Round 3 — Hidden Test Cases
+## Set 7: Subarray Sums Divisible by K
 
-### Hidden Test 1 — Normal Case
+**Points:** 30 | **Category:** Hard Debugging
 
-**Input:**
+### Problem Statement Summary
+Given an integer array nums and an integer k, return the number of non-empty subarrays that have a sum divisible by k.
+A subarray is a contiguous part of an array.
 
-```text
-4 4 1 4
-1 2 2
-2 3 3
-3 4 1
-1 4 100
+### Root Cause Analysis (Bug Diagnostic)
+In languages like C++ and Java, the remainder operator % returns negative values for negative integers (e.g., -2 % 5 = -2). The code fails to normalize the remainder to the range [0, k-1] with (rem % k + k) % k, leading to invalid remainder map keys and missed subarrays.
 
-1
-3
+### Fix Description
+Normalize remainder using (rem % k + k) % k before indexing into the frequency map or array.
+
+#### C++ Reference Solution
+
+```cpp
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+int main() {
+    int n, k;
+    if (!(cin >> n >> k)) return 0;
+    vector<int> nums(n);
+    for (int i = 0; i < n; i++) cin >> nums[i];
+
+    unordered_map<int, int> remainderCount;
+    remainderCount[0] = 1;
+
+    long long prefixSum = 0;
+    long long result = 0;
+
+    for (int i = 0; i < n; i++) {
+        prefixSum += nums[i];
+        int rem = (prefixSum % k + k) % k;
+
+        if (remainderCount.count(rem)) {
+            result += remainderCount[rem];
+        }
+        remainderCount[rem]++;
+    }
+
+    cout << result << endl;
+    return 0;
+}
 ```
 
-**Expected Output:**
+#### Java Reference Solution
 
-```text
-6
+```java
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+
+        int[] nums = new int[n];
+        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();
+
+        Map<Integer, Integer> remainderCount = new HashMap<>();
+        remainderCount.put(0, 1);
+
+        long prefixSum = 0;
+        long result = 0;
+
+        for (int i = 0; i < n; i++) {
+            prefixSum += nums[i];
+            int rem = (int)(((prefixSum % k) + k) % k);
+
+            if (remainderCount.containsKey(rem)) {
+                result += remainderCount.get(rem);
+            }
+            remainderCount.put(rem, remainderCount.getOrDefault(rem, 0) + 1);
+        }
+
+        System.out.println(result);
+    }
+}
 ```
 
-**Bug exposed:** Path 1→2→3→4 costs 6. With one-directional edges, Dijkstra from checkpoint 3 cannot reach nodes via reverse edges, producing wrong distances.
+#### Python Reference Solution
 
----
+```python
+import sys
 
-### Hidden Test 2 — Edge Case (reverse-only traversal needed)
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    n = int(tokens[0])
+    k = int(tokens[1])
+    nums = [int(x) for x in tokens[2:2+n]]
 
-**Input:**
+    remainder_count = {0: 1}
+    prefix_sum = 0
+    result = 0
 
-```text
-5 4 1 5
-2 1 3
-3 2 4
-4 3 2
-5 4 1
+    for x in nums:
+        prefix_sum += x
+        rem = ((prefix_sum % k) + k) % k
 
-1
-3
+        if rem in remainder_count:
+            result += remainder_count[rem]
+        remainder_count[rem] = remainder_count.get(rem, 0) + 1
+
+    print(result)
+
+if __name__ == '__main__':
+    main()
 ```
 
-**Expected Output:**
-
-```text
-10
-```
-
-**Bug exposed:** All edges listed with higher node first. Buggy code only adds `2→1`, `3→2`, etc. Node 1 has no outgoing edges — Dijkstra from node 1 reaches nothing. Outputs -1 instead of 10.
-
 ---
 
-### Hidden Test 3 — Multiple checkpoints
-
-**Input:**
-
-```text
-6 7 1 6
-1 3 10
-3 2 1
-2 4 2
-4 5 3
-5 6 1
-1 2 100
-3 6 50
-
-2
-2 5
-```
-
-**Expected Output:**
-
-```text
-17
-```
-
-**Bug exposed:** Optimal path 1→3→2→4→5→6 costs 17 visiting checkpoints 2 and 5. With one-directional edges, inter-checkpoint distances are wrong.
-
----
-
-### Complexity
-
-**Before fix:** O((p+2)(m+n)log n + 2^p·p²) — produces wrong answers
-
-**After fix:** O((p+2)(m+n)log n + 2^p·p²) — produces correct answers
-
-Space: O(n·(p+2) + 2^p·p)
-
----
-
-# ORGANIZER JUDGE SHEET
-
-## Round 1 — MCQ Scoring
-
-| Set | Language | Questions | Marks per Q | Total |
-| --- | -------- | --------: | ----------: | ----: |
-| 1   | C++      |         5 |           1 |     5 |
-| 1   | Java     |         5 |           1 |     5 |
-| 1   | Python   |         5 |           1 |     5 |
-| 2   | C++      |         5 |           1 |     5 |
-| 2   | Java     |         5 |           1 |     5 |
-| 2   | Python   |         5 |           1 |     5 |
-| 3   | C++      |         5 |           1 |     5 |
-| 3   | Java     |         5 |           1 |     5 |
-| 3   | Python   |         5 |           1 |     5 |
-| 4   | C++      |         5 |           1 |     5 |
-| 4   | Java     |         5 |           1 |     5 |
-| 4   | Python   |         5 |           1 |     5 |
-| 5   | C++      |         5 |           1 |     5 |
-| 5   | Java     |         5 |           1 |     5 |
-| 5   | Python   |         5 |           1 |     5 |
-
-**Each set: 15 marks. Each participant attempts ONE set. No negative marking.**
-
----
-
-## Round 2 & 3 — Debugging Scoring
-
-| Criteria                        | Round 2 (Medium) | Round 3 (Hard) |
-| ------------------------------- | ---------------: | -------------: |
-| Bug identification (written)    |           10 pts |         15 pts |
-| Correct fix applied             |           10 pts |         15 pts |
-| Code compiles/runs successfully |            5 pts |          5 pts |
-| Hidden test case 1 passed       |            5 pts |         10 pts |
-| Hidden test case 2 passed       |            5 pts |         10 pts |
-| Hidden test case 3 passed       |            5 pts |         10 pts |
-| Explanation quality             |            5 pts |         10 pts |
-| Code cleanliness                |            5 pts |          5 pts |
-| **Total**                       |       **50 pts** |     **80 pts** |
-
----
-
-## Tie-breaker
-
-1. **Faster completion time** — the participant who submitted all rounds earlier wins.
-2. If still tied: **Higher Round 3 score** takes priority.
-3. If still tied: **Higher Round 2 score**.
-4. If still tied: **Fewer wrong MCQ attempts** (if tracked).
-
----
-
-## Overall Scoring Summary
-
-| Round     | Max Score   | Duration |
-| --------- | ----------: | -------: |
-| Round 1   |      15 pts |   20 min |
-| Round 2   |      50 pts |   35 min |
-| Round 3   |      80 pts |   35 min |
-| **Total** | **145 pts** | **90 min** |
-
----
-
-## 2-Hour Schedule
-
-| Time          | Activity                                        |
-| ------------- | ----------------------------------------------- |
-| 0:00 – 0:30  | Registration, seating, system check, rules brief |
-| 0:30 – 0:50  | **Round 1** — MCQ (20 min)                       |
-| 0:50 – 0:55  | Transition & Round 2 distribution                |
-| 0:55 – 1:30  | **Round 2** — Medium Debugging (35 min)          |
-| 1:30 – 1:35  | Transition & Round 3 distribution                |
-| 1:35 – 2:10  | **Round 3** — Hard Debugging (35 min)            |
-| 2:10 – 2:15  | Buffer / submission collection                   |
-
----
-
-## Final Answer Keys
-
-
-### Round 1 — All Sets Combined
-
-| Set | Q1 | Q2 | Q3 | Q4 | Q5 | Q6 | Q7 | Q8 | Q9 | Q10 | Q11 | Q12 | Q13 | Q14 | Q15 |
-| --- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- | --- | --- | --- | --- | --- |
-| 1   | B  | C  | B  | B  | A  | B  | C  | B  | B  | B   | A   | C   | B   | C   | B   |
-| 2   | B  | A  | B  | B  | A  | B  | B  | B  | B  | B   | B   | A   | B   | B   | B   |
-| 3   | B  | B  | A  | A  | A  | B  | B  | A  | A  | C   | B   | A   | B   | A   | B   |
-| 4   | B  | A  | B  | A  | A  | B  | C  | A  | A  | B   | B   | B   | C   | B   | B   |
-| 5   | A  | B  | B  | A  | B  | A  | B  | A  | B  | C   | B   | B   | C   | A   | B   |
-
-### Round 2 — Bug Summary
-
-**Bug:** `left++` happens before `windowSum -= arr[left]` in the sliding window shrink loop.
-**Fix:** Swap the two lines — subtract first, then increment.
-
-### Round 3 — Bug Summary
-
-**Bug:** Undirected graph edges only added in one direction in the adjacency list.
-**Fix:** Add `adj[v].push_back({u, w})` (or language equivalent) after `adj[u].push_back({v, w})`.

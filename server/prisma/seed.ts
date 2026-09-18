@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 import { seedRound1Questions } from './seedRound1_20Q';
 import { seedMoreRound2And3Questions } from './seedMoreQuestions';
+import { seedAllSetsQuestions } from './seedAllSets';
 
 dotenv.config();
 
@@ -125,13 +126,10 @@ async function main() {
   }
   console.log(`✅ 5 Demo Teams & 10 Participants seeded (Default password: team123)`);
 
-  // 6. Seed Round 1 (20 MCQs for C++, 20 for Java, 20 for Python = 60 MCQs)
-  await seedRound1Questions();
+  // 6. Seed Complete Sets across all rounds (Round 1: 5 Sets x 20 MCQs; Rounds 2 & 3: 7 Sets each)
+  await seedAllSetsQuestions();
 
-  // 7. Seed Round 2 & Round 3 Debugging Challenges
-  await seedMoreRound2And3Questions();
-
-  console.log('🎉 Complete seeding completed successfully with 20 MCQs per language for Round 1 & Debugging challenges for Rounds 2 & 3!');
+  console.log('🎉 Complete event sets seeding finished successfully (342 questions across all rounds and languages)!');
 }
 
 main()
