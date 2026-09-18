@@ -289,15 +289,37 @@ export const QuestionBank: React.FC = () => {
     window.open('/api/admin/questions/template', '_blank');
   };
 
-  // Filter questions
-  const filteredQuestions = questions.filter((q) => {
-    const matchesSearch =
-      q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.statement.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesRound = selectedRound === 'ALL' || q.roundId === selectedRound;
-    const matchesLang = selectedLanguage === 'ALL' || q.language === selectedLanguage;
-    return matchesSearch && matchesRound && matchesLang;
-  });
+  const getDisplayStatement = (statement: string) => {
+    if (!statement) return '';
+    try {
+      if (statement.trim().startsWith('{')) {
+        const parsed = JSON.parse(statement);
+        return parsed.prompt || parsed.text || statement;
+      }
+    } catch (e) {}
+    return statement;
+  };
+
+  // Filter questions and sort naturally by round number, language, and question number
+  const filteredQuestions = questions
+    .filter((q) => {
+      const matchesSearch =
+        q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        q.statement.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesRound = selectedRound === 'ALL' || q.roundId === selectedRound;
+      const matchesLang = selectedLanguage === 'ALL' || q.language === selectedLanguage;
+      return matchesSearch && matchesRound && matchesLang;
+    })
+    .sort((a, b) => {
+      const rA = (a as any).round?.number || 0;
+      const rB = (b as any).round?.number || 0;
+      if (rA !== rB) return rA - rB;
+      if (a.language !== b.language) return a.language.localeCompare(b.language);
+      const numA = parseInt((a.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+      const numB = parseInt((b.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+      if (numA !== numB) return numA - numB;
+      return a.title.localeCompare(b.title);
+    });
 
   const round1Count = questions.filter((q) => (q as any).round?.number === 1).length;
   const round2Count = questions.filter((q) => (q as any).round?.number === 2).length;
@@ -367,17 +389,17 @@ export const QuestionBank: React.FC = () => {
             <Layers className="w-4 h-4 text-brand-400" />
           </span>
           <div className="text-2xl font-black text-white mt-1">
-            {questions.length} <span className="text-xs font-normal text-slate-500">/ 36 target</span>
+            {questions.length} <span className="text-xs font-normal text-slate-500">loaded</span>
           </div>
         </div>
 
         <div className="glass-card p-4 rounded-xl border border-slate-800">
           <span className="text-slate-400 text-xs flex items-center justify-between">
-            <span>Round 1 (Easy)</span>
+            <span>Round 1 (MCQ)</span>
             <Sparkles className="w-4 h-4 text-emerald-400" />
           </span>
           <div className="text-2xl font-black text-emerald-400 mt-1">
-            {round1Count} <span className="text-xs font-normal text-slate-500">/ 12</span>
+            {round1Count} <span className="text-xs font-normal text-slate-500">/ 60 MCQs</span>
           </div>
         </div>
 
@@ -387,7 +409,7 @@ export const QuestionBank: React.FC = () => {
             <Zap className="w-4 h-4 text-amber-400" />
           </span>
           <div className="text-2xl font-black text-amber-400 mt-1">
-            {round2Count} <span className="text-xs font-normal text-slate-500">/ 12</span>
+            {round2Count} <span className="text-xs font-normal text-slate-500">challenges</span>
           </div>
         </div>
 
@@ -397,7 +419,7 @@ export const QuestionBank: React.FC = () => {
             <FileCode className="w-4 h-4 text-rose-400" />
           </span>
           <div className="text-2xl font-black text-rose-400 mt-1">
-            {round3Count} <span className="text-xs font-normal text-slate-500">/ 12</span>
+            {round3Count} <span className="text-xs font-normal text-slate-500">challenges</span>
           </div>
         </div>
       </div>
@@ -484,7 +506,7 @@ export const QuestionBank: React.FC = () => {
                       <td className="py-3 px-4 max-w-xs">
                         <div className="font-semibold text-white truncate">{q.title}</div>
                         <div className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">
-                          {q.statement}
+                          {getDisplayStatement(q.statement)}
                         </div>
                       </td>
 

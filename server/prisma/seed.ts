@@ -1,6 +1,8 @@
 import { PrismaClient, Language, Difficulty, TeamStatus } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
+import { seedRound1Questions } from './seedRound1_20Q';
+import { seedMoreRound2And3Questions } from './seedMoreQuestions';
 
 dotenv.config();
 
@@ -123,177 +125,13 @@ async function main() {
   }
   console.log(`✅ 5 Demo Teams & 10 Participants seeded (Default password: team123)`);
 
-  // 6. Seed Sample Questions for Round 1 (C++, Java, Python)
-  // Python Round 1 Q1
-  const pyQ1 = await prisma.question.create({
-    data: {
-      roundId: round1.id,
-      language: Language.PYTHON,
-      title: 'Fix the Palindrome Checker',
-      statement: 'Given a string S from stdin, print "true" if S is a palindrome (ignoring casing and non-alphanumeric chars), else "false". The current program fails on mixed casing and punctuation.',
-      buggyCode: `import sys
+  // 6. Seed Round 1 (20 MCQs for C++, 20 for Java, 20 for Python = 60 MCQs)
+  await seedRound1Questions();
 
-def is_palindrome(s):
-    # BUG: Doesn't sanitize string or handle case
-    return s == s[::-1]
+  // 7. Seed Round 2 & Round 3 Debugging Challenges
+  await seedMoreRound2And3Questions();
 
-if __name__ == '__main__':
-    line = sys.stdin.read().strip()
-    if is_palindrome(line):
-        print("true")
-    else:
-        print("false")
-`,
-      referenceSolution: `import sys
-
-def is_palindrome(s):
-    cleaned = [c.lower() for c in s if c.isalnum()]
-    return cleaned == cleaned[::-1]
-
-if __name__ == '__main__':
-    line = sys.stdin.read().strip()
-    if is_palindrome(line):
-        print("true")
-    else:
-        print("false")
-`,
-      points: 10,
-      timeLimitMs: 2000,
-      memoryLimitMb: 128,
-    },
-  });
-
-  await prisma.testCase.createMany({
-    data: [
-      { questionId: pyQ1.id, stdin: 'racecar', expectedStdout: 'true', isHidden: false, weight: 1.0 },
-      { questionId: pyQ1.id, stdin: 'hello', expectedStdout: 'false', isHidden: false, weight: 1.0 },
-      { questionId: pyQ1.id, stdin: 'A man, a plan, a canal: Panama', expectedStdout: 'true', isHidden: true, weight: 2.0 },
-      { questionId: pyQ1.id, stdin: 'No lemon, no melon!', expectedStdout: 'true', isHidden: true, weight: 2.0 },
-    ],
-  });
-
-  // C++ Round 1 Q1
-  const cppQ1 = await prisma.question.create({
-    data: {
-      roundId: round1.id,
-      language: Language.CPP,
-      title: 'Off-By-One Array Sum',
-      statement: 'Read an integer N, followed by N integers. Print their sum. The buggy code has an off-by-one error reading inputs and calculating sum.',
-      buggyCode: `#include <iostream>
-#include <vector>
-
-using namespace std;
-
-int main() {
-    int n;
-    if (!(cin >> n)) return 0;
-    vector<long long> arr(n);
-    // BUG: reading up to <= n causing buffer overflow / out of bounds
-    for (int i = 1; i <= n; i++) {
-        cin >> arr[i];
-    }
-    long long sum = 0;
-    for (int i = 0; i < n - 1; i++) {
-        sum += arr[i];
-    }
-    cout << sum << endl;
-    return 0;
-}
-`,
-      referenceSolution: `#include <iostream>
-#include <vector>
-
-using namespace std;
-
-int main() {
-    int n;
-    if (!(cin >> n)) return 0;
-    vector<long long> arr(n);
-    for (int i = 0; i < n; i++) {
-        cin >> arr[i];
-    }
-    long long sum = 0;
-    for (int i = 0; i < n; i++) {
-        sum += arr[i];
-    }
-    cout << sum << endl;
-    return 0;
-}
-`,
-      points: 10,
-      timeLimitMs: 2000,
-      memoryLimitMb: 128,
-    },
-  });
-
-  await prisma.testCase.createMany({
-    data: [
-      { questionId: cppQ1.id, stdin: '5\n1 2 3 4 5', expectedStdout: '15', isHidden: false, weight: 1.0 },
-      { questionId: cppQ1.id, stdin: '3\n10 20 30', expectedStdout: '60', isHidden: false, weight: 1.0 },
-      { questionId: cppQ1.id, stdin: '1\n999', expectedStdout: '999', isHidden: true, weight: 2.0 },
-      { questionId: cppQ1.id, stdin: '4\n-5 5 -10 10', expectedStdout: '0', isHidden: true, weight: 2.0 },
-    ],
-  });
-
-  // Java Round 1 Q1
-  const javaQ1 = await prisma.question.create({
-    data: {
-      roundId: round1.id,
-      language: Language.JAVA,
-      title: 'String Tokenizer Word Count',
-      statement: 'Given a sentence on stdin, print the total number of words separated by spaces. Empty input or multiple consecutive spaces should be handled cleanly.',
-      buggyCode: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        if (!sc.hasNextLine()) {
-            System.out.println(0);
-            return;
-        }
-        String line = sc.nextLine();
-        // BUG: split on single space gives empty tokens for extra spaces or empty string
-        String[] words = line.split(" ");
-        System.out.println(words.length);
-    }
-}
-`,
-      referenceSolution: `import java.util.Scanner;
-
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        if (!sc.hasNextLine()) {
-            System.out.println(0);
-            return;
-        }
-        String line = sc.nextLine().trim();
-        if (line.isEmpty()) {
-            System.out.println(0);
-            return;
-        }
-        String[] words = line.split("\\\\s+");
-        System.out.println(words.length);
-    }
-}
-`,
-      points: 10,
-      timeLimitMs: 3000,
-      memoryLimitMb: 256,
-    },
-  });
-
-  await prisma.testCase.createMany({
-    data: [
-      { questionId: javaQ1.id, stdin: 'The quick brown fox', expectedStdout: '4', isHidden: false, weight: 1.0 },
-      { questionId: javaQ1.id, stdin: '  multiple   spaces  between  words  ', expectedStdout: '4', isHidden: false, weight: 1.0 },
-      { questionId: javaQ1.id, stdin: '', expectedStdout: '0', isHidden: true, weight: 2.0 },
-      { questionId: javaQ1.id, stdin: 'SingleWord', expectedStdout: '1', isHidden: true, weight: 2.0 },
-    ],
-  });
-
-  console.log('✅ Sample Questions & Test Cases for C++, Java, and Python seeded');
-  console.log('🎉 Seeding completed successfully!');
+  console.log('🎉 Complete seeding completed successfully with 20 MCQs per language for Round 1 & Debugging challenges for Rounds 2 & 3!');
 }
 
 main()

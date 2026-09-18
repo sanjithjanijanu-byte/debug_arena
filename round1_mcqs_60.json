@@ -1,0 +1,1202 @@
+[
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q1. Integer Division in C++",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"3.5\",\"B\":\"3\",\"C\":\"4\",\"D\":\"3.0\"},\"explanation\":\"In C++, dividing two integers truncates the decimal part towards zero: 7 / 2 = 3.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 7, b = 2;\n    cout << a / b << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q2. Post-Increment Operator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"5 5\",\"B\":\"6 6\",\"C\":\"6 5\",\"D\":\"5 6\"},\"explanation\":\"Post-increment assigns the current value of x (5) to y, then increments x to 6.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 5;\n    int y = x++;\n    cout << x << \" \" << y << endl;\n    return 0;\n}",
+    "referenceSolution": "C",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "C",
+        "expectedStdout": "C",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q3. Pass-by-Value in C++",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"30\",\"B\":\"20\",\"C\":\"10\",\"D\":\"Compilation error\"},\"explanation\":\"x is passed by value, so modifying x inside addTen does not affect num in main.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nvoid addTen(int x) {\n    x += 10;\n}\n\nint main() {\n    int num = 20;\n    addTen(num);\n    cout << num << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q4. Array Indexing in C++",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"30\",\"B\":\"40\",\"C\":\"50\",\"D\":\"20\"},\"explanation\":\"Arrays are 0-indexed: arr[0]=10, arr[1]=20, arr[2]=30, arr[3]=40.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[] = {10, 20, 30, 40, 50};\n    cout << arr[3] << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q5. String Length and Character Access",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"5 e\",\"B\":\"5 H\",\"C\":\"4 e\",\"D\":\"5 l\"},\"explanation\":\"\\\"Hello\\\" has length 5 and s[1] is the character at index 1: 'e'.\"}",
+    "buggyCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string s = \"Hello\";\n    cout << s.length() << \" \" << s[1] << endl;\n    return 0;\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q6. Modulo Operator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"3\",\"B\":\"2\",\"C\":\"0\",\"D\":\"3.5\"},\"explanation\":\"14 % 4 computes the remainder of 14 divided by 4, which is 2.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 14, b = 4;\n    cout << a % b << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q7. For Loop Accumulator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"10\",\"B\":\"15\",\"C\":\"5\",\"D\":\"0\"},\"explanation\":\"The loop adds 0 + 1 + 2 + 3 + 4 = 10.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int sum = 0;\n    for (int i = 0; i < 5; i++) {\n        sum += i;\n    }\n    cout << sum << endl;\n    return 0;\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q8. Ternary Conditional Operator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"100\",\"B\":\"200\",\"C\":\"0\",\"D\":\"15\"},\"explanation\":\"10 > 15 is false, so the ternary expression selects the second value: 200.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 10;\n    int result = (x > 15) ? 100 : 200;\n    cout << result << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q9. Boolean Logic Operators",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"1 1\",\"B\":\"0 1\",\"C\":\"1 0\",\"D\":\"0 0\"},\"explanation\":\"(5 > 0 && -2 > 0) is false (0). (5 > 0 || -2 > 0) is true (1).\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 5, b = -2;\n    cout << (a > 0 && b > 0) << \" \" << (a > 0 || b > 0) << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q10. Vector push_back and size",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"2 100\",\"B\":\"2 200\",\"C\":\"1 100\",\"D\":\"0 100\"},\"explanation\":\"push_back inserts 2 elements, so size is 2. v[0] is the first element, 100.\"}",
+    "buggyCode": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    vector<int> v;\n    v.push_back(100);\n    v.push_back(200);\n    cout << v.size() << \" \" << v[0] << endl;\n    return 0;\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q11. Reference Variables",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"10 25\",\"B\":\"25 25\",\"C\":\"10 10\",\"D\":\"Compilation error\"},\"explanation\":\"ref is an alias for x. Mutating ref directly alters x to 25.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 10;\n    int &ref = x;\n    ref = 25;\n    cout << x << \" \" << ref << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q12. Nested Ternary Operator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"1\",\"B\":\"2\",\"C\":\"3\",\"D\":\"0\"},\"explanation\":\"a > 3 (5 > 3) is true, and a < 10 (5 < 10) is true, resulting in 1.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 5;\n    cout << (a > 3 ? (a < 10 ? 1 : 2) : 3) << endl;\n    return 0;\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q13. Switch Statement Fall-Through",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"Two\",\"B\":\"Two Three\",\"C\":\"Two Three Default\",\"D\":\"One Two Three\"},\"explanation\":\"Without a break after case 2, execution falls through to case 3: \\\"Two Three \\\".\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int val = 2;\n    switch (val) {\n        case 1: cout << \"One \";\n        case 2: cout << \"Two \";\n        case 3: cout << \"Three \";\n            break;\n        default: cout << \"Default\";\n    }\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q14. Pointer Dereferencing",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"42\",\"B\":\"50\",\"C\":\"Garbage value\",\"D\":\"Memory address\"},\"explanation\":\"*ptr dereferences ptr to access variable a. 42 + 8 = 50.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int a = 42;\n    int *ptr = &a;\n    *ptr = *ptr + 8;\n    cout << a << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q15. Static Local Variable",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"1 1 1\",\"B\":\"1 2 3\",\"C\":\"0 1 2\",\"D\":\"Compilation error\"},\"explanation\":\"A static local variable persists across function calls, incrementing 1, 2, 3.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nvoid counter() {\n    static int c = 0;\n    c++;\n    cout << c << \" \";\n}\n\nint main() {\n    counter();\n    counter();\n    counter();\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q16. Short-Circuit Logical AND",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"Inside 6\",\"B\":\"5\",\"C\":\"6\",\"D\":\"Inside 5\"},\"explanation\":\"Because x != 0 is false, && short-circuits. ++y is never evaluated and y remains 5.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 0, y = 5;\n    if (x != 0 && ++y > 5) {\n        cout << \"Inside \";\n    }\n    cout << y << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q17. Vector push_back and pop_back",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"2 20\",\"B\":\"3 30\",\"C\":\"2 30\",\"D\":\"3 20\"},\"explanation\":\"push_back(30) adds 30, and pop_back() removes it. Size is 2, and v.back() is 20.\"}",
+    "buggyCode": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nint main() {\n    vector<int> v = {10, 20};\n    v.push_back(30);\n    v.pop_back();\n    cout << v.size() << \" \" << v.back() << endl;\n    return 0;\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q18. Array Size using sizeof",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"24\",\"B\":\"6\",\"C\":\"4\",\"D\":\"Compilation error\"},\"explanation\":\"sizeof(arr) is 24 bytes and sizeof(arr[0]) is 4 bytes. 24 / 4 = 6 elements.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int arr[] = {4, 8, 12, 16, 20, 24};\n    int n = sizeof(arr) / sizeof(arr[0]);\n    cout << n << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q19. Do-While Loop Execution Guarantee",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"10\",\"B\":\"15\",\"C\":\"20\",\"D\":\"Infinite loop\"},\"explanation\":\"A do-while loop executes at least once. x becomes 15, then 15 < 10 is false, terminating.\"}",
+    "buggyCode": "#include <iostream>\nusing namespace std;\n\nint main() {\n    int x = 10;\n    do {\n        x += 5;\n    } while (x < 10);\n    cout << x << endl;\n    return 0;\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "CPP",
+    "title": "Q20. String Search with string::find",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following C++ code?\",\"options\":{\"A\":\"Found at 3\",\"B\":\"Found at 4\",\"C\":\"Not found\",\"D\":\"Found at 2\"},\"explanation\":\"\\\"competitor\\\" contains \\\"pet\\\" starting at 0-based index 3.\"}",
+    "buggyCode": "#include <iostream>\n#include <string>\nusing namespace std;\n\nint main() {\n    string str = \"competitor\";\n    if (str.find(\"pet\") != string::npos) {\n        cout << \"Found at \" << str.find(\"pet\") << endl;\n    } else {\n        cout << \"Not found\" << endl;\n    }\n    return 0;\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q1. String Concatenation Precedence",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"Sum: 30\",\"B\":\"Sum: 1020\",\"C\":\"Sum: 10 20\",\"D\":\"Compilation error\"},\"explanation\":\"Left-to-right evaluation converts 10 to a string (\\\"Sum: 10\\\"), then concatenates 20 (\\\"Sum: 1020\\\").\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Sum: \" + 10 + 20);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q2. String equals() vs == Operator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"true true\",\"B\":\"false false\",\"C\":\"true false\",\"D\":\"false true\"},\"explanation\":\".equals() compares content (true); == compares object references in memory (false).\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        String s1 = \"hello\";\n        String s2 = new String(\"hello\");\n        System.out.println(s1.equals(s2) + \" \" + (s1 == s2));\n    }\n}",
+    "referenceSolution": "C",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "C",
+        "expectedStdout": "C",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q3. Array length Property",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"4\",\"B\":\"5\",\"C\":\"Compilation error\",\"D\":\"6\"},\"explanation\":\"In Java, an array length is accessed via the .length field, returning 5.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int[] nums = {1, 2, 3, 4, 5};\n        System.out.println(nums.length);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q4. Pass-by-Value with Primitive Arguments",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"100\",\"B\":\"25\",\"C\":\"0\",\"D\":\"Compilation error\"},\"explanation\":\"Java primitives are passed by value; changing parameter a has no effect on x.\"}",
+    "buggyCode": "public class Main {\n    static void modify(int a) {\n        a = 100;\n    }\n\n    public static void main(String[] args) {\n        int x = 25;\n        modify(x);\n        System.out.println(x);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q5. While Loop Counter",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"3\",\"B\":\"4\",\"C\":\"5\",\"D\":\"1\"},\"explanation\":\"count increments 1 -> 2 -> 3 -> 4. When count reaches 4, 4 < 4 is false and loop stops.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int count = 1;\n        while (count < 4) {\n            count++;\n        }\n        System.out.println(count);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q6. Integer Division Truncation",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"3.75\",\"B\":\"3\",\"C\":\"4\",\"D\":\"3.0\"},\"explanation\":\"Dividing two integers in Java truncates towards zero, producing 3.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int result = 15 / 4;\n        System.out.println(result);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q7. String Immutability",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"Hello World\",\"B\":\"Hello\",\"C\":\"World\",\"D\":\"Compilation error\"},\"explanation\":\"Strings are immutable in Java. s.concat() returns a new string without reassigning s.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        String s = \"Hello\";\n        s.concat(\" World\");\n        System.out.println(s);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q8. Loop Break Statement",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"1\",\"B\":\"3\",\"C\":\"5\",\"D\":\"1 2 3\"},\"explanation\":\"When i reaches 3, it prints 3 and breaks out of the loop immediately.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        for (int i = 1; i <= 5; i++) {\n            if (i == 3) {\n                System.out.println(i);\n                break;\n            }\n        }\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q9. Math.max() Method",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"25\",\"B\":\"40\",\"C\":\"65\",\"D\":\"15\"},\"explanation\":\"Math.max(25, 40) returns the greater value, 40.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int a = 25, b = 40;\n        System.out.println(Math.max(a, b));\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q10. Default Boolean Field Value",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"true\",\"B\":\"false\",\"C\":\"null\",\"D\":\"0\"},\"explanation\":\"The default initial value of uninitialized boolean class fields in Java is false.\"}",
+    "buggyCode": "public class Main {\n    static boolean flag;\n\n    public static void main(String[] args) {\n        System.out.println(flag);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q11. Unary Operators Precedence",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"11\",\"B\":\"12\",\"C\":\"13\",\"D\":\"10\"},\"explanation\":\"++x pre-increments to 6. x++ uses 6 and then increments to 7. 6 + 6 = 12.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int x = 5;\n        System.out.println(++x + x++);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q12. Substring Indexing",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"bugg\",\"B\":\"uggi\",\"C\":\"buggi\",\"D\":\"eggi\"},\"explanation\":\"substring(3, 7) takes indices 3, 4, 5, 6, which are 'u', 'g', 'g', 'i'.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        String str = \"Debugging\";\n        System.out.println(str.substring(3, 7));\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q13. Boolean Assignment in Conditionals",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"Yes\",\"B\":\"No\",\"C\":\"Compilation error\",\"D\":\"Runtime error\"},\"explanation\":\"The assignment flag = false sets flag to false and evaluates to false, executing the else block.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        boolean flag = true;\n        if (flag = false) {\n            System.out.println(\"Yes\");\n        } else {\n            System.out.println(\"No\");\n        }\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q14. String charAt and Length",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"Am\",\"B\":\"Ah\",\"C\":\"Algorithm\",\"D\":\"Compilation error\"},\"explanation\":\"s.charAt(0) is 'A' and s.charAt(8) is 'm', concatenating to \\\"Am\\\".\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        String s = \"Algorithm\";\n        System.out.println(s.charAt(0) + \"\" + s.charAt(s.length() - 1));\n    }\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q15. Enhanced For Loop Accumulator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"12\",\"B\":\"6\",\"C\":\"0\",\"D\":\"Compilation error\"},\"explanation\":\"The for-each loop adds all elements: 2 + 4 + 6 = 12.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int[] arr = {2, 4, 6};\n        int total = 0;\n        for (int n : arr) {\n            total += n;\n        }\n        System.out.println(total);\n    }\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q16. Math.max and Math.min Nesting",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"25\",\"B\":\"15\",\"C\":\"10\",\"D\":\"20\"},\"explanation\":\"Math.min(25, 10) gives 10. Math.max(15, 10) returns 15.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int a = 15, b = 25, c = 10;\n        int result = Math.max(a, Math.min(b, c));\n        System.out.println(result);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q17. ArrayList Remove by Index",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"[20, 30]\",\"B\":\"[10, 30]\",\"C\":\"[10, 20]\",\"D\":\"[10]\"},\"explanation\":\"list.remove(1) removes the item at index 1 (20), leaving [10, 30].\"}",
+    "buggyCode": "import java.util.ArrayList;\n\npublic class Main {\n    public static void main(String[] args) {\n        ArrayList<Integer> list = new ArrayList<>();\n        list.add(10);\n        list.add(20);\n        list.add(30);\n        list.remove(1);\n        System.out.println(list);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q18. Ternary Operator Evaluation",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"20\",\"B\":\"40\",\"C\":\"10\",\"D\":\"30\"},\"explanation\":\"10 > 20 is false, so max is 20. 20 * 2 = 40.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        int a = 10, b = 20;\n        int max = (a > b) ? a : b;\n        System.out.println(max * 2);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q19. StringBuilder Append & Length",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"7 c\",\"B\":\"4 c\",\"C\":\"7 1\",\"D\":\"6 c\"},\"explanation\":\"\\\"code\\\" + \\\"123\\\" has length 7, and the character at index 0 is 'c'.\"}",
+    "buggyCode": "public class Main {\n    public static void main(String[] args) {\n        StringBuilder sb = new StringBuilder(\"code\");\n        sb.append(\"123\");\n        System.out.println(sb.length() + \" \" + sb.charAt(0));\n    }\n}",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "JAVA",
+    "title": "Q20. Static Initialization Block",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Java program?\",\"options\":{\"A\":\"10\",\"B\":\"15\",\"C\":\"5\",\"D\":\"Compilation error\"},\"explanation\":\"The static block executes when the class loads, modifying x from 10 to 15 before main runs.\"}",
+    "buggyCode": "public class Main {\n    static int x = 10;\n    static {\n        x += 5;\n    }\n    public static void main(String[] args) {\n        System.out.println(x);\n    }\n}",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q1. Integer Floor Division vs Float Division",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"4 4.5\",\"B\":\"4.5 4\",\"C\":\"4 4\",\"D\":\"4.5 4.5\"},\"explanation\":\"// performs integer floor division (4), while / returns float division (4.5).\"}",
+    "buggyCode": "print(9 // 2, 9 / 2)",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q2. String Multiplication Operator",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"Go! Go! Go!\",\"B\":\"Go!3\",\"C\":\"Go!Go!Go!\",\"D\":\"Error\"},\"explanation\":\"Multiplying a string by an integer repeats it without extra spaces: \\\"Go!Go!Go!\\\".\"}",
+    "buggyCode": "text = \"Go!\"\nprint(text * 3)",
+    "referenceSolution": "C",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "C",
+        "expectedStdout": "C",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q3. List Slicing Indices",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"[10, 20]\",\"B\":\"[20, 30]\",\"C\":\"[20, 30, 40]\",\"D\":\"[10, 20, 30]\"},\"explanation\":\"nums[1:3] starts at index 1 and stops before index 3, returning [20, 30].\"}",
+    "buggyCode": "nums = [10, 20, 30, 40]\nprint(nums[1:3])",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q4. Negative Indexing in Lists",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"apple\",\"B\":\"banana\",\"C\":\"cherry\",\"D\":\"IndexError\"},\"explanation\":\"Negative index -1 retrieves the last element: \\\"cherry\\\".\"}",
+    "buggyCode": "fruits = [\"apple\", \"banana\", \"cherry\"]\nprint(fruits[-1])",
+    "referenceSolution": "C",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "C",
+        "expectedStdout": "C",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q5. Dictionary get() Default Value",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"None\",\"B\":\"0\",\"C\":\"KeyError\",\"D\":\"85\"},\"explanation\":\"dict.get(key, default) returns default 0 when key \\\"Charlie\\\" is not found.\"}",
+    "buggyCode": "scores = {\"Alice\": 90, \"Bob\": 85}\nprint(scores.get(\"Charlie\", 0))",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q6. List Length with len()",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"4\",\"B\":\"5\",\"C\":\"6\",\"D\":\"0\"},\"explanation\":\"len() returns the count of items in the list, which is 5.\"}",
+    "buggyCode": "items = [1, 2, 3, 4, 5]\nprint(len(items))",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q7. String lower() Method",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"hello\",\"B\":\"HELLO\",\"C\":\"Hello\",\"D\":\"Error\"},\"explanation\":\"str.lower() converts all uppercase characters to lowercase: \\\"hello\\\".\"}",
+    "buggyCode": "msg = \"HELLO\"\nprint(msg.lower())",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q8. List append() Modification",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"[4, 1, 2, 3]\",\"B\":\"[1, 2, 3, 4]\",\"C\":\"[1, 2, 3]\",\"D\":\"None\"},\"explanation\":\"append(4) adds 4 to the end of the list in-place: [1, 2, 3, 4].\"}",
+    "buggyCode": "nums = [1, 2, 3]\nnums.append(4)\nprint(nums)",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q9. Range Function Sequence",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"[1, 2, 3, 4, 5]\",\"B\":\"[1, 2, 3, 4]\",\"C\":\"[0, 1, 2, 3, 4]\",\"D\":\"[1, 5]\"},\"explanation\":\"range(1, 5) generates values starting from 1 up to 4: [1, 2, 3, 4].\"}",
+    "buggyCode": "print(list(range(1, 5)))",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q10. Tuple Packing and Unpacking",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"10 20\",\"B\":\"20 10\",\"C\":\"20 20\",\"D\":\"10 10\"},\"explanation\":\"Tuple unpacking swaps values simultaneously: x = 20 and y = 10.\"}",
+    "buggyCode": "x = 10\ny = 20\nx, y = y, x\nprint(x, y)",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q11. List Slicing Range",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"[1, 2, 3]\",\"B\":\"[2, 3, 4]\",\"C\":\"[2, 3, 4, 5]\",\"D\":\"[1, 2, 3, 4]\"},\"explanation\":\"nums[1:4] extracts indices 1, 2, 3: [2, 3, 4].\"}",
+    "buggyCode": "nums = [1, 2, 3, 4, 5]\nprint(nums[1:4])",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q12. Default Function Parameters",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"Hello, Bob!\",\"B\":\"Bob, Hello!\",\"C\":\"Error\",\"D\":\"None\"},\"explanation\":\"Since msg is not provided, the default parameter \\\"Hello\\\" is used: \\\"Hello, Bob!\\\".\"}",
+    "buggyCode": "def greet(name, msg=\"Hello\"):\n    return f\"{msg}, {name}!\"\n\nprint(greet(\"Bob\"))",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q13. List Reference Assignment",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"3\",\"B\":\"4\",\"C\":\"1\",\"D\":\"AttributeError\"},\"explanation\":\"y refers to the same object as x. Appending to y modifies x: len(x) is 4.\"}",
+    "buggyCode": "x = [1, 2, 3]\ny = x\ny.append(4)\nprint(len(x))",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q14. List Comprehension with Filter",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"[0, 4]\",\"B\":\"[0, 2, 4]\",\"C\":\"[0, 4, 8]\",\"D\":\"[2, 4]\"},\"explanation\":\"range(4) has even numbers 0 and 2. Multiplying by 2 yields [0, 4].\"}",
+    "buggyCode": "vals = [x * 2 for x in range(4) if x % 2 == 0]\nprint(vals)",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q15. List Comprehension with Strings",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"['CAT', 'ELEPHANT', 'DOG']\",\"B\":\"['CAT', 'DOG']\",\"C\":\"['cat', 'dog']\",\"D\":\"['ELEPHANT']\"},\"explanation\":\"Filters words with length <= 3 (\\\"cat\\\", \\\"dog\\\") and converts to uppercase: ['CAT', 'DOG'].\"}",
+    "buggyCode": "words = [\"cat\", \"elephant\", \"dog\"]\nshort = [w.upper() for w in words if len(w) <= 3]\nprint(short)",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q16. Dictionary Key Membership",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"True True\",\"B\":\"True False\",\"C\":\"False True\",\"D\":\"False False\"},\"explanation\":\"\\\"in\\\" on dict checks keys: \\\"a\\\" is a key (True), but 1 is a value, not a key (False).\"}",
+    "buggyCode": "data = {\"a\": 1, \"b\": 2}\nprint(\"a\" in data, 1 in data)",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q17. String Split and Join",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"apple/banana/orange\",\"B\":\"apple/banana\",\"C\":\"apple-banana\",\"D\":\"banana/orange\"},\"explanation\":\"parts[:2] is ['apple', 'banana'], which joined by \\\"/\\\" produces \\\"apple/banana\\\".\"}",
+    "buggyCode": "text = \"apple-banana-orange\"\nparts = text.split(\"-\")\nprint(\"/\".join(parts[:2]))",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q18. List pop() Return Value",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"10 [20, 30]\",\"B\":\"30 [10, 20]\",\"C\":\"30 [10, 20, 30]\",\"D\":\"20 [10, 30]\"},\"explanation\":\"pop() removes and returns the last element (30), leaving [10, 20].\"}",
+    "buggyCode": "nums = [10, 20, 30]\nval = nums.pop()\nprint(val, nums)",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q19. Float Truncation with int()",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"8\",\"B\":\"9\",\"C\":\"8.0\",\"D\":\"ValueError\"},\"explanation\":\"int() truncates the fractional part towards zero, returning integer 8.\"}",
+    "buggyCode": "val = int(8.75)\nprint(val)",
+    "referenceSolution": "A",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "A",
+        "expectedStdout": "A",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 1,
+    "language": "PYTHON",
+    "title": "Q20. Truthiness of Empty List vs List with Zero",
+    "statement": "{\"type\":\"MCQ\",\"prompt\":\"What is the output of the following Python code?\",\"options\":{\"A\":\"False False\",\"B\":\"False True\",\"C\":\"True False\",\"D\":\"True True\"},\"explanation\":\"An empty list [] evaluates to False; a non-empty list [0] evaluates to True.\"}",
+    "buggyCode": "print(bool([]), bool([0]))",
+    "referenceSolution": "B",
+    "points": 10,
+    "timeLimitMs": 1000,
+    "memoryLimitMb": 128,
+    "isTiebreaker": false,
+    "testCases": [
+      {
+        "stdin": "B",
+        "expectedStdout": "B",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  }
+]

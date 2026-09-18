@@ -908,7 +908,7 @@ print(val)`,
   },
 ];
 
-async function seedRound1Questions() {
+export async function seedRound1Questions() {
   console.log('🚀 Seeding exactly 20 MCQs for Round 1 per language (60 MCQs total)...');
 
   const round1 = await prisma.round.findUnique({ where: { number: 1 } });
@@ -978,11 +978,13 @@ async function seedRound1Questions() {
   console.log('✅ Round 1 successfully seeded with 20 questions for C++, 20 for Java, and 20 for Python!');
 }
 
-seedRound1Questions()
-  .catch((e) => {
-    console.error('Failed seeding Round 1:', e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+if (require.main === module) {
+  seedRound1Questions()
+    .catch((e) => {
+      console.error('Failed seeding Round 1:', e);
+      process.exit(1);
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
+}

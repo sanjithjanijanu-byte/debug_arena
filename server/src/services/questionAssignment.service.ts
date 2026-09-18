@@ -77,10 +77,9 @@ export async function assignQuestionsForTeam(
       language,
       isTiebreaker: false,
     },
-    select: { id: true, points: true, createdAt: true },
+    select: { id: true, title: true, points: true, createdAt: true },
     orderBy: [
-      { points: 'asc' },
-      { createdAt: 'asc' },
+      { title: 'asc' },
       { id: 'asc' },
     ],
   });
@@ -89,36 +88,15 @@ export async function assignQuestionsForTeam(
     return [];
   }
 
-  // Determine target questions per team and number of sets
-  // Round 1 (MCQ): typically 4 or 5 questions per set
-  // Round 2/3 (Coding): typically 2 or 4 questions per set depending on pool size
-  let targetPerTeam = 4;
-  if (round.number === 1) {
-    targetPerTeam = availableQuestions.length >= 20 ? 4 : (availableQuestions.length >= 10 ? 5 : availableQuestions.length);
-  } else {
-    // Round 2 or Round 3
-    if (availableQuestions.length >= 8) {
-      targetPerTeam = 4;
-    } else if (availableQuestions.length >= 4) {
-      targetPerTeam = 2;
-    } else {
-      targetPerTeam = availableQuestions.length;
-    }
-  }
+  // Sort naturally by question number (Q1, Q2, ..., Q20)
+  availableQuestions.sort((a, b) => {
+    const numA = parseInt((a.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+    const numB = parseInt((b.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+    return numA - numB;
+  });
 
-  const numSets = Math.max(1, Math.floor(availableQuestions.length / targetPerTeam));
-  const setIndex = getTeamSetIndex(team, numSets);
-
-  // Chunked partition: Set 0 gets [0..target-1], Set 1 gets [target..2*target-1], etc.
-  const startIndex = setIndex * targetPerTeam;
-  let selected = availableQuestions.slice(startIndex, startIndex + targetPerTeam);
-
-  // Fallback in case chunk is empty
-  if (selected.length === 0) {
-    selected = availableQuestions.slice(0, targetPerTeam);
-  }
-
-  const questionIds = selected.map((q) => q.id);
+  // Assign ALL available questions to each team (all 20 MCQs for Round 1)
+  const questionIds = availableQuestions.map((q) => q.id);
 
   // Persist assignments in database
   const assignmentsData = questionIds.map((qId) => ({
@@ -138,7 +116,7 @@ export async function assignQuestionsForTeam(
 
 /**
  * Returns existing assigned question IDs for a team in a round.
- * If no assignments exist yet, generates and persists a distinct set.
+ * If no assignments exist yet or fewer questions were assigned, generates all assignments.
  */
 export async function ensureTeamQuestionAssignments(
   teamId: string,
@@ -156,11 +134,26 @@ export async function ensureTeamQuestionAssignments(
     select: { questionId: true },
   });
 
-  if (existing.length > 0) {
+  const totalCandidateQuestions = await prisma.question.count({
+    where: { roundId, language, isTiebreaker: false },
+  });
+
+  // If already assigned all candidate questions, return them
+  if (existing.length >= totalCandidateQuestions && existing.length > 0) {
     return existing.map((a) => a.questionId);
   }
 
-  // No assignments exist yet: assign distinct set now
+  // Otherwise (e.g. previously only 4 questions were assigned), re-assign all questions
+  await prisma.assignment.deleteMany({
+    where: {
+      teamId,
+      question: {
+        roundId,
+        language,
+      },
+    },
+  });
+
   return await assignQuestionsForTeam(teamId, roundId, language);
 }
 
@@ -248,33 +241,12 @@ export function getShuffledMcqOptions(
   originalOptions: { [key: string]: string }
 ): ShuffledMcq {
   const origKeys = Object.keys(originalOptions).sort(); // e.g. ['A', 'B', 'C', 'D']
-  if (origKeys.length <= 1) {
-    const idMap = origKeys.reduce((acc, k) => ({ ...acc, [k]: k }), {} as { [k: string]: string });
-    return {
-      shuffledOptions: originalOptions,
-      displayToOriginalMap: idMap,
-      originalToDisplayMap: idMap,
-    };
-  }
-
-  const seed = `${teamId}_q_${questionId}_options_v2`;
-  const shuffledOrigKeys = shuffleArray(origKeys, seed);
-
-  const displayToOriginalMap: { [displayKey: string]: string } = {};
-  const originalToDisplayMap: { [origKey: string]: string } = {};
-  const shuffledOptions: { [displayKey: string]: string } = {};
-
-  origKeys.forEach((displayKey, idx) => {
-    const origKey = shuffledOrigKeys[idx];
-    displayToOriginalMap[displayKey] = origKey;
-    originalToDisplayMap[origKey] = displayKey;
-    shuffledOptions[displayKey] = originalOptions[origKey];
-  });
+  const idMap = origKeys.reduce((acc, k) => ({ ...acc, [k]: k }), {} as { [k: string]: string });
 
   return {
-    shuffledOptions,
-    displayToOriginalMap,
-    originalToDisplayMap,
+    shuffledOptions: originalOptions,
+    displayToOriginalMap: idMap,
+    originalToDisplayMap: idMap,
   };
 }
 

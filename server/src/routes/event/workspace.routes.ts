@@ -161,9 +161,12 @@ router.get('/questions', async (req: Request, res: Response, next: NextFunction)
       orderBy: { pointsAwarded: 'desc' },
     });
 
-    // Deterministically shuffle question order for this team in this active round
-    const qOrderSeed = `${team.teamId}_round_${activeRound.id}_q_order_v2`;
-    const orderedQuestions = shuffleArray(questions, qOrderSeed);
+    // Sort questions naturally by question number (Q1, Q2, ..., Q20)
+    const orderedQuestions = [...questions].sort((a: any, b: any) => {
+      const numA = parseInt((a.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+      const numB = parseInt((b.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+      return numA - numB;
+    });
 
     const enrichedQuestions = orderedQuestions.map((q: any, index: number) => {
       const draft = drafts.find((d: any) => d.questionId === q.id);

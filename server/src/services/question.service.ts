@@ -37,7 +37,7 @@ export async function getAllQuestions(filters?: {
     where.round = { difficulty: filters.difficulty };
   }
 
-  return prisma.question.findMany({
+  const questions = await prisma.question.findMany({
     where,
     include: {
       round: true,
@@ -56,6 +56,19 @@ export async function getAllQuestions(filters?: {
       { language: 'asc' },
       { points: 'asc' },
     ],
+  });
+
+  return questions.sort((a, b) => {
+    if (a.round?.number !== b.round?.number) {
+      return (a.round?.number || 0) - (b.round?.number || 0);
+    }
+    if (a.language !== b.language) {
+      return a.language.localeCompare(b.language);
+    }
+    const numA = parseInt((a.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+    const numB = parseInt((b.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
+    if (numA !== numB) return numA - numB;
+    return a.title.localeCompare(b.title);
   });
 }
 

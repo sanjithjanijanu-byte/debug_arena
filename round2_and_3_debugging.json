@@ -1,0 +1,662 @@
+[
+  {
+    "roundNumber": 2,
+    "language": "PYTHON",
+    "title": "Valid Parentheses & Bracket Matching",
+    "statement": "Given a string containing only brackets \"()[]{}\", determine if the input string is valid. Open brackets must be closed in the correct order.",
+    "buggyCode": "import sys\n\ndef is_valid(s):\n    stack = []\n    # BUG: mapping key/value inverted and closing logic incorrect\n    mapping = {\")\": \"(\", \"}\": \"{\", \"]\": \"[\"}\n    for char in s:\n        if char in mapping:\n            stack.append(char)\n        else:\n            if not stack: return False\n            stack.pop()\n    return len(stack) == 0\n\ns = sys.stdin.read().strip()\nprint(\"true\" if is_valid(s) else \"false\")\n",
+    "referenceSolution": "import sys\n\ndef is_valid(s):\n    stack = []\n    mapping = {\")\": \"(\", \"}\": \"{\", \"]\": \"[\"}\n    for char in s:\n        if char in mapping:\n            top = stack.pop() if stack else '#'\n            if mapping[char] != top:\n                return False\n        else:\n            stack.append(char)\n    return not stack\n\ns = sys.stdin.read().strip()\nprint(\"true\" if is_valid(s) else \"false\")\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "()[]{}",
+        "expectedStdout": "true",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "(]",
+        "expectedStdout": "false",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "([{}])",
+        "expectedStdout": "true",
+        "isHidden": true,
+        "weight": 2
+      },
+      {
+        "stdin": "((((((((",
+        "expectedStdout": "false",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "PYTHON",
+    "title": "Two Sum Target Index Pair",
+    "statement": "Given a target sum T and an array of integers, print the 0-based indices of the two numbers that add up to T. Print smaller index first.",
+    "buggyCode": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\ntarget = tokens[0]\nnums = tokens[1:]\n\n# BUG: Does not guard against using the exact same element index twice\nseen = {val: i for i, val in enumerate(nums)}\nfor i, num in enumerate(nums):\n    diff = target - num\n    if diff in seen:\n        print(f\"{i} {seen[diff]}\")\n        break\n",
+    "referenceSolution": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\nif not tokens:\n    sys.exit(0)\ntarget = tokens[0]\nnums = tokens[1:]\n\nseen = {}\nfor i, num in enumerate(nums):\n    diff = target - num\n    if diff in seen:\n        print(f\"{seen[diff]} {i}\")\n        break\n    seen[num] = i\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "9 2 7 11 15",
+        "expectedStdout": "0 1",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "6 3 2 4",
+        "expectedStdout": "1 2",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "6 3 3",
+        "expectedStdout": "0 1",
+        "isHidden": true,
+        "weight": 2
+      },
+      {
+        "stdin": "10 1 2 3 4 5 5",
+        "expectedStdout": "4 5",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "PYTHON",
+    "title": "Longest Substring Without Repeating Characters",
+    "statement": "Find the length of the longest substring without duplicate characters.",
+    "buggyCode": "import sys\n\ns = sys.stdin.read().strip()\nmax_len = 0\nleft = 0\nseen = set()\n\nfor right in range(len(s)):\n    # BUG: Sets left pointer unconditionally without removing evicted items from seen\n    if s[right] in seen:\n        left = right\n        seen.clear()\n    seen.add(s[right])\n    max_len = max(max_len, right - left + 1)\n\nprint(max_len)\n",
+    "referenceSolution": "import sys\n\ns = sys.stdin.read().strip()\nseen = {}\nmax_len = 0\nleft = 0\n\nfor right, char in enumerate(s):\n    if char in seen and seen[char] >= left:\n        left = seen[char] + 1\n    seen[char] = right\n    max_len = max(max_len, right - left + 1)\n\nprint(max_len)\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "abcabcbb",
+        "expectedStdout": "3",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "bbbbb",
+        "expectedStdout": "1",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "pwwkew",
+        "expectedStdout": "3",
+        "isHidden": true,
+        "weight": 2
+      },
+      {
+        "stdin": "dvdf",
+        "expectedStdout": "3",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "PYTHON",
+    "title": "Merge Overlapping Intervals",
+    "statement": "Given N intervals [start, end], merge all overlapping intervals and print each merged interval.",
+    "buggyCode": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\nif not tokens: sys.exit(0)\nn = tokens[0]\nraw = tokens[1:]\nintervals = []\nfor i in range(0, 2*n, 2):\n    intervals.append([raw[i], raw[i+1]])\n\n# BUG: Does not sort intervals prior to merging\nmerged = [intervals[0]]\nfor current in intervals[1:]:\n    prev = merged[-1]\n    if current[0] <= prev[1]:\n        prev[1] = max(prev[1], current[1])\n    else:\n        merged.append(current)\n\nfor interval in merged:\n    print(f\"{interval[0]} {interval[1]}\")\n",
+    "referenceSolution": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\nif not tokens: sys.exit(0)\nn = tokens[0]\nraw = tokens[1:]\nintervals = []\nfor i in range(0, 2*n, 2):\n    intervals.append([raw[i], raw[i+1]])\n\nintervals.sort(key=lambda x: x[0])\nmerged = [intervals[0]]\nfor current in intervals[1:]:\n    prev = merged[-1]\n    if current[0] <= prev[1]:\n        prev[1] = max(prev[1], current[1])\n    else:\n        merged.append(current)\n\nfor interval in merged:\n    print(f\"{interval[0]} {interval[1]}\")\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "4 1 3 2 6 8 10 15 18",
+        "expectedStdout": "1 6\n8 10\n15 18",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "2 1 4 4 5",
+        "expectedStdout": "1 5",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "3 6 8 1 9 2 4",
+        "expectedStdout": "1 9",
+        "isHidden": true,
+        "weight": 2
+      },
+      {
+        "stdin": "1 1 4",
+        "expectedStdout": "1 4",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "PYTHON",
+    "title": "Trapping Rain Water Calculation",
+    "statement": "Given N elevation map heights, compute how much water it can trap after raining.",
+    "buggyCode": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\nif len(tokens) <= 2:\n    print(0)\n    sys.exit(0)\n\n# BUG: Two-pointer boundary advancement checks the wrong side\nheight = tokens\nleft, right = 0, len(height) - 1\nleft_max, right_max = height[left], height[right]\nwater = 0\n\nwhile left < right:\n    if left_max > right_max:\n        left += 1\n        left_max = max(left_max, height[left])\n        water += max(0, left_max - height[left])\n    else:\n        right -= 1\n        right_max = max(right_max, height[right])\n        water += max(0, right_max - height[right])\n\nprint(water)\n",
+    "referenceSolution": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\nif len(tokens) <= 2:\n    print(0)\n    sys.exit(0)\n\nheight = tokens\nleft, right = 0, len(height) - 1\nleft_max, right_max = height[left], height[right]\nwater = 0\n\nwhile left < right:\n    if left_max < right_max:\n        left += 1\n        left_max = max(left_max, height[left])\n        water += max(0, left_max - height[left])\n    else:\n        right -= 1\n        right_max = max(right_max, height[right])\n        water += max(0, right_max - height[right])\n\nprint(water)\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "0 1 0 2 1 0 1 3 2 1 2 1",
+        "expectedStdout": "6",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "4 2 0 3 2 5",
+        "expectedStdout": "9",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1 2 3 4 5",
+        "expectedStdout": "0",
+        "isHidden": true,
+        "weight": 2
+      },
+      {
+        "stdin": "5 4 1 2",
+        "expectedStdout": "1",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "PYTHON",
+    "title": "LRU Cache Access Simulator",
+    "statement": "Implement an LRU cache with capacity C. Commands: PUT k v, GET k. Output values for GET or -1 if absent.",
+    "buggyCode": "import sys\nfrom collections import OrderedDict\n\nlines = sys.stdin.read().strip().splitlines()\nif not lines: sys.exit(0)\n\ncapacity = int(lines[0])\ncache = OrderedDict()\n\nfor line in lines[1:]:\n    parts = line.split()\n    if parts[0] == 'PUT':\n        k, v = int(parts[1]), int(parts[2])\n        # BUG: Does not move existing key to end on update or pop properly\n        if len(cache) >= capacity and k not in cache:\n            cache.popitem(last=True) # Popping wrong end!\n        cache[k] = v\n    elif parts[0] == 'GET':\n        k = int(parts[1])\n        if k in cache:\n            print(cache[k])\n        else:\n            print(-1)\n",
+    "referenceSolution": "import sys\nfrom collections import OrderedDict\n\nlines = sys.stdin.read().strip().splitlines()\nif not lines: sys.exit(0)\n\ncapacity = int(lines[0])\ncache = OrderedDict()\n\nfor line in lines[1:]:\n    parts = line.split()\n    if parts[0] == 'PUT':\n        k, v = int(parts[1]), int(parts[2])\n        if k in cache:\n            cache.move_to_end(k)\n        cache[k] = v\n        if len(cache) > capacity:\n            cache.popitem(last=False)\n    elif parts[0] == 'GET':\n        k = int(parts[1])\n        if k in cache:\n            cache.move_to_end(k)\n            print(cache[k])\n        else:\n            print(-1)\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "2\nPUT 1 1\nPUT 2 2\nGET 1\nPUT 3 3\nGET 2\nGET 3",
+        "expectedStdout": "1\n-1\n3",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1\nPUT 2 1\nGET 2\nPUT 3 2\nGET 2\nGET 3",
+        "expectedStdout": "1\n-1\n2",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "PYTHON",
+    "title": "Minimum Path Sum in a Grid",
+    "statement": "Given an M x N grid with non-negative integers, find a path from top-left to bottom-right minimizing the sum of values along its path.",
+    "buggyCode": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\nif not tokens: sys.exit(0)\nm, n = tokens[0], tokens[1]\ngrid = []\nidx = 2\nfor _ in range(m):\n    grid.append(tokens[idx:idx+n])\n    idx += n\n\ndp = [[0]*n for _ in range(m)]\ndp[0][0] = grid[0][0]\n\n# BUG: Fails to accumulate values along boundaries\nfor i in range(1, m):\n    dp[i][0] = grid[i][0]\nfor j in range(1, n):\n    dp[0][j] = grid[0][j]\n\nfor i in range(1, m):\n    for j in range(1, n):\n        dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])\n\nprint(dp[m-1][n-1])\n",
+    "referenceSolution": "import sys\n\ntokens = list(map(int, sys.stdin.read().split()))\nif not tokens: sys.exit(0)\nm, n = tokens[0], tokens[1]\ngrid = []\nidx = 2\nfor _ in range(m):\n    grid.append(tokens[idx:idx+n])\n    idx += n\n\ndp = [[0]*n for _ in range(m)]\ndp[0][0] = grid[0][0]\n\nfor i in range(1, m):\n    dp[i][0] = dp[i-1][0] + grid[i][0]\nfor j in range(1, n):\n    dp[0][j] = dp[0][j-1] + grid[0][j]\n\nfor i in range(1, m):\n    for j in range(1, n):\n        dp[i][j] = grid[i][j] + min(dp[i-1][j], dp[i][j-1])\n\nprint(dp[m-1][n-1])\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "3 3\n1 3 1\n1 5 1\n4 2 1",
+        "expectedStdout": "7",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "2 3\n1 2 3\n4 5 6",
+        "expectedStdout": "12",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "PYTHON",
+    "title": "Sliding Window Maximum Deque",
+    "statement": "Given an array of integers and a sliding window of size K, output the maximum value in each window from left to right.",
+    "buggyCode": "import sys\nfrom collections import deque\n\ntokens = list(map(int, sys.stdin.read().split()))\nif not tokens: sys.exit(0)\nk = tokens[0]\nnums = tokens[1:]\n\ndq = deque()\nres = []\n\nfor i, x in enumerate(nums):\n    # BUG: Compares index instead of value when popping from back\n    while dq and dq[-1] < x:\n        dq.pop()\n    dq.append(x)\n    if i >= k - 1:\n        res.append(dq[0])\n\nprint(\" \".join(map(str, res)))\n",
+    "referenceSolution": "import sys\nfrom collections import deque\n\ntokens = list(map(int, sys.stdin.read().split()))\nif not tokens: sys.exit(0)\nk = tokens[0]\nnums = tokens[1:]\n\ndq = deque() # Stores indices\nres = []\n\nfor i in range(len(nums)):\n    while dq and dq[0] < i - k + 1:\n        dq.popleft()\n    while dq and nums[dq[-1]] < nums[i]:\n        dq.pop()\n    dq.append(i)\n    if i >= k - 1:\n        res.append(nums[dq[0]])\n\nprint(\" \".join(map(str, res)))\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "3 1 3 -1 -3 5 3 6 7",
+        "expectedStdout": "3 3 5 5 6 7",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1 1",
+        "expectedStdout": "1",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "JAVA",
+    "title": "Rotate Array by K Steps",
+    "statement": "Given N and K, followed by N integers, rotate the array to the right by K steps.",
+    "buggyCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int k = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n\n        // BUG: Does not reduce k modulo n causing array out of bounds if k > n\n        int[] rotated = new int[n];\n        for (int i = 0; i < n; i++) {\n            rotated[(i + k)] = arr[i];\n        }\n\n        for (int i = 0; i < n; i++) System.out.print(rotated[i] + (i == n - 1 ? \"\" : \" \"));\n        System.out.println();\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int k = sc.nextInt();\n        int[] arr = new int[n];\n        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();\n\n        k = k % n;\n        int[] rotated = new int[n];\n        for (int i = 0; i < n; i++) {\n            rotated[(i + k) % n] = arr[i];\n        }\n\n        for (int i = 0; i < n; i++) System.out.print(rotated[i] + (i == n - 1 ? \"\" : \" \"));\n        System.out.println();\n    }\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "7 3\n1 2 3 4 5 6 7",
+        "expectedStdout": "5 6 7 1 2 3 4",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "4 2\n-1 -100 3 99",
+        "expectedStdout": "3 99 -1 -100",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "3 5\n1 2 3",
+        "expectedStdout": "2 3 1",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "JAVA",
+    "title": "Subarray Sum Equals K Counter",
+    "statement": "Given N integers and an integer K, return the total number of continuous subarrays whose sum equals K.",
+    "buggyCode": "import java.util.Scanner;\nimport java.util.HashMap;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int k = sc.nextInt();\n        int[] nums = new int[n];\n        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();\n\n        // BUG: HashMap not seeded with (0, 1) base prefix\n        HashMap<Integer, Integer> map = new HashMap<>();\n        int count = 0, sum = 0;\n        for (int x : nums) {\n            sum += x;\n            if (map.containsKey(sum - k)) {\n                count += map.get(sum - k);\n            }\n            map.put(sum, map.getOrDefault(sum, 0) + 1);\n        }\n        System.out.println(count);\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.HashMap;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int k = sc.nextInt();\n        int[] nums = new int[n];\n        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();\n\n        HashMap<Integer, Integer> map = new HashMap<>();\n        map.put(0, 1);\n        int count = 0, sum = 0;\n        for (int x : nums) {\n            sum += x;\n            if (map.containsKey(sum - k)) {\n                count += map.get(sum - k);\n            }\n            map.put(sum, map.getOrDefault(sum, 0) + 1);\n        }\n        System.out.println(count);\n    }\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "3 2\n1 1 1",
+        "expectedStdout": "2",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "3 3\n1 2 3",
+        "expectedStdout": "2",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "5 0\n0 0 0 0 0",
+        "expectedStdout": "15",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "JAVA",
+    "title": "Binary Search in Rotated Sorted Array",
+    "statement": "Given N integers sorted in ascending order and rotated at an unknown pivot, find the index of target value. Return -1 if absent.",
+    "buggyCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int target = sc.nextInt();\n        int[] nums = new int[n];\n        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();\n\n        int l = 0, r = n - 1;\n        int ans = -1;\n        while (l <= r) {\n            int mid = l + (r - l) / 2;\n            if (nums[mid] == target) { ans = mid; break; }\n            // BUG: Misjudges which half of the array is uniformly sorted\n            if (nums[l] < nums[mid]) {\n                if (target >= nums[l] && target < nums[mid]) r = mid - 1;\n                else l = mid + 1;\n            } else {\n                if (target > nums[mid] && target <= nums[r]) l = mid + 1;\n                else r = mid - 1;\n            }\n        }\n        System.out.println(ans);\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int target = sc.nextInt();\n        int[] nums = new int[n];\n        for (int i = 0; i < n; i++) nums[i] = sc.nextInt();\n\n        int l = 0, r = n - 1;\n        int ans = -1;\n        while (l <= r) {\n            int mid = l + (r - l) / 2;\n            if (nums[mid] == target) { ans = mid; break; }\n            if (nums[l] <= nums[mid]) {\n                if (target >= nums[l] && target < nums[mid]) r = mid - 1;\n                else l = mid + 1;\n            } else {\n                if (target > nums[mid] && target <= nums[r]) l = mid + 1;\n                else r = mid - 1;\n            }\n        }\n        System.out.println(ans);\n    }\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "7 0\n4 5 6 7 0 1 2",
+        "expectedStdout": "4",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "7 3\n4 5 6 7 0 1 2",
+        "expectedStdout": "-1",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1 0\n1",
+        "expectedStdout": "-1",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "JAVA",
+    "title": "Group Anagrams Array",
+    "statement": "Read N strings. Group the anagrams together and output the number of distinct anagram groups.",
+    "buggyCode": "import java.util.Scanner;\nimport java.util.HashSet;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        // BUG: Uses simple length as hash causing words of same length to group together\n        HashSet<Integer> lengths = new HashSet<>();\n        for (int i = 0; i < n; i++) {\n            String s = sc.next();\n            lengths.add(s.length());\n        }\n        System.out.println(lengths.size());\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.HashSet;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        HashSet<String> groups = new HashSet<>();\n        for (int i = 0; i < n; i++) {\n            char[] chars = sc.next().toCharArray();\n            Arrays.sort(chars);\n            groups.add(new String(chars));\n        }\n        System.out.println(groups.size());\n    }\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "6 eat tea tan ate nat bat",
+        "expectedStdout": "3",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1 a",
+        "expectedStdout": "1",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "3 ab cd ef",
+        "expectedStdout": "3",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "JAVA",
+    "title": "Coin Change Minimum Coins",
+    "statement": "Given coin denominations and an amount, find the fewest coins needed to make up that amount. Return -1 if not possible.",
+    "buggyCode": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int n = sc.nextInt();\n        int amount = sc.nextInt();\n        int[] coins = new int[n];\n        for (int i = 0; i < n; i++) coins[i] = sc.nextInt();\n\n        int[] dp = new int[amount + 1];\n        // BUG: Initialized to Integer.MAX_VALUE causing integer overflow on + 1\n        Arrays.fill(dp, Integer.MAX_VALUE);\n        dp[0] = 0;\n\n        for (int i = 1; i <= amount; i++) {\n            for (int coin : coins) {\n                if (i - coin >= 0) {\n                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);\n                }\n            }\n        }\n        System.out.println(dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount]);\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.Arrays;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int n = sc.nextInt();\n        int amount = sc.nextInt();\n        int[] coins = new int[n];\n        for (int i = 0; i < n; i++) coins[i] = sc.nextInt();\n\n        int[] dp = new int[amount + 1];\n        Arrays.fill(dp, amount + 1);\n        dp[0] = 0;\n\n        for (int i = 1; i <= amount; i++) {\n            for (int coin : coins) {\n                if (i - coin >= 0) {\n                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);\n                }\n            }\n        }\n        System.out.println(dp[amount] > amount ? -1 : dp[amount]);\n    }\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "3 11\n1 2 5",
+        "expectedStdout": "3",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1 3\n2",
+        "expectedStdout": "-1",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1 0\n1",
+        "expectedStdout": "0",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "JAVA",
+    "title": "Word Break Segmentation Check",
+    "statement": "Given a target string S and a dictionary of N words, print \"true\" if S can be segmented into a space-separated sequence of dictionary words.",
+    "buggyCode": "import java.util.Scanner;\nimport java.util.HashSet;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        String s = sc.next();\n        int n = sc.nextInt();\n        HashSet<String> dict = new HashSet<>();\n        for (int i = 0; i < n; i++) dict.add(sc.next());\n\n        boolean[] dp = new boolean[s.length() + 1];\n        // BUG: Base condition dp[0] not set to true\n        for (int i = 1; i <= s.length(); i++) {\n            for (int j = 0; j < i; j++) {\n                if (dp[j] && dict.contains(s.substring(j, i))) {\n                    dp[i] = true;\n                    break;\n                }\n            }\n        }\n        System.out.println(dp[s.length()] ? \"true\" : \"false\");\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.HashSet;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNext()) return;\n        String s = sc.next();\n        int n = sc.nextInt();\n        HashSet<String> dict = new HashSet<>();\n        for (int i = 0; i < n; i++) dict.add(sc.next());\n\n        boolean[] dp = new boolean[s.length() + 1];\n        dp[0] = true;\n        for (int i = 1; i <= s.length(); i++) {\n            for (int j = 0; j < i; j++) {\n                if (dp[j] && dict.contains(s.substring(j, i))) {\n                    dp[i] = true;\n                    break;\n                }\n            }\n        }\n        System.out.println(dp[s.length()] ? \"true\" : \"false\");\n    }\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "leetcode 2\nleet code",
+        "expectedStdout": "true",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "applepenapple 2\napple pen",
+        "expectedStdout": "true",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "catsandog 5\ncats dog sand and cat",
+        "expectedStdout": "false",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "JAVA",
+    "title": "Course Schedule Cycle Detection",
+    "statement": "There are N courses labeled 0 to N-1 with prerequisites [a, b]. Print \"true\" if you can finish all courses without cyclic dependencies, else \"false\".",
+    "buggyCode": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.LinkedList;\nimport java.util.Queue;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int numCourses = sc.nextInt();\n        int p = sc.nextInt();\n        int[] inDegree = new int[numCourses];\n        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();\n        for (int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());\n\n        for (int i = 0; i < p; i++) {\n            int dest = sc.nextInt();\n            int src = sc.nextInt();\n            adj.get(src).add(dest);\n            // BUG: inDegree increments on source instead of destination\n            inDegree[src]++;\n        }\n\n        Queue<Integer> q = new LinkedList<>();\n        for (int i = 0; i < numCourses; i++) {\n            if (inDegree[i] == 0) q.offer(i);\n        }\n\n        int count = 0;\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n            count++;\n            for (int next : adj.get(curr)) {\n                if (--inDegree[next] == 0) q.offer(next);\n            }\n        }\n        System.out.println(count == numCourses ? \"true\" : \"false\");\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\nimport java.util.ArrayList;\nimport java.util.LinkedList;\nimport java.util.Queue;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int numCourses = sc.nextInt();\n        int p = sc.nextInt();\n        int[] inDegree = new int[numCourses];\n        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();\n        for (int i = 0; i < numCourses; i++) adj.add(new ArrayList<>());\n\n        for (int i = 0; i < p; i++) {\n            int dest = sc.nextInt();\n            int src = sc.nextInt();\n            adj.get(src).add(dest);\n            inDegree[dest]++;\n        }\n\n        Queue<Integer> q = new LinkedList<>();\n        for (int i = 0; i < numCourses; i++) {\n            if (inDegree[i] == 0) q.offer(i);\n        }\n\n        int count = 0;\n        while (!q.isEmpty()) {\n            int curr = q.poll();\n            count++;\n            for (int next : adj.get(curr)) {\n                if (--inDegree[next] == 0) q.offer(next);\n            }\n        }\n        System.out.println(count == numCourses ? \"true\" : \"false\");\n    }\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "2 1\n1 0",
+        "expectedStdout": "true",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "2 2\n1 0\n0 1",
+        "expectedStdout": "false",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "JAVA",
+    "title": "Median of Two Sorted Arrays",
+    "statement": "Given two sorted arrays of size M and N, return the median formatted with one decimal place.",
+    "buggyCode": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        int m = sc.nextInt();\n        int n = sc.nextInt();\n        int[] nums1 = new int[m];\n        for (int i = 0; i < m; i++) nums1[i] = sc.nextInt();\n        int[] nums2 = new int[n];\n        for (int i = 0; i < n; i++) nums2[i] = sc.nextInt();\n\n        int[] merged = new int[m + n];\n        int i = 0, j = 0, k = 0;\n        while (i < m && j < n) {\n            if (nums1[i] <= nums2[j]) merged[k++] = nums1[i++];\n            else merged[k++] = nums2[j++];\n        }\n        while (i < m) merged[k++] = nums1[i++];\n        while (j < n) merged[k++] = nums2[j++];\n\n        int total = m + n;\n        // BUG: Integer division truncates decimals\n        if (total % 2 == 1) {\n            System.out.printf(\"%.1f\\n\", (double)merged[total / 2]);\n        } else {\n            System.out.printf(\"%.1f\\n\", (double)((merged[total / 2 - 1] + merged[total / 2]) / 2));\n        }\n    }\n}\n",
+    "referenceSolution": "import java.util.Scanner;\n\npublic class Main {\n    public static void main(String[] args) {\n        Scanner sc = new Scanner(System.in);\n        if (!sc.hasNextInt()) return;\n        int m = sc.nextInt();\n        int n = sc.nextInt();\n        int[] nums1 = new int[m];\n        for (int i = 0; i < m; i++) nums1[i] = sc.nextInt();\n        int[] nums2 = new int[n];\n        for (int i = 0; i < n; i++) nums2[i] = sc.nextInt();\n\n        int[] merged = new int[m + n];\n        int i = 0, j = 0, k = 0;\n        while (i < m && j < n) {\n            if (nums1[i] <= nums2[j]) merged[k++] = nums1[i++];\n            else merged[k++] = nums2[j++];\n        }\n        while (i < m) merged[k++] = nums1[i++];\n        while (j < n) merged[k++] = nums2[j++];\n\n        int total = m + n;\n        if (total % 2 == 1) {\n            System.out.printf(\"%.1f\\n\", (double)merged[total / 2]);\n        } else {\n            System.out.printf(\"%.1f\\n\", (merged[total / 2 - 1] + merged[total / 2]) / 2.0);\n        }\n    }\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "2 1\n1 3\n2",
+        "expectedStdout": "2.0",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "2 2\n1 2\n3 4",
+        "expectedStdout": "2.5",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "CPP",
+    "title": "Kadane Maximum Subarray",
+    "statement": "Given an array of N integers, find the contiguous subarray with the largest sum and print its sum.",
+    "buggyCode": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // BUG: max_so_far initialized to 0 fails on all-negative array\n    int max_so_far = 0;\n    int curr_max = 0;\n    for (int x : a) {\n        curr_max = max(x, curr_max + x);\n        max_so_far = max(max_so_far, curr_max);\n    }\n    cout << max_so_far << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    int max_so_far = a[0];\n    int curr_max = a[0];\n    for (size_t i = 1; i < a.size(); i++) {\n        curr_max = max(a[i], curr_max + a[i]);\n        max_so_far = max(max_so_far, curr_max);\n    }\n    cout << max_so_far << endl;\n    return 0;\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "9\n-2 1 -3 4 -1 2 1 -5 4",
+        "expectedStdout": "6",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "5\n-1 -2 -3 -4 -5",
+        "expectedStdout": "-1",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "CPP",
+    "title": "Binary Search Lower Bound Index",
+    "statement": "Given a sorted array of N elements and a target X, print the 0-based index of the first element >= X. Print N if no such element.",
+    "buggyCode": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int n, x;\n    if (!(cin >> n >> x)) return 0;\n    vector<int> arr(n);\n    for (int i = 0; i < n; i++) cin >> arr[i];\n\n    int l = 0, r = n - 1, ans = n;\n    while (l <= r) {\n        int mid = l + (r - l) / 2;\n        // BUG: Uses strict > instead of >=\n        if (arr[mid] > x) {\n            ans = mid;\n            r = mid - 1;\n        } else {\n            l = mid + 1;\n        }\n    }\n    cout << ans << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int n, x;\n    if (!(cin >> n >> x)) return 0;\n    vector<int> arr(n);\n    for (int i = 0; i < n; i++) cin >> arr[i];\n\n    int l = 0, r = n - 1, ans = n;\n    while (l <= r) {\n        int mid = l + (r - l) / 2;\n        if (arr[mid] >= x) {\n            ans = mid;\n            r = mid - 1;\n        } else {\n            l = mid + 1;\n        }\n    }\n    cout << ans << endl;\n    return 0;\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "5 3\n1 2 3 4 5",
+        "expectedStdout": "2",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "4 6\n1 2 3 4",
+        "expectedStdout": "4",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "CPP",
+    "title": "Remove Duplicates from Sorted Array",
+    "statement": "Given sorted N integers, remove duplicates in-place and print the new length followed by the unique elements.",
+    "buggyCode": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<int> arr(n);\n    for (int i = 0; i < n; i++) cin >> arr[i];\n\n    // BUG: Index update out of sync\n    int k = 1;\n    for (int i = 1; i < n; i++) {\n        if (arr[i] != arr[i - 1]) {\n            arr[k++] = arr[i];\n        }\n    }\n    cout << k << \"\\n\";\n    for (int i = 0; i < k; i++) cout << arr[i] << (i == k - 1 ? \"\" : \" \");\n    cout << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <vector>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    if (n == 0) { cout << 0 << endl; return 0; }\n    vector<int> arr(n);\n    for (int i = 0; i < n; i++) cin >> arr[i];\n\n    int k = 1;\n    for (int i = 1; i < n; i++) {\n        if (arr[i] != arr[i - 1]) {\n            arr[k++] = arr[i];\n        }\n    }\n    cout << k << \"\\n\";\n    for (int i = 0; i < k; i++) cout << arr[i] << (i == k - 1 ? \"\" : \" \");\n    cout << endl;\n    return 0;\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "5\n1 1 2 2 3",
+        "expectedStdout": "3\n1 2 3",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "1\n10",
+        "expectedStdout": "1\n10",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 2,
+    "language": "CPP",
+    "title": "3Sum Zero Triplets Count",
+    "statement": "Given N integers, return the count of unique triplets [a, b, c] such that a + b + c = 0.",
+    "buggyCode": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    sort(nums.begin(), nums.end());\n    int count = 0;\n\n    for (int i = 0; i < n - 2; i++) {\n        // BUG: Does not skip duplicate values of nums[i]\n        int l = i + 1, r = n - 1;\n        while (l < r) {\n            int sum = nums[i] + nums[l] + nums[r];\n            if (sum == 0) {\n                count++;\n                l++; r--;\n            } else if (sum < 0) l++;\n            else r--;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<int> nums(n);\n    for (int i = 0; i < n; i++) cin >> nums[i];\n\n    sort(nums.begin(), nums.end());\n    int count = 0;\n\n    for (int i = 0; i < n - 2; i++) {\n        if (i > 0 && nums[i] == nums[i - 1]) continue;\n        int l = i + 1, r = n - 1;\n        while (l < r) {\n            int sum = nums[i] + nums[l] + nums[r];\n            if (sum == 0) {\n                count++;\n                while (l < r && nums[l] == nums[l + 1]) l++;\n                while (l < r && nums[r] == nums[r - 1]) r--;\n                l++; r--;\n            } else if (sum < 0) l++;\n            else r--;\n        }\n    }\n    cout << count << endl;\n    return 0;\n}\n",
+    "points": 20,
+    "testCases": [
+      {
+        "stdin": "6\n-1 0 1 2 -1 -4",
+        "expectedStdout": "2",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "3\n0 1 1",
+        "expectedStdout": "0",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "CPP",
+    "title": "Dijkstra Shortest Path Single Source",
+    "statement": "Given V vertices and E weighted edges, output shortest distance from node 0 to node V-1.",
+    "buggyCode": "#include <iostream>\n#include <vector>\n#include <queue>\n\nusing namespace std;\n\nint main() {\n    int v, e;\n    if (!(cin >> v >> e)) return 0;\n    vector<vector<pair<int, int>>> adj(v);\n    for (int i = 0; i < e; i++) {\n        int u, w, weight;\n        cin >> u >> w >> weight;\n        adj[u].push_back({w, weight});\n        adj[w].push_back({u, weight});\n    }\n\n    // BUG: priority_queue defaults to max-heap instead of min-heap\n    priority_queue<pair<int, int>> pq;\n    vector<int> dist(v, 1e9);\n    dist[0] = 0;\n    pq.push({0, 0});\n\n    while (!pq.empty()) {\n        auto [d, u] = pq.top(); pq.pop();\n        if (d > dist[u]) continue;\n        for (auto& [nxt, w] : adj[u]) {\n            if (dist[u] + w < dist[nxt]) {\n                dist[nxt] = dist[u] + w;\n                pq.push({dist[nxt], nxt});\n            }\n        }\n    }\n    cout << (dist[v - 1] >= 1e9 ? -1 : dist[v - 1]) << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <vector>\n#include <queue>\n\nusing namespace std;\n\nint main() {\n    int v, e;\n    if (!(cin >> v >> e)) return 0;\n    vector<vector<pair<int, int>>> adj(v);\n    for (int i = 0; i < e; i++) {\n        int u, w, weight;\n        cin >> u >> w >> weight;\n        adj[u].push_back({w, weight});\n        adj[w].push_back({u, weight});\n    }\n\n    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;\n    vector<int> dist(v, 1e9);\n    dist[0] = 0;\n    pq.push({0, 0});\n\n    while (!pq.empty()) {\n        auto [d, u] = pq.top(); pq.pop();\n        if (d > dist[u]) continue;\n        for (auto& [nxt, w] : adj[u]) {\n            if (dist[u] + w < dist[nxt]) {\n                dist[nxt] = dist[u] + w;\n                pq.push({dist[nxt], nxt});\n            }\n        }\n    }\n    cout << (dist[v - 1] >= 1e9 ? -1 : dist[v - 1]) << endl;\n    return 0;\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "4 4\n0 1 1\n1 2 2\n2 3 3\n0 3 10",
+        "expectedStdout": "6",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "3 1\n0 1 5",
+        "expectedStdout": "-1",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "CPP",
+    "title": "Longest Increasing Subsequence Length",
+    "statement": "Given N integers, find the length of the longest strictly increasing subsequence in O(N log N) time.",
+    "buggyCode": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    vector<int> tails;\n    for (int x : a) {\n        // BUG: uses upper_bound which allows non-decreasing instead of strictly increasing\n        auto it = upper_bound(tails.begin(), tails.end(), x);\n        if (it == tails.end()) tails.push_back(x);\n        else *it = x;\n    }\n    cout << tails.size() << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<int> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    vector<int> tails;\n    for (int x : a) {\n        auto it = lower_bound(tails.begin(), tails.end(), x);\n        if (it == tails.end()) tails.push_back(x);\n        else *it = x;\n    }\n    cout << tails.size() << endl;\n    return 0;\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "8\n10 9 2 5 3 7 101 18",
+        "expectedStdout": "4",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "6\n0 1 0 3 2 3",
+        "expectedStdout": "4",
+        "isHidden": false,
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "CPP",
+    "title": "Maximum Product Subarray",
+    "statement": "Given N integers, find a contiguous non-empty subarray with the largest product, and print its product.",
+    "buggyCode": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    // BUG: Does not track min_prod; multiplying negative numbers can create large positives\n    long long max_prod = a[0], ans = a[0];\n    for (size_t i = 1; i < a.size(); i++) {\n        max_prod = max(a[i], max_prod * a[i]);\n        ans = max(ans, max_prod);\n    }\n    cout << ans << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <vector>\n#include <algorithm>\n\nusing namespace std;\n\nint main() {\n    int n;\n    if (!(cin >> n)) return 0;\n    vector<long long> a(n);\n    for (int i = 0; i < n; i++) cin >> a[i];\n\n    long long max_prod = a[0], min_prod = a[0], ans = a[0];\n    for (size_t i = 1; i < a.size(); i++) {\n        if (a[i] < 0) swap(max_prod, min_prod);\n        max_prod = max(a[i], max_prod * a[i]);\n        min_prod = min(a[i], min_prod * a[i]);\n        ans = max(ans, max_prod);\n    }\n    cout << ans << endl;\n    return 0;\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "4\n2 3 -2 4",
+        "expectedStdout": "6",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "3\n-2 0 -1",
+        "expectedStdout": "0",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "4\n-2 3 -4 -1",
+        "expectedStdout": "24",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  },
+  {
+    "roundNumber": 3,
+    "language": "CPP",
+    "title": "Minimum Window Substring Length",
+    "statement": "Given string S and string T, find the length of the minimum window substring of S containing all characters in T. Print 0 if impossible.",
+    "buggyCode": "#include <iostream>\n#include <string>\n#include <unordered_map>\n\nusing namespace std;\n\nint main() {\n    string s, t;\n    if (!(cin >> s >> t)) return 0;\n    unordered_map<char, int> need, window;\n    for (char c : t) need[c]++;\n\n    int match = 0, l = 0, minLen = 1e9;\n    for (int r = 0; r < (int)s.size(); r++) {\n        char c = s[r];\n        if (need.count(c)) {\n            window[c]++;\n            if (window[c] == need[c]) match++;\n        }\n        // BUG: Does not correctly shrink left pointer window\n        if (match == (int)need.size()) {\n            minLen = min(minLen, r - l + 1);\n        }\n    }\n    cout << (minLen > 1e8 ? 0 : minLen) << endl;\n    return 0;\n}\n",
+    "referenceSolution": "#include <iostream>\n#include <string>\n#include <unordered_map>\n\nusing namespace std;\n\nint main() {\n    string s, t;\n    if (!(cin >> s >> t)) return 0;\n    unordered_map<char, int> need, window;\n    for (char c : t) need[c]++;\n\n    int match = 0, l = 0, minLen = 1e9;\n    for (int r = 0; r < (int)s.size(); r++) {\n        char c = s[r];\n        if (need.count(c)) {\n            window[c]++;\n            if (window[c] == need[c]) match++;\n        }\n        while (match == (int)need.size()) {\n            minLen = min(minLen, r - l + 1);\n            char d = s[l];\n            l++;\n            if (need.count(d)) {\n                if (window[d] == need[d]) match--;\n                window[d]--;\n            }\n        }\n    }\n    cout << (minLen > 1e8 ? 0 : minLen) << endl;\n    return 0;\n}\n",
+    "points": 32.5,
+    "testCases": [
+      {
+        "stdin": "ADOBECODEBANC ABC",
+        "expectedStdout": "4",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "a a",
+        "expectedStdout": "1",
+        "isHidden": false,
+        "weight": 1
+      },
+      {
+        "stdin": "a aa",
+        "expectedStdout": "0",
+        "isHidden": true,
+        "weight": 2
+      }
+    ]
+  }
+]
