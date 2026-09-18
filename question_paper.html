@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Debugging Competition — Question Paper</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --bg-page: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --border: #e2e8f0;
+    --code-bg: #f8fafc;
+    --code-border: #cbd5e1;
+    --tag-bg: #eff6ff;
+    --tag-color: #1e40af;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg-page);
+    color: var(--text-main);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px 80px 24px;
+  }
+  .header {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    padding: 32px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .header h1 {
+    margin: 0 0 8px 0;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+  }
+  .header p {
+    margin: 4px 0;
+    color: #94a3b8;
+    font-size: 15px;
+  }
+  .nav-bar {
+    position: sticky;
+    top: 12px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .nav-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.15s;
+  }
+  .nav-links a:hover {
+    background: var(--tag-bg);
+    color: var(--primary);
+  }
+  .btn-print {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-print:hover { background: var(--primary-dark); }
+
+  .round-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #0f172a;
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 8px;
+    margin-top: 48px;
+    margin-bottom: 20px;
+  }
+  .set-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 36px;
+    margin-bottom: 16px;
+    padding-left: 12px;
+    border-left: 4px solid var(--primary);
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+  .lang-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 24px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .question-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .question-header {
+    font-weight: 700;
+    font-size: 15px;
+    color: #0f172a;
+    margin-bottom: 10px;
+  }
+
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 13.5px;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: 12px 0;
+  }
+  code {
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 13px;
+    background: #e2e8f0;
+    padding: 2px 5px;
+    border-radius: 4px;
+  }
+  pre code {
+    background: transparent;
+    padding: 0;
+    font-size: 13.5px;
+  }
+
+  .option-item {
+    font-size: 14px;
+    color: #334155;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    padding: 7px 14px;
+    border-radius: 6px;
+    margin: 6px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    background: white;
+  }
+  th, td {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    text-align: left;
+    font-size: 14px;
+  }
+  th {
+    background: #f1f5f9;
+    font-weight: 700;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px dashed var(--border);
+    margin: 24px 0;
+  }
+
+  li {
+    margin: 6px 0;
+    font-size: 14.5px;
+  }
+
+  @media print {
+    body { background: white; color: black; font-size: 12pt; }
+    .container { max-width: 100%; padding: 0; }
+    .nav-bar { display: none !important; }
+    .header { background: none; color: black; border: 2px solid #000; padding: 14px; box-shadow: none; margin-bottom: 20px; }
+    .header p { color: #222; }
+    .question-block { border: 1px solid #999; box-shadow: none; page-break-inside: avoid; break-inside: avoid; margin-bottom: 14px; padding: 12px 14px; }
+    .option-item { border: 1px solid #ccc; background: white; color: black; }
+    .page-break { page-break-before: always; break-before: page; }
+    pre { border: 1px solid #999; background: #fafafa; page-break-inside: avoid; break-inside: avoid; font-size: 10pt; }
+    table { font-size: 10pt; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="nav-bar">
+    <div class="nav-links">
+      <a href="#event-overview">Overview</a>
+      <a href="#round-1-mcq-qualification">Round 1 (MCQ)</a>
+      <a href="#set-1">Set 1</a>
+      <a href="#set-2">Set 2</a>
+      <a href="#set-3">Set 3</a>
+      <a href="#set-4">Set 4</a>
+      <a href="#set-5">Set 5</a>
+      <a href="#round-2-medium-debugging">Round 2</a>
+      <a href="#round-3-hard-debugging">Round 3</a>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+  <h1 class="main-title" id="debugging-competition-question-paper">DEBUGGING COMPETITION — QUESTION PAPER</h1>
+<h2 class="section-title" id="event-overview">Event Overview</h2>
+<p>A <strong>2-hour college-level programming debugging competition</strong> with 3 rounds.</p>
+<table>
+<thead><tr><th>Round</th><th>Format</th><th>Time</th></tr></thead><tbody>
+<tr><td>**Settling In**</td><td>Registration &amp; Setup</td><td>**30 min**</td></tr>
+<tr><td>**Round 1**</td><td>MCQs – C++, Java, Python</td><td>**20 min**</td></tr>
+<tr><td>**Round 2**</td><td>Code Debugging</td><td>**35 min**</td></tr>
+<tr><td>**Round 3**</td><td>Advanced Debugging Challenge</td><td>**35 min**</td></tr>
+<tr><td>**Total**</td><td></td><td>**2 hrs**</td></tr>
+</tbody></table>
+<hr class="divider" />
+<h2 class="section-title" id="instructions-to-candidates">Instructions to Candidates</h2>
+<li>**Duration:** 2 Hours (120 minutes) total.</li>
+<li>**Structure:**</li>
+<li>**Round 1 (20 min):** Multiple-choice questions testing code comprehension, language semantics, operator precedence, scope, and pointer/reference behavior in C++, Java, and Python.</li>
+<li>**Round 2 (35 min):** Medium-level debugging challenge. Locate and fix the logic flaw in the algorithm so all sample and hidden test cases pass.</li>
+<li>**Round 3 (35 min):** Hard-level debugging challenge. Debug an advanced algorithmic program involving state tracking and shortest paths.</li>
+<li>**Languages Supported:** C++, Java, Python. Choose your preferred language for the debugging rounds.</li>
+<li>**General Guidelines:**</li>
+<li>For Multiple Choice Questions, mark only ONE option (A, B, C, or D).</li>
+<li>For Debugging questions, retain the core algorithmic approach and modify only the flawed logic. Do not rewrite from scratch unless necessary.</li>
+<li>Pay close attention to constraints, edge cases, and 0/1-indexing.</li>
+<hr class="divider" />
+<h1 class="main-title" id="round-1-mcq-qualification">ROUND 1 — MCQ QUALIFICATION</h1>
+<hr class="divider" />
+<div class="page-break"></div><h2 class="set-title" id="set-1">SET 1</h2>
+<h3 class="lang-title">C++ (Set 1)</h3>
+<div class="question-block"><div class="question-header">Q1. What is the output of the following C++ code?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 7, b = 2;
+    cout &lt;&lt; a / b &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 3.5</div>
+<div class="option-item"><strong>B.</strong> 3</div>
+<div class="option-item"><strong>C.</strong> 4</div>
+<div class="option-item"><strong>D.</strong> 3.0</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q2. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 5;
+    int y = x++;
+    cout &lt;&lt; x &lt;&lt; &quot; &quot; &lt;&lt; y &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 5 5</div>
+<div class="option-item"><strong>B.</strong> 6 6</div>
+<div class="option-item"><strong>C.</strong> 6 5</div>
+<div class="option-item"><strong>D.</strong> 5 6</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q3. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void addTen(int x) {
+    x += 10;
+}
+
+int main() {
+    int num = 20;
+    addTen(num);
+    cout &lt;&lt; num &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 30</div>
+<div class="option-item"><strong>B.</strong> 20</div>
+<div class="option-item"><strong>C.</strong> 10</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q4. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int arr[] = {10, 20, 30, 40, 50};
+    cout &lt;&lt; arr[3] &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 30</div>
+<div class="option-item"><strong>B.</strong> 40</div>
+<div class="option-item"><strong>C.</strong> 50</div>
+<div class="option-item"><strong>D.</strong> 20</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q5. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string s = &quot;Hello&quot;;
+    cout &lt;&lt; s.length() &lt;&lt; &quot; &quot; &lt;&lt; s[1] &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 5 e</div>
+<div class="option-item"><strong>B.</strong> 5 H</div>
+<div class="option-item"><strong>C.</strong> 4 e</div>
+<div class="option-item"><strong>D.</strong> 5 l</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 1)</h3>
+<div class="question-block"><div class="question-header">Q6. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        System.out.println(&quot;Sum: &quot; + 10 + 20);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Sum: 30</div>
+<div class="option-item"><strong>B.</strong> Sum: 1020</div>
+<div class="option-item"><strong>C.</strong> Sum: 10 20</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q7. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String s1 = &quot;hello&quot;;
+        String s2 = new String(&quot;hello&quot;);
+        System.out.println(s1.equals(s2) + &quot; &quot; + (s1 == s2));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> true true</div>
+<div class="option-item"><strong>B.</strong> false false</div>
+<div class="option-item"><strong>C.</strong> true false</div>
+<div class="option-item"><strong>D.</strong> false true</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q8. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 3, 4, 5};
+        System.out.println(nums.length);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 4</div>
+<div class="option-item"><strong>B.</strong> 5</div>
+<div class="option-item"><strong>C.</strong> Compilation error</div>
+<div class="option-item"><strong>D.</strong> 6</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q9. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    static void modify(int a) {
+        a = 100;
+    }
+
+    public static void main(String[] args) {
+        int x = 25;
+        modify(x);
+        System.out.println(x);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 100</div>
+<div class="option-item"><strong>B.</strong> 25</div>
+<div class="option-item"><strong>C.</strong> 0</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q10. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int count = 1;
+        while (count &lt; 4) {
+            count++;
+        }
+        System.out.println(count);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 3</div>
+<div class="option-item"><strong>B.</strong> 4</div>
+<div class="option-item"><strong>C.</strong> 5</div>
+<div class="option-item"><strong>D.</strong> 1</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 1)</h3>
+<div class="question-block"><div class="question-header">Q11. What is the output?</div>
+<pre><code class="language-python">print(9 // 2, 9 / 2)</code></pre>
+<div class="option-item"><strong>A.</strong> 4 4.5</div>
+<div class="option-item"><strong>B.</strong> 4.5 4</div>
+<div class="option-item"><strong>C.</strong> 4 4</div>
+<div class="option-item"><strong>D.</strong> 4.5 4.5</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q12. What is the output?</div>
+<pre><code class="language-python">text = &quot;Go!&quot;
+print(text * 3)</code></pre>
+<div class="option-item"><strong>A.</strong> Go! Go! Go!</div>
+<div class="option-item"><strong>B.</strong> Go!3</div>
+<div class="option-item"><strong>C.</strong> Go!Go!Go!</div>
+<div class="option-item"><strong>D.</strong> TypeError</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q13. What is the output?</div>
+<pre><code class="language-python">nums = [10, 20, 30, 40, 50]
+print(nums[1:4])</code></pre>
+<div class="option-item"><strong>A.</strong> [20, 30, 40, 50]</div>
+<div class="option-item"><strong>B.</strong> [20, 30, 40]</div>
+<div class="option-item"><strong>C.</strong> [10, 20, 30]</div>
+<div class="option-item"><strong>D.</strong> [20, 30]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q14. What is the output?</div>
+<pre><code class="language-python">fruits = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]
+print(fruits[-1])</code></pre>
+<div class="option-item"><strong>A.</strong> apple</div>
+<div class="option-item"><strong>B.</strong> banana</div>
+<div class="option-item"><strong>C.</strong> cherry</div>
+<div class="option-item"><strong>D.</strong> IndexError</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q15. What is the output?</div>
+<pre><code class="language-python">scores = {&quot;Alice&quot;: 90, &quot;Bob&quot;: 85}
+print(scores.get(&quot;Charlie&quot;, 0))</code></pre>
+<div class="option-item"><strong>A.</strong> None</div>
+<div class="option-item"><strong>B.</strong> 0</div>
+<div class="option-item"><strong>C.</strong> KeyError</div>
+<div class="option-item"><strong>D.</strong> 85</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">C++ (Set 1 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q16. What is the output of the following C++ code?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 10;
+    int &amp;ref = x;
+    ref = 25;
+    cout &lt;&lt; x &lt;&lt; &quot; &quot; &lt;&lt; ref &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10 25</div>
+<div class="option-item"><strong>B.</strong> 25 25</div>
+<div class="option-item"><strong>C.</strong> 10 10</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q17. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 5;
+    cout &lt;&lt; (a &gt; 3 ? (a &lt; 10 ? 1 : 2) : 3) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1</div>
+<div class="option-item"><strong>B.</strong> 2</div>
+<div class="option-item"><strong>C.</strong> 3</div>
+<div class="option-item"><strong>D.</strong> 0</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q18. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int val = 2;
+    switch (val) {
+        case 1: cout &lt;&lt; &quot;One &quot;;
+        case 2: cout &lt;&lt; &quot;Two &quot;;
+        case 3: cout &lt;&lt; &quot;Three &quot;;
+            break;
+        default: cout &lt;&lt; &quot;Default&quot;;
+    }
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Two</div>
+<div class="option-item"><strong>B.</strong> Two Three</div>
+<div class="option-item"><strong>C.</strong> Two Three Default</div>
+<div class="option-item"><strong>D.</strong> One Two Three</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 1 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q19. What is the output of the following Java code?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int x = 5;
+        System.out.println(++x + x++);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 11</div>
+<div class="option-item"><strong>B.</strong> 12</div>
+<div class="option-item"><strong>C.</strong> 13</div>
+<div class="option-item"><strong>D.</strong> 10</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q20. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String str = &quot;Debugging&quot;;
+        System.out.println(str.substring(3, 7));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> bugg</div>
+<div class="option-item"><strong>B.</strong> uggi</div>
+<div class="option-item"><strong>C.</strong> buggi</div>
+<div class="option-item"><strong>D.</strong> eggi</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q21. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        boolean flag = true;
+        if (flag = false) {
+            System.out.println(&quot;Yes&quot;);
+        } else {
+            System.out.println(&quot;No&quot;);
+        }
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Yes</div>
+<div class="option-item"><strong>B.</strong> No</div>
+<div class="option-item"><strong>C.</strong> Compilation error</div>
+<div class="option-item"><strong>D.</strong> Runtime error</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 1 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q22. What is the output of the following Python code?</div>
+<pre><code class="language-python">nums = [1, 2, 3, 4, 5]
+print(nums[1:4])</code></pre>
+<div class="option-item"><strong>A.</strong> [1, 2, 3]</div>
+<div class="option-item"><strong>B.</strong> [2, 3, 4]</div>
+<div class="option-item"><strong>C.</strong> [2, 3, 4, 5]</div>
+<div class="option-item"><strong>D.</strong> [1, 2, 3, 4]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q23. What is the output?</div>
+<pre><code class="language-python">def greet(name, msg=&quot;Hello&quot;):
+    return f&quot;{msg}, {name}!&quot;
+
+print(greet(&quot;Bob&quot;))</code></pre>
+<div class="option-item"><strong>A.</strong> Hello, Bob!</div>
+<div class="option-item"><strong>B.</strong> Bob, Hello!</div>
+<div class="option-item"><strong>C.</strong> Error</div>
+<div class="option-item"><strong>D.</strong> None</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q24. What is the output?</div>
+<pre><code class="language-python">x = [1, 2, 3]
+y = x
+y.append(4)
+print(len(x))</code></pre>
+<div class="option-item"><strong>A.</strong> 3</div>
+<div class="option-item"><strong>B.</strong> 4</div>
+<div class="option-item"><strong>C.</strong> 1</div>
+<div class="option-item"><strong>D.</strong> AttributeError</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q25. What is the output?</div>
+<pre><code class="language-python">vals = [x * 2 for x in range(4) if x % 2 == 0]
+print(vals)</code></pre>
+<div class="option-item"><strong>A.</strong> [0, 4]</div>
+<div class="option-item"><strong>B.</strong> [0, 2, 4]</div>
+<div class="option-item"><strong>C.</strong> [0, 4, 8]</div>
+<div class="option-item"><strong>D.</strong> [2, 4]</div>
+</div>
+<hr class="divider" />
+<div class="page-break"></div><h2 class="set-title" id="set-2">SET 2</h2>
+<h3 class="lang-title">C++ (Set 2)</h3>
+<div class="question-block"><div class="question-header">Q1. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 14, b = 4;
+    cout &lt;&lt; a % b &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 3</div>
+<div class="option-item"><strong>B.</strong> 2</div>
+<div class="option-item"><strong>C.</strong> 0</div>
+<div class="option-item"><strong>D.</strong> 3.5</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q2. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int sum = 0;
+    for (int i = 1; i &lt;= 4; i++) {
+        sum += i;
+    }
+    cout &lt;&lt; sum &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> 6</div>
+<div class="option-item"><strong>C.</strong> 15</div>
+<div class="option-item"><strong>D.</strong> 4</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q3. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 15, b = 25;
+    int maxVal = (a &gt; b) ? a : b;
+    cout &lt;&lt; maxVal &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 15</div>
+<div class="option-item"><strong>B.</strong> 25</div>
+<div class="option-item"><strong>C.</strong> 1</div>
+<div class="option-item"><strong>D.</strong> 0</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q4. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    bool p = true;
+    bool q = false;
+    cout &lt;&lt; (p &amp;&amp; q) &lt;&lt; &quot; &quot; &lt;&lt; (p || q) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1 0</div>
+<div class="option-item"><strong>B.</strong> 0 1</div>
+<div class="option-item"><strong>C.</strong> 1 1</div>
+<div class="option-item"><strong>D.</strong> 0 0</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q5. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; v;
+    v.push_back(100);
+    v.push_back(200);
+    cout &lt;&lt; v.size() &lt;&lt; &quot; &quot; &lt;&lt; v[0] &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 2 100</div>
+<div class="option-item"><strong>B.</strong> 2 200</div>
+<div class="option-item"><strong>C.</strong> 1 100</div>
+<div class="option-item"><strong>D.</strong> 0 100</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 2)</h3>
+<div class="question-block"><div class="question-header">Q6. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int result = 15 / 4;
+        System.out.println(result);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 3.75</div>
+<div class="option-item"><strong>B.</strong> 3</div>
+<div class="option-item"><strong>C.</strong> 4</div>
+<div class="option-item"><strong>D.</strong> 3.0</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q7. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String s = &quot;hello&quot;;
+        s.toUpperCase();
+        System.out.println(s);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> HELLO</div>
+<div class="option-item"><strong>B.</strong> hello</div>
+<div class="option-item"><strong>C.</strong> Hello</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q8. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int sum = 0;
+        for (int i = 1; i &lt;= 5; i++) {
+            if (i == 3) break;
+            sum += i;
+        }
+        System.out.println(sum);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 15</div>
+<div class="option-item"><strong>B.</strong> 3</div>
+<div class="option-item"><strong>C.</strong> 6</div>
+<div class="option-item"><strong>D.</strong> 1</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q9. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        System.out.println(Math.max(42, 17));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 17</div>
+<div class="option-item"><strong>B.</strong> 42</div>
+<div class="option-item"><strong>C.</strong> 59</div>
+<div class="option-item"><strong>D.</strong> 25</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q10. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    static boolean flag;
+
+    public static void main(String[] args) {
+        System.out.println(flag);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> true</div>
+<div class="option-item"><strong>B.</strong> false</div>
+<div class="option-item"><strong>C.</strong> null</div>
+<div class="option-item"><strong>D.</strong> 0</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 2)</h3>
+<div class="question-block"><div class="question-header">Q11. What is the output?</div>
+<pre><code class="language-python">animals = [&quot;dog&quot;, &quot;cat&quot;, &quot;bird&quot;, &quot;fish&quot;]
+print(len(animals))</code></pre>
+<div class="option-item"><strong>A.</strong> 3</div>
+<div class="option-item"><strong>B.</strong> 4</div>
+<div class="option-item"><strong>C.</strong> 5</div>
+<div class="option-item"><strong>D.</strong> 16</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q12. What is the output?</div>
+<pre><code class="language-python">word = &quot;PYTHON&quot;
+print(word.lower())</code></pre>
+<div class="option-item"><strong>A.</strong> python</div>
+<div class="option-item"><strong>B.</strong> PYTHON</div>
+<div class="option-item"><strong>C.</strong> Python</div>
+<div class="option-item"><strong>D.</strong> TypeError</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q13. What is the output?</div>
+<pre><code class="language-python">nums = [1, 2, 3]
+nums.append(4)
+print(nums)</code></pre>
+<div class="option-item"><strong>A.</strong> [4, 1, 2, 3]</div>
+<div class="option-item"><strong>B.</strong> [1, 2, 3, 4]</div>
+<div class="option-item"><strong>C.</strong> [1, 2, 3]</div>
+<div class="option-item"><strong>D.</strong> 4</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q14. What is the output?</div>
+<pre><code class="language-python">print(list(range(1, 5)))</code></pre>
+<div class="option-item"><strong>A.</strong> [1, 2, 3, 4, 5]</div>
+<div class="option-item"><strong>B.</strong> [1, 2, 3, 4]</div>
+<div class="option-item"><strong>C.</strong> [0, 1, 2, 3, 4]</div>
+<div class="option-item"><strong>D.</strong> [1, 5]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q15. What is the output?</div>
+<pre><code class="language-python">x = 10
+y = 20
+x, y = y, x
+print(x, y)</code></pre>
+<div class="option-item"><strong>A.</strong> 10 20</div>
+<div class="option-item"><strong>B.</strong> 20 10</div>
+<div class="option-item"><strong>C.</strong> 20 20</div>
+<div class="option-item"><strong>D.</strong> 10 10</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">C++ (Set 2 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q16. What is the output of the following C++ code?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 42;
+    int *ptr = &amp;a;
+    *ptr = *ptr + 8;
+    cout &lt;&lt; a &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 42</div>
+<div class="option-item"><strong>B.</strong> 50</div>
+<div class="option-item"><strong>C.</strong> Garbage value</div>
+<div class="option-item"><strong>D.</strong> Memory address</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q17. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void counter() {
+    static int c = 0;
+    c++;
+    cout &lt;&lt; c &lt;&lt; &quot; &quot;;
+}
+
+int main() {
+    counter();
+    counter();
+    counter();
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1 1 1</div>
+<div class="option-item"><strong>B.</strong> 1 2 3</div>
+<div class="option-item"><strong>C.</strong> 0 1 2</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q18. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 0, y = 5;
+    if (x != 0 &amp;&amp; ++y &gt; 5) {
+        cout &lt;&lt; &quot;Inside &quot;;
+    }
+    cout &lt;&lt; y &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Inside 6</div>
+<div class="option-item"><strong>B.</strong> 5</div>
+<div class="option-item"><strong>C.</strong> 6</div>
+<div class="option-item"><strong>D.</strong> Inside 5</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q19. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; v = {10, 20};
+    v.push_back(30);
+    v.pop_back();
+    cout &lt;&lt; v.size() &lt;&lt; &quot; &quot; &lt;&lt; v.back() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 2 20</div>
+<div class="option-item"><strong>B.</strong> 3 30</div>
+<div class="option-item"><strong>C.</strong> 2 30</div>
+<div class="option-item"><strong>D.</strong> 3 20</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 2 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q20. What is the output of the following Java code?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String s = &quot;Algorithm&quot;;
+        System.out.println(s.charAt(0) + &quot;&quot; + s.charAt(s.length() - 1));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Am</div>
+<div class="option-item"><strong>B.</strong> Ah</div>
+<div class="option-item"><strong>C.</strong> Algorithm</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q21. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int[] arr = {2, 4, 6};
+        int total = 0;
+        for (int n : arr) {
+            total += n;
+        }
+        System.out.println(total);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 12</div>
+<div class="option-item"><strong>B.</strong> 6</div>
+<div class="option-item"><strong>C.</strong> 0</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q22. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int a = 15, b = 25, c = 10;
+        int result = Math.max(a, Math.min(b, c));
+        System.out.println(result);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 25</div>
+<div class="option-item"><strong>B.</strong> 15</div>
+<div class="option-item"><strong>C.</strong> 10</div>
+<div class="option-item"><strong>D.</strong> 20</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 2 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q23. What is the output of the following Python code?</div>
+<pre><code class="language-python">words = [&quot;cat&quot;, &quot;elephant&quot;, &quot;dog&quot;]
+short = [w.upper() for w in words if len(w) &lt;= 3]
+print(short)</code></pre>
+<div class="option-item"><strong>A.</strong> [&#x27;CAT&#x27;, &#x27;ELEPHANT&#x27;, &#x27;DOG&#x27;]</div>
+<div class="option-item"><strong>B.</strong> [&#x27;CAT&#x27;, &#x27;DOG&#x27;]</div>
+<div class="option-item"><strong>C.</strong> [&#x27;cat&#x27;, &#x27;dog&#x27;]</div>
+<div class="option-item"><strong>D.</strong> [&#x27;ELEPHANT&#x27;]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q24. What is the output?</div>
+<pre><code class="language-python">data = {&quot;a&quot;: 1, &quot;b&quot;: 2}
+print(&quot;a&quot; in data, 1 in data)</code></pre>
+<div class="option-item"><strong>A.</strong> True True</div>
+<div class="option-item"><strong>B.</strong> True False</div>
+<div class="option-item"><strong>C.</strong> False True</div>
+<div class="option-item"><strong>D.</strong> False False</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q25. What is the output?</div>
+<pre><code class="language-python">text = &quot;apple-banana-orange&quot;
+parts = text.split(&quot;-&quot;)
+print(&quot;/&quot;.join(parts[:2]))</code></pre>
+<div class="option-item"><strong>A.</strong> apple/banana/orange</div>
+<div class="option-item"><strong>B.</strong> apple/banana</div>
+<div class="option-item"><strong>C.</strong> apple-banana</div>
+<div class="option-item"><strong>D.</strong> banana/orange</div>
+</div>
+<hr class="divider" />
+<div class="page-break"></div><h2 class="set-title" id="set-3">SET 3</h2>
+<h3 class="lang-title">C++ (Set 3)</h3>
+<div class="question-block"><div class="question-header">Q1. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+void doubleVal(int &amp;x) {
+    x *= 2;
+}
+
+int main() {
+    int num = 7;
+    doubleVal(num);
+    cout &lt;&lt; num &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 7</div>
+<div class="option-item"><strong>B.</strong> 14</div>
+<div class="option-item"><strong>C.</strong> 2</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q2. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    char c = &#x27;A&#x27;;
+    c = c + 1;
+    cout &lt;&lt; c &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> A1</div>
+<div class="option-item"><strong>B.</strong> B</div>
+<div class="option-item"><strong>C.</strong> 66</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q3. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int n = 3;
+    while (n &gt; 0) {
+        cout &lt;&lt; n &lt;&lt; &quot; &quot;;
+        n--;
+    }
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 3 2 1</div>
+<div class="option-item"><strong>B.</strong> 3 2 1 0</div>
+<div class="option-item"><strong>C.</strong> 2 1 0</div>
+<div class="option-item"><strong>D.</strong> 3 2</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q4. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int arr[] = {5, 10, 15};
+    int count = sizeof(arr) / sizeof(arr[0]);
+    cout &lt;&lt; count &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 3</div>
+<div class="option-item"><strong>B.</strong> 12</div>
+<div class="option-item"><strong>C.</strong> 4</div>
+<div class="option-item"><strong>D.</strong> 1</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q5. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string greeting = &quot;Hi&quot;;
+    greeting += &quot;!&quot;;
+    cout &lt;&lt; greeting &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Hi!</div>
+<div class="option-item"><strong>B.</strong> Hi</div>
+<div class="option-item"><strong>C.</strong> !</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 3)</h3>
+<div class="question-block"><div class="question-header">Q6. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int x = 22 % 5;
+        System.out.println(x);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 4</div>
+<div class="option-item"><strong>B.</strong> 2</div>
+<div class="option-item"><strong>C.</strong> 0</div>
+<div class="option-item"><strong>D.</strong> 4.4</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q7. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int[] arr = new int[3];
+        arr[0] = 10;
+        arr[1] = 20;
+        arr[2] = 30;
+        System.out.println(arr[1]);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> 20</div>
+<div class="option-item"><strong>C.</strong> 30</div>
+<div class="option-item"><strong>D.</strong> ArrayIndexOutOfBoundsException</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q8. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(add(8, 12));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 20</div>
+<div class="option-item"><strong>B.</strong> 812</div>
+<div class="option-item"><strong>C.</strong> 96</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q9. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        char ch = &#x27;C&#x27;;
+        System.out.println((int) ch == 67);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> true</div>
+<div class="option-item"><strong>B.</strong> false</div>
+<div class="option-item"><strong>C.</strong> Compilation error</div>
+<div class="option-item"><strong>D.</strong> 67</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q10. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int x = 0;
+        for (int i = 0; i &lt; 3; i++) {
+            x++;
+        }
+        System.out.println(x);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 0</div>
+<div class="option-item"><strong>B.</strong> 2</div>
+<div class="option-item"><strong>C.</strong> 3</div>
+<div class="option-item"><strong>D.</strong> 4</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 3)</h3>
+<div class="question-block"><div class="question-header">Q11. What is the output?</div>
+<pre><code class="language-python">name = &quot;Antigravity&quot;
+print(len(name))</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> 11</div>
+<div class="option-item"><strong>C.</strong> 12</div>
+<div class="option-item"><strong>D.</strong> 9</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q12. What is the output?</div>
+<pre><code class="language-python">fruits = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]
+print(&quot;banana&quot; in fruits, &quot;mango&quot; in fruits)</code></pre>
+<div class="option-item"><strong>A.</strong> True False</div>
+<div class="option-item"><strong>B.</strong> True True</div>
+<div class="option-item"><strong>C.</strong> False True</div>
+<div class="option-item"><strong>D.</strong> False False</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q13. What is the output?</div>
+<pre><code class="language-python">nums = [10, 20, 30]
+val = nums.pop()
+print(val, nums)</code></pre>
+<div class="option-item"><strong>A.</strong> 10 [20, 30]</div>
+<div class="option-item"><strong>B.</strong> 30 [10, 20]</div>
+<div class="option-item"><strong>C.</strong> 30 [10, 20, 30]</div>
+<div class="option-item"><strong>D.</strong> 20 [10, 30]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q14. What is the output?</div>
+<pre><code class="language-python">val = int(8.75)
+print(val)</code></pre>
+<div class="option-item"><strong>A.</strong> 8</div>
+<div class="option-item"><strong>B.</strong> 9</div>
+<div class="option-item"><strong>C.</strong> 8.0</div>
+<div class="option-item"><strong>D.</strong> ValueError</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q15. What is the output?</div>
+<pre><code class="language-python">print(bool([]), bool([0]))</code></pre>
+<div class="option-item"><strong>A.</strong> False False</div>
+<div class="option-item"><strong>B.</strong> False True</div>
+<div class="option-item"><strong>C.</strong> True False</div>
+<div class="option-item"><strong>D.</strong> True True</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">C++ (Set 3 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q16. What is the output of the following C++ code?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int arr[] = {4, 8, 12, 16, 20, 24};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    cout &lt;&lt; n &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 24</div>
+<div class="option-item"><strong>B.</strong> 6</div>
+<div class="option-item"><strong>C.</strong> 4</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q17. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 10;
+    do {
+        x += 5;
+    } while (x &lt; 10);
+    cout &lt;&lt; x &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> 15</div>
+<div class="option-item"><strong>C.</strong> 20</div>
+<div class="option-item"><strong>D.</strong> Infinite loop</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q18. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string str = &quot;competitor&quot;;
+    if (str.find(&quot;pet&quot;) != string::npos) {
+        cout &lt;&lt; &quot;Found at &quot; &lt;&lt; str.find(&quot;pet&quot;) &lt;&lt; endl;
+    } else {
+        cout &lt;&lt; &quot;Not found&quot; &lt;&lt; endl;
+    }
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Found at 3</div>
+<div class="option-item"><strong>B.</strong> Found at 4</div>
+<div class="option-item"><strong>C.</strong> Not found</div>
+<div class="option-item"><strong>D.</strong> Found at 2</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 3 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q19. What is the output of the following Java code?</div>
+<pre><code class="language-java">import java.util.ArrayList;
+
+public class Main {
+    public static void main(String[] args) {
+        ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+        list.add(10);
+        list.add(20);
+        list.add(30);
+        list.remove(1);
+        System.out.println(list);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> [20, 30]</div>
+<div class="option-item"><strong>B.</strong> [10, 30]</div>
+<div class="option-item"><strong>C.</strong> [10, 20]</div>
+<div class="option-item"><strong>D.</strong> [10]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q20. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int a = 10, b = 20;
+        int max = (a &gt; b) ? a : b;
+        System.out.println(max * 2);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 20</div>
+<div class="option-item"><strong>B.</strong> 40</div>
+<div class="option-item"><strong>C.</strong> 10</div>
+<div class="option-item"><strong>D.</strong> 30</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q21. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        StringBuilder sb = new StringBuilder(&quot;code&quot;);
+        sb.append(&quot;123&quot;);
+        System.out.println(sb.length() + &quot; &quot; + sb.charAt(0));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 7 c</div>
+<div class="option-item"><strong>B.</strong> 4 c</div>
+<div class="option-item"><strong>C.</strong> 7 1</div>
+<div class="option-item"><strong>D.</strong> 6 c</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q22. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    static int x = 10;
+    static {
+        x += 5;
+    }
+    public static void main(String[] args) {
+        System.out.println(x);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> 15</div>
+<div class="option-item"><strong>C.</strong> 5</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 3 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q23. What is the output of the following Python code?</div>
+<pre><code class="language-python">names = [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;]
+scores = [100, 90, 80]
+pairs = list(zip(names, scores))
+print(pairs[1])</code></pre>
+<div class="option-item"><strong>A.</strong> (&#x27;A&#x27;, 100)</div>
+<div class="option-item"><strong>B.</strong> (&#x27;B&#x27;, 90)</div>
+<div class="option-item"><strong>C.</strong> (&#x27;C&#x27;, 80)</div>
+<div class="option-item"><strong>D.</strong> [&#x27;B&#x27;, 90]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q24. What is the output?</div>
+<pre><code class="language-python">s1 = {1, 2, 3, 4}
+s2 = {3, 4, 5, 6}
+print(s1 - s2)</code></pre>
+<div class="option-item"><strong>A.</strong> {1, 2}</div>
+<div class="option-item"><strong>B.</strong> {5, 6}</div>
+<div class="option-item"><strong>C.</strong> {3, 4}</div>
+<div class="option-item"><strong>D.</strong> {1, 2, 5, 6}</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q25. What is the output?</div>
+<pre><code class="language-python">text = &quot;banana&quot;
+print(text.count(&quot;an&quot;))</code></pre>
+<div class="option-item"><strong>A.</strong> 1</div>
+<div class="option-item"><strong>B.</strong> 2</div>
+<div class="option-item"><strong>C.</strong> 3</div>
+<div class="option-item"><strong>D.</strong> 0</div>
+</div>
+<hr class="divider" />
+<div class="page-break"></div><h2 class="set-title" id="set-4">SET 4</h2>
+<h3 class="lang-title">C++ (Set 4)</h3>
+<div class="question-block"><div class="question-header">Q1. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int choice = 2;
+    switch (choice) {
+        case 1: cout &lt;&lt; &quot;One&quot;; break;
+        case 2: cout &lt;&lt; &quot;Two&quot;; break;
+        case 3: cout &lt;&lt; &quot;Three&quot;; break;
+        default: cout &lt;&lt; &quot;Other&quot;;
+    }
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> One</div>
+<div class="option-item"><strong>B.</strong> Two</div>
+<div class="option-item"><strong>C.</strong> Three</div>
+<div class="option-item"><strong>D.</strong> Other</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q2. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 5;
+    int b = ++a;
+    cout &lt;&lt; a &lt;&lt; &quot; &quot; &lt;&lt; b &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 6 6</div>
+<div class="option-item"><strong>B.</strong> 6 5</div>
+<div class="option-item"><strong>C.</strong> 5 5</div>
+<div class="option-item"><strong>D.</strong> 5 6</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q3. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int count = 0;
+    for (int i = 0; i &lt; 10; i += 2) {
+        count++;
+    }
+    cout &lt;&lt; count &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> 5</div>
+<div class="option-item"><strong>C.</strong> 4</div>
+<div class="option-item"><strong>D.</strong> 6</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q4. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int arr[] = {2, 4, 6};
+    int total = 0;
+    for (int x : arr) {
+        total += x;
+    }
+    cout &lt;&lt; total &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 12</div>
+<div class="option-item"><strong>B.</strong> 6</div>
+<div class="option-item"><strong>C.</strong> 8</div>
+<div class="option-item"><strong>D.</strong> 10</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q5. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+int main() {
+    string s = &quot;&quot;;
+    cout &lt;&lt; s.empty() &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1</div>
+<div class="option-item"><strong>B.</strong> 0</div>
+<div class="option-item"><strong>C.</strong> true</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 4)</h3>
+<div class="question-block"><div class="question-header">Q6. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        boolean active = false;
+        System.out.println(!active);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> false</div>
+<div class="option-item"><strong>B.</strong> true</div>
+<div class="option-item"><strong>C.</strong> 1</div>
+<div class="option-item"><strong>D.</strong> null</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q7. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String lang = &quot;Java&quot;;
+        System.out.println(lang.charAt(2));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> J</div>
+<div class="option-item"><strong>B.</strong> a</div>
+<div class="option-item"><strong>C.</strong> v</div>
+<div class="option-item"><strong>D.</strong> IndexOutOfBoundsException</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q8. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int[] vals = {3, 5, 7};
+        int sum = 0;
+        for (int v : vals) {
+            sum += v;
+        }
+        System.out.println(sum);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 15</div>
+<div class="option-item"><strong>B.</strong> 8</div>
+<div class="option-item"><strong>C.</strong> 12</div>
+<div class="option-item"><strong>D.</strong> 7</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q9. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int score = 75;
+        String status = score &gt;= 60 ? &quot;Pass&quot; : &quot;Fail&quot;;
+        System.out.println(status);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Pass</div>
+<div class="option-item"><strong>B.</strong> Fail</div>
+<div class="option-item"><strong>C.</strong> true</div>
+<div class="option-item"><strong>D.</strong> 75</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q10. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int num = Integer.parseInt(&quot;123&quot;);
+        System.out.println(num + 1);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1231</div>
+<div class="option-item"><strong>B.</strong> 124</div>
+<div class="option-item"><strong>C.</strong> &quot;124&quot;</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 4)</h3>
+<div class="question-block"><div class="question-header">Q11. What is the output?</div>
+<pre><code class="language-python">sentence = &quot;learn code build&quot;
+words = sentence.split()
+print(len(words))</code></pre>
+<div class="option-item"><strong>A.</strong> 16</div>
+<div class="option-item"><strong>B.</strong> 3</div>
+<div class="option-item"><strong>C.</strong> 2</div>
+<div class="option-item"><strong>D.</strong> 1</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q12. What is the output?</div>
+<pre><code class="language-python">nums = [1, 2, 2, 3, 3, 3]
+unique = set(nums)
+print(len(unique))</code></pre>
+<div class="option-item"><strong>A.</strong> 6</div>
+<div class="option-item"><strong>B.</strong> 3</div>
+<div class="option-item"><strong>C.</strong> 1</div>
+<div class="option-item"><strong>D.</strong> 2</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q13. What is the output?</div>
+<pre><code class="language-python">items = [&quot;a&quot;, &quot;b&quot;, &quot;a&quot;, &quot;c&quot;, &quot;a&quot;]
+print(items.count(&quot;a&quot;))</code></pre>
+<div class="option-item"><strong>A.</strong> 1</div>
+<div class="option-item"><strong>B.</strong> 2</div>
+<div class="option-item"><strong>C.</strong> 3</div>
+<div class="option-item"><strong>D.</strong> 5</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q14. What is the output?</div>
+<pre><code class="language-python">print(2 ** 4)</code></pre>
+<div class="option-item"><strong>A.</strong> 8</div>
+<div class="option-item"><strong>B.</strong> 16</div>
+<div class="option-item"><strong>C.</strong> 6</div>
+<div class="option-item"><strong>D.</strong> 24</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q15. What is the output?</div>
+<pre><code class="language-python">info = {&quot;name&quot;: &quot;Alex&quot;, &quot;age&quot;: 20}
+info[&quot;age&quot;] = 21
+print(info[&quot;age&quot;])</code></pre>
+<div class="option-item"><strong>A.</strong> 20</div>
+<div class="option-item"><strong>B.</strong> 21</div>
+<div class="option-item"><strong>C.</strong> 41</div>
+<div class="option-item"><strong>D.</strong> KeyError</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">C++ (Set 4 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q16. What is the output of the following C++ code?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+struct Point {
+    int x;
+    int y;
+};
+
+int main() {
+    Point p = {10, 20};
+    p.x += 5;
+    cout &lt;&lt; p.x &lt;&lt; &quot; &quot; &lt;&lt; p.y &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10 20</div>
+<div class="option-item"><strong>B.</strong> 15 20</div>
+<div class="option-item"><strong>C.</strong> 15 25</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q17. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 3;
+    int y = x &lt;&lt; 2;
+    cout &lt;&lt; y &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 6</div>
+<div class="option-item"><strong>B.</strong> 12</div>
+<div class="option-item"><strong>C.</strong> 9</div>
+<div class="option-item"><strong>D.</strong> 5</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q18. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int a = 10, b = 20;
+    const int *ptr = &amp;a;
+    ptr = &amp;b;
+    cout &lt;&lt; *ptr &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> 20</div>
+<div class="option-item"><strong>C.</strong> Compilation error</div>
+<div class="option-item"><strong>D.</strong> Undefined behavior</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 4 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q19. What is the output of the following Java code?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3};
+        int[] b = a.clone();
+        b[0] = 99;
+        System.out.println(a[0] + &quot; &quot; + b[0]);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 99 99</div>
+<div class="option-item"><strong>B.</strong> 1 99</div>
+<div class="option-item"><strong>C.</strong> 1 1</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q20. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        char ch = &#x27;7&#x27;;
+        int num = Character.getNumericValue(ch);
+        System.out.println(num + 3);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 55</div>
+<div class="option-item"><strong>B.</strong> 10</div>
+<div class="option-item"><strong>C.</strong> 73</div>
+<div class="option-item"><strong>D.</strong> 7</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q21. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        double val = Math.pow(2, 3);
+        System.out.println(val);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 8</div>
+<div class="option-item"><strong>B.</strong> 8.0</div>
+<div class="option-item"><strong>C.</strong> 6.0</div>
+<div class="option-item"><strong>D.</strong> 9.0</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 4 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q22. What is the output of the following Python code?</div>
+<pre><code class="language-python">text = &quot;hello world&quot;
+print(text.title())</code></pre>
+<div class="option-item"><strong>A.</strong> Hello world</div>
+<div class="option-item"><strong>B.</strong> Hello World</div>
+<div class="option-item"><strong>C.</strong> HELLO WORLD</div>
+<div class="option-item"><strong>D.</strong> hello World</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q23. What is the output?</div>
+<pre><code class="language-python">words = [&quot;python&quot;, &quot;c&quot;, &quot;javascript&quot;, &quot;go&quot;]
+print(min(words, key=len))</code></pre>
+<div class="option-item"><strong>A.</strong> c</div>
+<div class="option-item"><strong>B.</strong> go</div>
+<div class="option-item"><strong>C.</strong> python</div>
+<div class="option-item"><strong>D.</strong> javascript</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q24. What is the output?</div>
+<pre><code class="language-python">items = [&quot;apple&quot;, &quot;banana&quot;]
+for i, item in enumerate(items, start=1):
+    print(f&quot;{i}:{item}&quot;, end=&quot; &quot;)</code></pre>
+<div class="option-item"><strong>A.</strong> 0:apple 1:banana</div>
+<div class="option-item"><strong>B.</strong> 1:apple 2:banana</div>
+<div class="option-item"><strong>C.</strong> 1:apple 1:banana</div>
+<div class="option-item"><strong>D.</strong> apple:1 banana:2</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q25. What is the output?</div>
+<pre><code class="language-python">nums = [1, 3, 4]
+nums.insert(1, 2)
+print(nums)</code></pre>
+<div class="option-item"><strong>A.</strong> [2, 1, 3, 4]</div>
+<div class="option-item"><strong>B.</strong> [1, 2, 3, 4]</div>
+<div class="option-item"><strong>C.</strong> [1, 3, 2, 4]</div>
+<div class="option-item"><strong>D.</strong> [1, 2, 4]</div>
+</div>
+<hr class="divider" />
+<div class="page-break"></div><h2 class="set-title" id="set-5">SET 5</h2>
+<h3 class="lang-title">C++ (Set 5)</h3>
+<div class="question-block"><div class="question-header">Q1. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int x = 10;
+    if (x &gt; 5) {
+        cout &lt;&lt; &quot;Greater&quot;;
+    } else {
+        cout &lt;&lt; &quot;Smaller&quot;;
+    }
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Greater</div>
+<div class="option-item"><strong>B.</strong> Smaller</div>
+<div class="option-item"><strong>C.</strong> 10</div>
+<div class="option-item"><strong>D.</strong> Nothing</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q2. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int multiply(int a, int b = 2) {
+    return a * b;
+}
+
+int main() {
+    cout &lt;&lt; multiply(5) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 5</div>
+<div class="option-item"><strong>B.</strong> 10</div>
+<div class="option-item"><strong>C.</strong> 7</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q3. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    char ch = &#x27;m&#x27;;
+    bool isUpper = (ch &gt;= &#x27;A&#x27; &amp;&amp; ch &lt;= &#x27;Z&#x27;);
+    cout &lt;&lt; isUpper &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1</div>
+<div class="option-item"><strong>B.</strong> 0</div>
+<div class="option-item"><strong>C.</strong> true</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q4. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int i = 10;
+    do {
+        cout &lt;&lt; i;
+        i++;
+    } while (i &lt; 5);
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 10</div>
+<div class="option-item"><strong>B.</strong> Nothing</div>
+<div class="option-item"><strong>C.</strong> Infinite loop</div>
+<div class="option-item"><strong>D.</strong> 101112...</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q5. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    int arr[] = {100, 200, 300};
+    cout &lt;&lt; arr[0] + arr[2] &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 300</div>
+<div class="option-item"><strong>B.</strong> 400</div>
+<div class="option-item"><strong>C.</strong> 500</div>
+<div class="option-item"><strong>D.</strong> 600</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 5)</h3>
+<div class="question-block"><div class="question-header">Q6. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int temp = 32;
+        if (temp &gt; 30) {
+            System.out.println(&quot;Hot&quot;);
+        } else {
+            System.out.println(&quot;Cold&quot;);
+        }
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Hot</div>
+<div class="option-item"><strong>B.</strong> Cold</div>
+<div class="option-item"><strong>C.</strong> 32</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q7. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        System.out.println(Math.abs(-15));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> -15</div>
+<div class="option-item"><strong>B.</strong> 15</div>
+<div class="option-item"><strong>C.</strong> 0</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q8. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String title = &quot;Competitive Programming&quot;;
+        System.out.println(title.startsWith(&quot;Comp&quot;));
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> true</div>
+<div class="option-item"><strong>B.</strong> false</div>
+<div class="option-item"><strong>C.</strong> Comp</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q9. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int n = 0;
+        while (n &lt; 4) {
+            n += 2;
+        }
+        System.out.println(n);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 2</div>
+<div class="option-item"><strong>B.</strong> 4</div>
+<div class="option-item"><strong>C.</strong> 6</div>
+<div class="option-item"><strong>D.</strong> 0</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q10. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String[] colors = {&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;};
+        System.out.println(colors[colors.length - 1]);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> red</div>
+<div class="option-item"><strong>B.</strong> green</div>
+<div class="option-item"><strong>C.</strong> blue</div>
+<div class="option-item"><strong>D.</strong> ArrayIndexOutOfBoundsException</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 5)</h3>
+<div class="question-block"><div class="question-header">Q11. What is the output?</div>
+<pre><code class="language-python">text = &quot;hello world&quot;
+print(text.title())</code></pre>
+<div class="option-item"><strong>A.</strong> hello world</div>
+<div class="option-item"><strong>B.</strong> Hello World</div>
+<div class="option-item"><strong>C.</strong> HELLO WORLD</div>
+<div class="option-item"><strong>D.</strong> Hello world</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q12. What is the output?</div>
+<pre><code class="language-python">nums = [1, 2, 3]
+print(nums[::-1])</code></pre>
+<div class="option-item"><strong>A.</strong> [1, 2, 3]</div>
+<div class="option-item"><strong>B.</strong> [3, 2, 1]</div>
+<div class="option-item"><strong>C.</strong> [3, 1, 2]</div>
+<div class="option-item"><strong>D.</strong> [-1, -2, -3]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q13. What is the output?</div>
+<pre><code class="language-python">scores = [45, 88, 72, 95, 60]
+print(max(scores))</code></pre>
+<div class="option-item"><strong>A.</strong> 45</div>
+<div class="option-item"><strong>B.</strong> 88</div>
+<div class="option-item"><strong>C.</strong> 95</div>
+<div class="option-item"><strong>D.</strong> 72</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q14. What is the output?</div>
+<pre><code class="language-python">nums = [5, 10, 15]
+print(sum(nums))</code></pre>
+<div class="option-item"><strong>A.</strong> 30</div>
+<div class="option-item"><strong>B.</strong> 15</div>
+<div class="option-item"><strong>C.</strong> 25</div>
+<div class="option-item"><strong>D.</strong> 50</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q15. What is the output?</div>
+<pre><code class="language-python">user = &quot;Sam&quot;
+score = 98
+print(f&quot;{user}: {score}&quot;)</code></pre>
+<div class="option-item"><strong>A.</strong> {user}: {score}</div>
+<div class="option-item"><strong>B.</strong> Sam: 98</div>
+<div class="option-item"><strong>C.</strong> Sam 98</div>
+<div class="option-item"><strong>D.</strong> Error</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">C++ (Set 5 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q16. What is the output of the following C++ code?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;utility&gt;
+using namespace std;
+
+int main() {
+    pair&lt;string, int&gt; p = make_pair(&quot;Score&quot;, 95);
+    cout &lt;&lt; p.first &lt;&lt; &quot;: &quot; &lt;&lt; p.second &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> Score: 95</div>
+<div class="option-item"><strong>B.</strong> 95: Score</div>
+<div class="option-item"><strong>C.</strong> (&quot;Score&quot;, 95)</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q17. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int multiply(int a, int b = 2, int c = 3) {
+    return a * b * c;
+}
+
+int main() {
+    cout &lt;&lt; multiply(4, 5) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 24</div>
+<div class="option-item"><strong>B.</strong> 60</div>
+<div class="option-item"><strong>C.</strong> 40</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q18. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+int main() {
+    vector&lt;int&gt; v = {1, 2, 3};
+    for (int &amp;x : v) {
+        x *= 2;
+    }
+    cout &lt;&lt; v[0] &lt;&lt; &quot; &quot; &lt;&lt; v[1] &lt;&lt; &quot; &quot; &lt;&lt; v[2] &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1 2 3</div>
+<div class="option-item"><strong>B.</strong> 2 4 6</div>
+<div class="option-item"><strong>C.</strong> 2 2 3</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q19. What is the output?</div>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+using namespace std;
+
+int x = 50;
+
+int main() {
+    int x = 10;
+    cout &lt;&lt; ::x + x &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 20</div>
+<div class="option-item"><strong>B.</strong> 60</div>
+<div class="option-item"><strong>C.</strong> 100</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Java (Set 5 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q20. What is the output of the following Java code?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String word = &quot;Java&quot;;
+        char[] chars = word.toCharArray();
+        System.out.println(chars.length + &quot; &quot; + chars[2]);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 4 v</div>
+<div class="option-item"><strong>B.</strong> 4 a</div>
+<div class="option-item"><strong>C.</strong> 3 v</div>
+<div class="option-item"><strong>D.</strong> Compilation error</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q21. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        int decimal = Integer.parseInt(&quot;1010&quot;, 2);
+        System.out.println(decimal);
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> 1010</div>
+<div class="option-item"><strong>B.</strong> 10</div>
+<div class="option-item"><strong>C.</strong> 12</div>
+<div class="option-item"><strong>D.</strong> NumberFormatException</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q22. What is the output?</div>
+<pre><code class="language-java">public class Main {
+    public static void main(String[] args) {
+        String role = &quot;ADMIN&quot;;
+        switch (role) {
+            case &quot;USER&quot;: System.out.print(&quot;U&quot;); break;
+            case &quot;ADMIN&quot;: System.out.print(&quot;A&quot;);
+            case &quot;GUEST&quot;: System.out.print(&quot;G&quot;); break;
+            default: System.out.print(&quot;D&quot;);
+        }
+    }
+}</code></pre>
+<div class="option-item"><strong>A.</strong> A</div>
+<div class="option-item"><strong>B.</strong> AG</div>
+<div class="option-item"><strong>C.</strong> AD</div>
+<div class="option-item"><strong>D.</strong> AGD</div>
+</div>
+<hr class="divider" />
+<h3 class="lang-title">Python (Set 5 - Continued)</h3>
+<div class="question-block"><div class="question-header">Q23. What is the output of the following Python code?</div>
+<pre><code class="language-python">info = {&quot;x&quot;: 10, &quot;y&quot;: 20}
+total = 0
+for k, v in info.items():
+    total += v
+print(total)</code></pre>
+<div class="option-item"><strong>A.</strong> 30</div>
+<div class="option-item"><strong>B.</strong> 10</div>
+<div class="option-item"><strong>C.</strong> 20</div>
+<div class="option-item"><strong>D.</strong> TypeError</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q24. What is the output?</div>
+<pre><code class="language-python">items = [10, 20, 30, 40]
+removed = items.pop(1)
+print(removed, items)</code></pre>
+<div class="option-item"><strong>A.</strong> 20 [10, 30, 40]</div>
+<div class="option-item"><strong>B.</strong> 10 [20, 30, 40]</div>
+<div class="option-item"><strong>C.</strong> 20 [10, 20, 30, 40]</div>
+<div class="option-item"><strong>D.</strong> 40 [10, 20, 30]</div>
+</div>
+<hr class="divider" />
+<div class="question-block"><div class="question-header">Q25. What is the output?</div>
+<pre><code class="language-python">flags = [True, True, False]
+print(any(flags), all(flags))</code></pre>
+<div class="option-item"><strong>A.</strong> True True</div>
+<div class="option-item"><strong>B.</strong> True False</div>
+<div class="option-item"><strong>C.</strong> False True</div>
+<div class="option-item"><strong>D.</strong> False False</div>
+</div>
+<hr class="divider" />
+<h1 class="main-title" id="round-2-medium-debugging">ROUND 2 — MEDIUM DEBUGGING</h1>
+<div class="page-break"></div><h2 class="round-title" id="problem-title-maximum-subarray-sum-with-at-most-k-distinct-elements">Problem Title: Maximum Subarray Sum with At Most K Distinct Elements</h2>
+<h3 class="lang-title">Difficulty</h3>
+<p>Medium</p>
+<h3 class="lang-title">Problem Statement</h3>
+<p>Given an array of <code>n</code> integers and an integer <code>k</code>, find the maximum sum of a contiguous subarray such that the subarray contains <strong>at most <code>k</code> distinct elements</strong>.</p>
+<p><strong>Input Format:</strong></p>
+<li>First line: Two integers `n` and `k` (`1 ≤ n ≤ 10^5`, `1 ≤ k ≤ n`)</li>
+<li>Second line: `n` space-separated integers `arr[0], arr[1], ..., arr[n-1]` (`-10^4 ≤ arr[i] ≤ 10^4`)</li>
+<p><strong>Output Format:</strong></p>
+<li>A single integer: the maximum sum of a contiguous subarray with at most `k` distinct elements.</li>
+<p><strong>Example 1:</strong></p>
+<pre><code class="language-">Input:
+7 2
+1 2 1 2 3 4 5
+
+Output:
+6</code></pre>
+<p><em>Explanation:</em> The subarray <code>[1, 2, 1, 2]</code> has sum 6 and contains 2 distinct elements.</p>
+<p><strong>Example 2:</strong></p>
+<pre><code class="language-">Input:
+5 1
+3 3 3 3 3
+
+Output:
+15</code></pre>
+<p><em>Explanation:</em> The entire array has only 1 distinct element. Sum = 15.</p>
+<p><strong>Example 3:</strong></p>
+<pre><code class="language-">Input:
+5 3
+-1 -2 -3 -4 -5
+
+Output:
+-1</code></pre>
+<p><em>Explanation:</em> The best subarray is <code>[-1]</code> with sum -1 (all elements are negative).</p>
+<h3 class="lang-title">Expected Algorithm</h3>
+<p>Use a <strong>sliding window</strong> approach with a frequency map to maintain at most <code>k</code> distinct elements. Expand the right pointer and track the window sum. When distinct elements exceed <code>k</code>, shrink from the left. Track the maximum sum seen.</p>
+<hr class="divider" />
+<h3 class="lang-title">C++ Buggy Code</h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;unordered_map&gt;
+#include &lt;climits&gt;
+using namespace std;
+
+int main() {
+    int n, k;
+    cin &gt;&gt; n &gt;&gt; k;
+    
+    int arr[n];
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; arr[i];
+    }
+    
+    unordered_map&lt;int, int&gt; freq;
+    int left = 0;
+    long long windowSum = 0;
+    long long maxSum = LLONG_MIN;
+    
+    for (int right = 0; right &lt; n; right++) {
+        freq[arr[right]]++;
+        windowSum += arr[right];
+        
+        while (freq.size() &gt; (size_t)k) {
+            freq[arr[left]]--;
+            if (freq[arr[left]] == 0) {
+                freq.erase(arr[left]);
+            }
+            left++;
+            windowSum -= arr[left];
+        }
+        
+        if (windowSum &gt; maxSum) {
+            maxSum = windowSum;
+        }
+    }
+    
+    cout &lt;&lt; maxSum &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<h3 class="lang-title">Java Buggy Code</h3>
+<pre><code class="language-java">import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        
+        int[] arr = new int[n];
+        for (int i = 0; i &lt; n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        
+        Map&lt;Integer, Integer&gt; freq = new HashMap&lt;&gt;();
+        int left = 0;
+        long windowSum = 0;
+        long maxSum = Long.MIN_VALUE;
+        
+        for (int right = 0; right &lt; n; right++) {
+            freq.merge(arr[right], 1, Integer::sum);
+            windowSum += arr[right];
+            
+            while (freq.size() &gt; k) {
+                freq.merge(arr[left], -1, Integer::sum);
+                if (freq.get(arr[left]) == 0) {
+                    freq.remove(arr[left]);
+                }
+                left++;
+                windowSum -= arr[left];
+            }
+            
+            if (windowSum &gt; maxSum) {
+                maxSum = windowSum;
+            }
+        }
+        
+        System.out.println(maxSum);
+    }
+}</code></pre>
+<h3 class="lang-title">Python Buggy Code</h3>
+<pre><code class="language-python">import sys
+from collections import defaultdict
+
+def solve():
+    data = sys.stdin.read().split()
+    idx = 0
+    n = int(data[idx]); idx += 1
+    k = int(data[idx]); idx += 1
+    
+    arr = []
+    for i in range(n):
+        arr.append(int(data[idx])); idx += 1
+    
+    freq = defaultdict(int)
+    left = 0
+    window_sum = 0
+    max_sum = float(&#x27;-inf&#x27;)
+    
+    for right in range(n):
+        freq[arr[right]] += 1
+        window_sum += arr[right]
+        
+        while len(freq) &gt; k:
+            freq[arr[left]] -= 1
+            if freq[arr[left]] == 0:
+                del freq[arr[left]]
+            left += 1
+            window_sum -= arr[left]
+        
+        if window_sum &gt; max_sum:
+            max_sum = window_sum
+    
+    print(max_sum)
+
+solve()</code></pre>
+<hr class="divider" />
+<h1 class="main-title" id="round-3-hard-debugging">ROUND 3 — HARD DEBUGGING</h1>
+<div class="page-break"></div><h2 class="round-title" id="problem-title-shortest-path-in-weighted-graph-with-mandatory-checkpoints">Problem Title: Shortest Path in Weighted Graph with Mandatory Checkpoints</h2>
+<h3 class="lang-title">Difficulty</h3>
+<p>Hard</p>
+<h3 class="lang-title">Problem Statement</h3>
+<p>You are given a weighted <strong>undirected</strong> graph with <code>n</code> nodes (numbered 1 to n) and <code>m</code> edges. You are also given a source node <code>s</code>, a destination node <code>d</code>, and a list of <code>p</code> <strong>mandatory checkpoint nodes</strong> that must be visited on the path from <code>s</code> to <code>d</code>.</p>
+<p>Find the <strong>minimum total weight</strong> of a path from <code>s</code> to <code>d</code> that visits <strong>all checkpoint nodes</strong> (in any order). If no such path exists, output <code>-1</code>.</p>
+<p><strong>Input Format:</strong></p>
+<li>Line 1: Four integers `n`, `m`, `s`, `d` (`2 ≤ n ≤ 1000`, `1 ≤ m ≤ 5000`, `1 ≤ s, d ≤ n`)</li>
+<li>Next `m` lines: Three integers `u`, `v`, `w` (undirected edge between u and v with weight w, `1 ≤ w ≤ 10^6`)</li>
+<li>Next line: Integer `p` (`0 ≤ p ≤ 10`)</li>
+<li>Next line: `p` space-separated integers — the checkpoint nodes</li>
+<p><strong>Output Format:</strong></p>
+<li>A single integer: the minimum path weight, or `-1` if impossible.</li>
+<p><strong>Constraints:</strong></p>
+<li>The graph may have multiple edges between the same pair of nodes.</li>
+<li>The path may revisit nodes.</li>
+<li>`p ≤ 10` (allows bitmask DP approach).</li>
+<p><strong>Example 1:</strong></p>
+<pre><code class="language-">Input:
+4 4 1 4
+1 2 2
+2 3 3
+3 4 1
+1 4 100
+
+1
+3
+
+Output:
+6</code></pre>
+<p><em>Explanation:</em> Must visit checkpoint 3. Path: 1 → 2 → 3 → 4. Cost: 2 + 3 + 1 = 6. The direct edge 1→4 costs 100 but skips checkpoint 3.</p>
+<p><strong>Example 2:</strong></p>
+<pre><code class="language-">Input:
+3 2 1 3
+1 2 5
+2 3 3
+
+0
+
+Output:
+8</code></pre>
+<p><em>Explanation:</em> No mandatory checkpoints. Shortest path: 1 → 2 → 3. Cost: 5 + 3 = 8.</p>
+<h3 class="lang-title">Expected Algorithm</h3>
+<li>Build a list of &quot;key nodes&quot; = [checkpoints] + [source] + [destination].</li>
+<li>Run **Dijkstra&#x27;s algorithm** from each key node to compute shortest distances to all other nodes.</li>
+<li>Use **bitmask DP** on the checkpoints: `dp[mask][i]` = minimum cost to have visited the subset of checkpoints indicated by `mask`, currently at key node `i`.</li>
+<li>Enumerate all orderings via DP transitions and find the minimum cost path that visits all checkpoints and reaches the destination.</li>
+<hr class="divider" />
+<h2 class="section-title" id="c-17-buggy-code">C++17 Buggy Code</h2>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;climits&gt;
+using namespace std;
+
+typedef pair&lt;long long, int&gt; pli;
+
+const long long INF = 1e18;
+
+vector&lt;long long&gt; dijkstra(int src, const vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt;&amp; adj, int n) {
+    vector&lt;long long&gt; dist(n + 1, INF);
+    priority_queue&lt;pli, vector&lt;pli&gt;, greater&lt;pli&gt;&gt; pq;
+    dist[src] = 0;
+    pq.push({0, src});
+    
+    while (!pq.empty()) {
+        auto [d, u] = pq.top();
+        pq.pop();
+        
+        if (d &gt; dist[u]) continue;
+        
+        for (auto&amp; [v, w] : adj[u]) {
+            if (dist[u] + w &lt; dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+    return dist;
+}
+
+int main() {
+    int n, m, s, d;
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; d;
+    
+    vector&lt;vector&lt;pair&lt;int, int&gt;&gt;&gt; adj(n + 1);
+    for (int i = 0; i &lt; m; i++) {
+        int u, v, w;
+        cin &gt;&gt; u &gt;&gt; v &gt;&gt; w;
+        adj[u].push_back({v, w});
+    }
+    
+    int p;
+    cin &gt;&gt; p;
+    vector&lt;int&gt; checkpoints(p);
+    for (int i = 0; i &lt; p; i++) {
+        cin &gt;&gt; checkpoints[i];
+    }
+    
+    int totalKeys = p + 2;
+    vector&lt;int&gt; keyNodes(totalKeys);
+    for (int i = 0; i &lt; p; i++) keyNodes[i] = checkpoints[i];
+    keyNodes[p] = s;
+    keyNodes[p + 1] = d;
+    
+    vector&lt;vector&lt;long long&gt;&gt; dist(totalKeys);
+    for (int i = 0; i &lt; totalKeys; i++) {
+        dist[i] = dijkstra(keyNodes[i], adj, n);
+    }
+    
+    int fullMask = (1 &lt;&lt; p) - 1;
+    vector&lt;vector&lt;long long&gt;&gt; dp(fullMask + 1, vector&lt;long long&gt;(totalKeys, INF));
+    
+    int srcIdx = p;
+    for (int i = 0; i &lt; p; i++) {
+        if (dist[srcIdx][keyNodes[i]] &lt; INF) {
+            dp[1 &lt;&lt; i][i] = dist[srcIdx][keyNodes[i]];
+        }
+    }
+    
+    for (int mask = 1; mask &lt;= fullMask; mask++) {
+        for (int i = 0; i &lt; p; i++) {
+            if (!(mask &amp; (1 &lt;&lt; i))) continue;
+            if (dp[mask][i] &gt;= INF) continue;
+            
+            for (int j = 0; j &lt; p; j++) {
+                if (mask &amp; (1 &lt;&lt; j)) continue;
+                int newMask = mask | (1 &lt;&lt; j);
+                if (dist[i][keyNodes[j]] &lt; INF) {
+                    long long cost = dp[mask][i] + dist[i][keyNodes[j]];
+                    if (cost &lt; dp[newMask][j]) {
+                        dp[newMask][j] = cost;
+                    }
+                }
+            }
+        }
+    }
+    
+    long long ans = INF;
+    int destIdx = p + 1;
+    if (p == 0) {
+        ans = dist[srcIdx][keyNodes[destIdx]];
+    } else {
+        for (int i = 0; i &lt; p; i++) {
+            if (dp[fullMask][i] &lt; INF &amp;&amp; dist[i][keyNodes[destIdx]] &lt; INF) {
+                ans = min(ans, dp[fullMask][i] + dist[i][keyNodes[destIdx]]);
+            }
+        }
+    }
+    
+    cout &lt;&lt; (ans &gt;= INF ? -1 : ans) &lt;&lt; endl;
+    return 0;
+}</code></pre>
+<h2 class="section-title" id="java-17-buggy-code">Java 17 Buggy Code</h2>
+<pre><code class="language-java">import java.util.*;
+
+public class Main {
+    static final long INF = (long) 1e18;
+    
+    static long[] dijkstra(int src, List&lt;List&lt;int[]&gt;&gt; adj, int n) {
+        long[] dist = new long[n + 1];
+        Arrays.fill(dist, INF);
+        dist[src] = 0;
+        PriorityQueue&lt;long[]&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; Long.compare(a[0], b[0]));
+        pq.offer(new long[]{0, src});
+        
+        while (!pq.isEmpty()) {
+            long[] top = pq.poll();
+            long d = top[0];
+            int u = (int) top[1];
+            
+            if (d &gt; dist[u]) continue;
+            
+            for (int[] edge : adj.get(u)) {
+                int v = edge[0], w = edge[1];
+                if (dist[u] + w &lt; dist[v]) {
+                    dist[v] = dist[u] + w;
+                    pq.offer(new long[]{dist[v], v});
+                }
+            }
+        }
+        return dist;
+    }
+    
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt(), m = sc.nextInt(), s = sc.nextInt(), d = sc.nextInt();
+        
+        List&lt;List&lt;int[]&gt;&gt; adj = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt;= n; i++) adj.add(new ArrayList&lt;&gt;());
+        
+        for (int i = 0; i &lt; m; i++) {
+            int u = sc.nextInt(), v = sc.nextInt(), w = sc.nextInt();
+            adj.get(u).add(new int[]{v, w});
+        }
+        
+        int p = sc.nextInt();
+        int[] checkpoints = new int[p];
+        for (int i = 0; i &lt; p; i++) checkpoints[i] = sc.nextInt();
+        
+        int totalKeys = p + 2;
+        int[] keyNodes = new int[totalKeys];
+        for (int i = 0; i &lt; p; i++) keyNodes[i] = checkpoints[i];
+        keyNodes[p] = s;
+        keyNodes[p + 1] = d;
+        
+        long[][] dist = new long[totalKeys][];
+        for (int i = 0; i &lt; totalKeys; i++) {
+            dist[i] = dijkstra(keyNodes[i], adj, n);
+        }
+        
+        int fullMask = (1 &lt;&lt; p) - 1;
+        long[][] dp = new long[fullMask + 1][totalKeys];
+        for (long[] row : dp) Arrays.fill(row, INF);
+        
+        int srcIdx = p;
+        for (int i = 0; i &lt; p; i++) {
+            if (dist[srcIdx][keyNodes[i]] &lt; INF) {
+                dp[1 &lt;&lt; i][i] = dist[srcIdx][keyNodes[i]];
+            }
+        }
+        
+        for (int mask = 1; mask &lt;= fullMask; mask++) {
+            for (int i = 0; i &lt; p; i++) {
+                if ((mask &amp; (1 &lt;&lt; i)) == 0) continue;
+                if (dp[mask][i] &gt;= INF) continue;
+                
+                for (int j = 0; j &lt; p; j++) {
+                    if ((mask &amp; (1 &lt;&lt; j)) != 0) continue;
+                    int newMask = mask | (1 &lt;&lt; j);
+                    if (dist[i][keyNodes[j]] &lt; INF) {
+                        long cost = dp[mask][i] + dist[i][keyNodes[j]];
+                        if (cost &lt; dp[newMask][j]) {
+                            dp[newMask][j] = cost;
+                        }
+                    }
+                }
+            }
+        }
+        
+        long ans = INF;
+        int destIdx = p + 1;
+        if (p == 0) {
+            ans = dist[srcIdx][keyNodes[destIdx]];
+        } else {
+            for (int i = 0; i &lt; p; i++) {
+                if (dp[fullMask][i] &lt; INF &amp;&amp; dist[i][keyNodes[destIdx]] &lt; INF) {
+                    ans = Math.min(ans, dp[fullMask][i] + dist[i][keyNodes[destIdx]]);
+                }
+            }
+        }
+        
+        System.out.println(ans &gt;= INF ? -1 : ans);
+    }
+}</code></pre>
+<h2 class="section-title" id="python-3-11-buggy-code">Python 3.11+ Buggy Code</h2>
+<pre><code class="language-python">import sys
+import heapq
+
+def dijkstra(src, adj, n):
+    INF = float(&#x27;inf&#x27;)
+    dist = [INF] * (n + 1)
+    dist[src] = 0
+    pq = [(0, src)]
+    
+    while pq:
+        d, u = heapq.heappop(pq)
+        if d &gt; dist[u]:
+            continue
+        for v, w in adj[u]:
+            if dist[u] + w &lt; dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(pq, (dist[v], v))
+    
+    return dist
+
+def solve():
+    input_data = sys.stdin.read().split()
+    idx = 0
+    n = int(input_data[idx]); idx += 1
+    m = int(input_data[idx]); idx += 1
+    s = int(input_data[idx]); idx += 1
+    d = int(input_data[idx]); idx += 1
+    
+    adj = [[] for _ in range(n + 1)]
+    for _ in range(m):
+        u = int(input_data[idx]); idx += 1
+        v = int(input_data[idx]); idx += 1
+        w = int(input_data[idx]); idx += 1
+        adj[u].append((v, w))
+    
+    p = int(input_data[idx]); idx += 1
+    checkpoints = []
+    for _ in range(p):
+        checkpoints.append(int(input_data[idx])); idx += 1
+    
+    total_keys = p + 2
+    key_nodes = checkpoints + [s, d]
+    
+    INF = float(&#x27;inf&#x27;)
+    
+    dist = []
+    for i in range(total_keys):
+        dist.append(dijkstra(key_nodes[i], adj, n))
+    
+    full_mask = (1 &lt;&lt; p) - 1
+    dp = [[INF] * total_keys for _ in range(full_mask + 1)]
+    
+    src_idx = p
+    for i in range(p):
+        if dist[src_idx][key_nodes[i]] &lt; INF:
+            dp[1 &lt;&lt; i][i] = dist[src_idx][key_nodes[i]]
+    
+    for mask in range(1, full_mask + 1):
+        for i in range(p):
+            if not (mask &amp; (1 &lt;&lt; i)):
+                continue
+            if dp[mask][i] &gt;= INF:
+                continue
+            
+            for j in range(p):
+                if mask &amp; (1 &lt;&lt; j):
+                    continue
+                new_mask = mask | (1 &lt;&lt; j)
+                if dist[i][key_nodes[j]] &lt; INF:
+                    cost = dp[mask][i] + dist[i][key_nodes[j]]
+                    if cost &lt; dp[new_mask][j]:
+                        dp[new_mask][j] = cost
+    
+    dest_idx = p + 1
+    ans = INF
+    if p == 0:
+        ans = dist[src_idx][key_nodes[dest_idx]]
+    else:
+        for i in range(p):
+            if dp[full_mask][i] &lt; INF and dist[i][key_nodes[dest_idx]] &lt; INF:
+                ans = min(ans, dp[full_mask][i] + dist[i][key_nodes[dest_idx]])
+    
+    print(-1 if ans &gt;= INF else int(ans))
+
+solve()</code></pre>
+<hr class="divider" />
+</div>
+</body>
+</html>

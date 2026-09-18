@@ -1,0 +1,129 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: debug_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: debug_user
+      POSTGRES_PASSWORD: debug_secret_pass
+      POSTGRES_DB: debug_event_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U debug_user -d debug_event_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - debug_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: debug_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - debug_network
+
+  judge0-server:
+    image: judge0/judge0:1.13.1
+    container_name: debug_judge0_server
+    restart: unless-stopped
+    ports:
+      - "2358:2358"
+    privileged: true
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=debug_user
+      - POSTGRES_PASSWORD=debug_secret_pass
+      - POSTGRES_DB=debug_event_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - debug_network
+
+  judge0-worker:
+    image: judge0/judge0:1.13.1
+    container_name: debug_judge0_worker
+    restart: unless-stopped
+    privileged: true
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=debug_user
+      - POSTGRES_PASSWORD=debug_secret_pass
+      - POSTGRES_DB=debug_event_db
+    depends_on:
+      - judge0-server
+    networks:
+      - debug_network
+
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: debug_backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - CLIENT_URL=http://localhost:5173
+      - DATABASE_URL=postgresql://debug_user:debug_secret_pass@postgres:5432/debug_event_db?schema=public
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JUDGE0_API_URL=http://judge0-server:2358
+      - JWT_ADMIN_SECRET=super_secret_admin_jwt_key_fest_2026_x98f2
+      - JWT_PARTICIPANT_SECRET=super_secret_participant_jwt_key_fest_2026_p37q1
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=adminpassword123
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - debug_network
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: debug_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    networks:
+      - debug_network
+
+networks:
+  debug_network:
+    driver: bridge
+
+volumes:
+  pgdata:
+  redisdata:
