@@ -1,31 +1,34 @@
-# Round 2 — Medium Debugging (Set 4)
+# Round 2 — Hard Debugging (Set 4)
 
-## Problem: Product of Array Except Self Without Division
+## Problem: Trapping Rain Water with Monotonic Stack
 
-**Points:** 20 Points | **Time Limit:** 2.5s | **Memory Limit:** 256MB
+**Points:** 30 Points | **Difficulty:** Hard | **Time Limit:** 3.0s | **Memory Limit:** 256MB
 
 ### Problem Statement
 
-Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
-The algorithm must run in O(n) time without using the division operator.
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
 
 Input Format:
-- Space-separated integers representing the array nums (2 <= n <= 10^5, -30 <= nums[i] <= 30)
+- First line: Single integer n (1 <= n <= 10^5)
+- Second line: n space-separated non-negative integers height[0] ... height[n-1]
 
 Output Format:
-- Space-separated integers representing answer array.
+- A single integer: total units of trapped rain water.
 
 Example 1:
 Input:
-1 2 3 4
+12
+0 1 0 2 1 0 1 3 2 1 2 1
 Output:
-24 12 8 6
+6
+Explanation: The elevation map traps 6 units of rain water.
 
 Example 2:
 Input:
--1 1 0 -3 3
+6
+4 2 0 3 2 5
 Output:
-0 0 9 0 0
+9
 
 ---
 
@@ -36,33 +39,33 @@ Output:
 ```cpp
 #include <iostream>
 #include <vector>
+#include <stack>
+#include <algorithm>
 using namespace std;
 
 int main() {
-    vector<long long> nums;
-    long long val;
-    while (cin >> val) nums.push_back(val);
-    if (nums.empty()) return 0;
+    int n;
+    if (!(cin >> n)) return 0;
+    vector<int> height(n);
+    for (int i = 0; i < n; i++) cin >> height[i];
 
-    int n = nums.size();
-    vector<long long> res(n, 1);
+    long long totalWater = 0;
+    stack<int> st;
 
-    long long curr = 1;
-    for (int i = 0; i < n; i++) {
-        curr *= nums[i];
-        res[i] = curr;
+    for (int current = 0; current < n; current++) {
+        while (!st.empty() && height[current] > height[st.top()]) {
+            int top = st.top();
+            st.pop();
+            if (st.empty()) break;
+
+            long long distance = current - top;
+            long long bounded_height = min(height[current], height[st.top()]) - height[top];
+            totalWater += distance * bounded_height;
+        }
+        st.push(current);
     }
 
-    curr = 1;
-    for (int i = n - 1; i >= 0; i--) {
-        res[i] *= curr;
-        curr *= nums[i];
-    }
-
-    for (int i = 0; i < n; i++) {
-        cout << res[i] << (i == n - 1 ? "" : " ");
-    }
-    cout << endl;
+    cout << totalWater << endl;
     return 0;
 }
 ```
@@ -75,30 +78,27 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Long> list = new ArrayList<>();
-        while (sc.hasNextLong()) list.add(sc.nextLong());
-        if (list.isEmpty()) return;
+        if (!sc.hasNextInt()) return;
+        int n = sc.nextInt();
+        int[] height = new int[n];
+        for (int i = 0; i < n; i++) height[i] = sc.nextInt();
 
-        int n = list.size();
-        long[] res = new long[n];
-        long curr = 1;
+        long totalWater = 0;
+        Deque<Integer> st = new ArrayDeque<>();
 
-        for (int i = 0; i < n; i++) {
-            curr *= list.get(i);
-            res[i] = curr;
+        for (int current = 0; current < n; current++) {
+            while (!st.isEmpty() && height[current] > height[st.peek()]) {
+                int top = st.pop();
+                if (st.isEmpty()) break;
+
+                long distance = current - top;
+                long boundedHeight = Math.min(height[current], height[st.peek()]) - height[top];
+                totalWater += distance * boundedHeight;
+            }
+            st.push(current);
         }
 
-        curr = 1;
-        for (int i = n - 1; i >= 0; i--) {
-            res[i] *= curr;
-            curr *= list.get(i);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < n; i++) {
-            sb.append(res[i]).append(i == n - 1 ? "" : " ");
-        }
-        System.out.println(sb.toString());
+        System.out.println(totalWater);
     }
 }
 ```
@@ -108,25 +108,29 @@ public class Main {
 ```python
 import sys
 
-def solve():
-    nums = list(map(int, sys.stdin.read().split()))
-    if not nums: return
-    n = len(nums)
-    res = [1] * n
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    n = int(tokens[0])
+    height = [int(x) for x in tokens[1:1+n]]
 
-    curr = 1
-    for i in range(n):
-        curr *= nums[i]
-        res[i] = curr
+    total_water = 0
+    st = []
 
-    curr = 1
-    for i in range(n - 1, -1, -1):
-        res[i] *= curr
-        curr *= nums[i]
+    for current in range(n):
+        while st and height[current] > height[st[-1]]:
+            top = st.pop()
+            if not st:
+                break
+            distance = current - top
+            bounded_height = min(height[current], height[st[-1]]) - height[top]
+            total_water += distance * bounded_height
+        st.append(current)
 
-    print(" ".join(map(str, res)))
+    print(total_water)
 
 if __name__ == '__main__':
-    solve()
+    main()
 ```
 

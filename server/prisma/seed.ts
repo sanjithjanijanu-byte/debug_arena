@@ -58,12 +58,12 @@ async function main() {
   });
   console.log(`✅ Admin seeded: ${admin.username}`);
 
-  // 4. Seed Rounds
+  // 4. Seed Rounds (2 Rounds: Round 1 MCQ & Round 2 Hard Debugging)
   const round1 = await prisma.round.create({
     data: {
       number: 1,
       name: 'Bug Hunt',
-      durationMinutes: 20,
+      durationMinutes: 30,
       difficulty: Difficulty.EASY,
       status: 'LOCKED',
     },
@@ -72,23 +72,13 @@ async function main() {
   const round2 = await prisma.round.create({
     data: {
       number: 2,
-      name: 'Logic Hunt',
-      durationMinutes: 35,
-      difficulty: Difficulty.MEDIUM,
-      status: 'LOCKED',
-    },
-  });
-
-  const round3 = await prisma.round.create({
-    data: {
-      number: 3,
       name: 'Debugging Showdown',
-      durationMinutes: 35,
+      durationMinutes: 45,
       difficulty: Difficulty.HARD,
       status: 'LOCKED',
     },
   });
-  console.log('✅ Rounds 1, 2, and 3 seeded');
+  console.log('✅ Rounds 1 and 2 seeded');
 
   // 5. Seed Teams & Participants
   const defaultTeamPassHash = await bcrypt.hash('team123', 12);
@@ -129,7 +119,7 @@ async function main() {
   // 6. Seed Complete Sets across all rounds (Round 1: 5 Sets x 20 MCQs; Rounds 2 & 3: 7 Sets each)
   await seedAllSetsQuestions();
 
-  console.log('🎉 Complete event sets seeding finished successfully (342 questions across all rounds and languages)!');
+  console.log('🎉 Complete event sets seeding finished successfully (315 questions across 2 rounds and all languages)!');
 }
 
 main()

@@ -382,7 +382,7 @@ export const QuestionBank: React.FC = () => {
       )}
 
       {/* Metric Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <div className="glass-card p-4 rounded-xl border border-slate-800">
           <span className="text-slate-400 text-xs flex items-center justify-between">
             <span>Total Questions</span>
@@ -399,27 +399,17 @@ export const QuestionBank: React.FC = () => {
             <Sparkles className="w-4 h-4 text-emerald-400" />
           </span>
           <div className="text-2xl font-black text-emerald-400 mt-1">
-            {round1Count} <span className="text-xs font-normal text-slate-500">/ 60 MCQs</span>
+            {round1Count} <span className="text-xs font-normal text-slate-500">MCQs (5 Sets)</span>
           </div>
         </div>
 
         <div className="glass-card p-4 rounded-xl border border-slate-800">
           <span className="text-slate-400 text-xs flex items-center justify-between">
-            <span>Round 2 (Medium)</span>
-            <Zap className="w-4 h-4 text-amber-400" />
-          </span>
-          <div className="text-2xl font-black text-amber-400 mt-1">
-            {round2Count} <span className="text-xs font-normal text-slate-500">challenges</span>
-          </div>
-        </div>
-
-        <div className="glass-card p-4 rounded-xl border border-slate-800">
-          <span className="text-slate-400 text-xs flex items-center justify-between">
-            <span>Round 3 (Hard)</span>
+            <span>Round 2 (Hard Debugging)</span>
             <FileCode className="w-4 h-4 text-rose-400" />
           </span>
           <div className="text-2xl font-black text-rose-400 mt-1">
-            {round3Count} <span className="text-xs font-normal text-slate-500">challenges</span>
+            {round2Count} <span className="text-xs font-normal text-slate-500">challenges (5 Sets)</span>
           </div>
         </div>
       </div>

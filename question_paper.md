@@ -1,11 +1,10 @@
 # DEBUG ARENA — Official Student Question Paper
 
-Welcome to **Debug Arena**. This paper contains all competition problem sets across all 3 rounds:
+Welcome to **Debug Arena**. This paper contains all competition problem sets across **2 rounds**:
 - **Round 1 (MCQ Qualification):** 5 Sets (20 Questions each for C++, Java, Python)
-- **Round 2 (Medium Debugging):** 7 Sets (1 Problem each with C++, Java, Python templates)
-- **Round 3 (Hard Debugging):** 7 Sets (1 Problem each with C++, Java, Python templates)
+- **Round 2 (Hard Debugging):** 5 Sets (1 Problem each with C++, Java, Python templates)
 
-> *Refer to your assigned Set Number given by the coordinator or system.*
+> *Refer to your assigned Set Number given by the coordinator or system (Set 1 to Set 5).*
 
 ---
 
@@ -4767,223 +4766,7 @@ a == b implies hash(a) == hash(b)
 
 ---
 
-## Round 2 — Set 1: Maximum Subarray Sum with At Most K Distinct Elements
-
-Given an array of n integers and an integer k, find the maximum sum of a contiguous subarray such that the subarray contains at most k distinct elements.
-
-Input Format:
-- First line: Two integers n and k (1 <= n <= 10^5, 1 <= k <= n)
-- Second line: n space-separated integers arr[0] ... arr[n-1] (-10^4 <= arr[i] <= 10^4)
-
-Output Format:
-- A single integer: maximum sum of a contiguous subarray with at most k distinct elements.
-
-Example 1:
-Input:
-7 2
-1 2 1 2 3 4 5
-Output:
-9
-Explanation: Subarray [4, 5] has sum 9 and contains 2 distinct elements (<= 2).
-
-Example 2:
-Input:
-5 3
--1 -2 -3 -4 -5
-Output:
--1
-
-*(See `question_papers/Round2_Set1.md` for language templates)*
-
----
-
-## Round 2 — Set 2: Container With Most Water
-
-Given n non-negative integers representing heights of vertical lines on the x-axis, find two lines that together with the x-axis form a container that stores the maximum water volume.
-
-Input Format:
-- First line: Single integer n (2 <= n <= 10^5)
-- Second line: n space-separated non-negative integers representing heights.
-
-Output Format:
-- Single integer representing maximum water container volume.
-
-Example 1:
-Input:
-9
-1 8 6 2 5 4 8 3 7
-Output:
-49
-Explanation: The lines at index 1 (height 8) and index 8 (height 7) have width 7. Water = min(8, 7) * 7 = 49.
-
-Example 2:
-Input:
-2
-1 1
-Output:
-1
-
-*(See `question_papers/Round2_Set2.md` for language templates)*
-
----
-
-## Round 2 — Set 3: Longest Substring Without Repeating Characters
-
-Given a string s on stdin, find the length of the longest substring without duplicate characters.
-
-Input Format:
-- Single line containing string s (0 <= length(s) <= 10^5)
-
-Output Format:
-- Single integer representing the length of the longest substring without repeating characters.
-
-Example 1:
-Input:
-abcabcbb
-Output:
-3
-Explanation: The answer is "abc", with the length of 3.
-
-Example 2:
-Input:
-bbbbb
-Output:
-1
-Explanation: The answer is "b", with length 1.
-
-Example 3:
-Input:
-pwwkew
-Output:
-3
-Explanation: The answer is "wke", with length 3.
-
-*(See `question_papers/Round2_Set3.md` for language templates)*
-
----
-
-## Round 2 — Set 4: Product of Array Except Self Without Division
-
-Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
-The algorithm must run in O(n) time without using the division operator.
-
-Input Format:
-- Space-separated integers representing the array nums (2 <= n <= 10^5, -30 <= nums[i] <= 30)
-
-Output Format:
-- Space-separated integers representing answer array.
-
-Example 1:
-Input:
-1 2 3 4
-Output:
-24 12 8 6
-
-Example 2:
-Input:
--1 1 0 -3 3
-Output:
-0 0 9 0 0
-
-*(See `question_papers/Round2_Set4.md` for language templates)*
-
----
-
-## Round 2 — Set 5: Search in Rotated Sorted Array
-
-Given an integer array nums sorted in ascending order with distinct values, rotated at some unknown pivot index, and a target value, return the 0-based index of target if it is in nums, or -1 if not.
-Algorithm must achieve O(log n) time complexity.
-
-Input Format:
-- First line: Integer target
-- Second line: Space-separated integers representing rotated array nums
-
-Output Format:
-- Single integer: index of target, or -1.
-
-Example 1:
-Input:
-0
-4 5 6 7 0 1 2
-Output:
-4
-
-Example 2:
-Input:
-3
-4 5 6 7 0 1 2
-Output:
--1
-
-*(See `question_papers/Round2_Set5.md` for language templates)*
-
----
-
-## Round 2 — Set 6: 3Sum Triplets with Zero Sum
-
-Given an integer array nums, return the count of unique triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
-
-Input Format:
-- Space-separated integers representing array nums (3 <= n <= 3000, -10^5 <= nums[i] <= 10^5)
-
-Output Format:
-- Single integer: the count of unique triplets that sum to 0.
-
-Example 1:
-Input:
--1 0 1 2 -1 -4
-Output:
-2
-Explanation: Triplets are [-1, -1, 2] and [-1, 0, 1].
-
-Example 2:
-Input:
-0 1 1
-Output:
-0
-
-*(See `question_papers/Round2_Set6.md` for language templates)*
-
----
-
-## Round 2 — Set 7: Minimum Size Subarray Sum Exceeding Target
-
-Given an array of positive integers nums and a positive integer target, return the minimal length of a contiguous subarray [nums[l], ..., nums[r]] of which the sum is greater than or equal to target. If there is no such subarray, return 0.
-
-Input Format:
-- First line: Integer target (1 <= target <= 10^9)
-- Second line: Space-separated positive integers nums (1 <= n <= 10^5)
-
-Output Format:
-- Single integer: minimal length of subarray with sum >= target, or 0.
-
-Example 1:
-Input:
-7
-2 3 1 2 4 3
-Output:
-2
-Explanation: The subarray [4, 3] has the minimal length 2 under the problem constraint.
-
-Example 2:
-Input:
-4
-1 4 4
-Output:
-1
-
-Example 3:
-Input:
-11
-1 1 1 1 1 1 1 1
-Output:
-0
-
-*(See `question_papers/Round2_Set7.md` for language templates)*
-
----
-
-## Round 3 — Set 1: Shortest Path with Mandatory Checkpoints
+## Round 2 — Set 1: Shortest Path with Mandatory Checkpoints
 
 You are given a weighted undirected graph with n vertices (0 to n-1) and m edges. You are also given a start vertex S, a destination vertex D, and a set of k mandatory checkpoint vertices.
 Find the minimum total distance to travel from S to D such that every mandatory checkpoint is visited at least once. If it is impossible, print -1.
@@ -5016,11 +4799,11 @@ Input:
 Output:
 -1
 
-*(See `question_papers/Round3_Set1.md` for language templates)*
+*(See `question_papers/Round2_Set1.md` for language templates)*
 
 ---
 
-## Round 3 — Set 2: Word Ladder II - Shortest Transformation Sequences Count
+## Round 2 — Set 2: Word Ladder II - Shortest Transformation Sequences Count
 
 Given two words, beginWord and endWord, and a dictionary of words wordList, return the number of distinct shortest transformation sequences from beginWord to endWord modulo 10^9 + 7.
 A transformation sequence is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
@@ -5056,11 +4839,11 @@ hot dot dog lot log
 Output:
 0
 
-*(See `question_papers/Round3_Set2.md` for language templates)*
+*(See `question_papers/Round2_Set2.md` for language templates)*
 
 ---
 
-## Round 3 — Set 3: Median of Two Sorted Arrays
+## Round 2 — Set 3: Median of Two Sorted Arrays
 
 Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
 
@@ -5090,11 +4873,11 @@ Output:
 2.5
 Explanation: Merged array = [1, 2, 3, 4] and median is (2 + 3) / 2 = 2.5.
 
-*(See `question_papers/Round3_Set3.md` for language templates)*
+*(See `question_papers/Round2_Set3.md` for language templates)*
 
 ---
 
-## Round 3 — Set 4: Trapping Rain Water with Monotonic Stack
+## Round 2 — Set 4: Trapping Rain Water with Monotonic Stack
 
 Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
 
@@ -5120,11 +4903,11 @@ Input:
 Output:
 9
 
-*(See `question_papers/Round3_Set4.md` for language templates)*
+*(See `question_papers/Round2_Set4.md` for language templates)*
 
 ---
 
-## Round 3 — Set 5: Minimum Window Substring with Exact Multiplicities
+## Round 2 — Set 5: Minimum Window Substring with Exact Multiplicities
 
 Given two strings s and t of lengths m and n respectively, return the minimum window substring of s such that every character in t (including duplicates) is included in the window. If there is no such substring, return an empty string (or print -1).
 
@@ -5159,82 +4942,7 @@ aa
 Output:
 -1
 
-*(See `question_papers/Round3_Set5.md` for language templates)*
-
----
-
-## Round 3 — Set 6: Lexicographically Smallest Course Schedule Topological Sort
-
-There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b before taking course a.
-
-Return the ordering of courses you should take to finish all courses. If there are multiple valid answers, return the lexicographically smallest ordering. If it is impossible to finish all courses (a cycle exists), return "CYCLE DETECTED".
-
-Input Format:
-- First line: Two integers numCourses and m (number of prerequisite edges)
-- Next m lines: Two integers a and b (directed edge b -> a, prerequisite b before a)
-
-Output Format:
-- Print the course order separated by single spaces, or "CYCLE DETECTED" if impossible.
-
-Example 1:
-Input:
-2 1
-1 0
-Output:
-0 1
-Explanation: Course 0 must be taken before course 1.
-
-Example 2:
-Input:
-4 4
-1 0
-2 0
-3 1
-3 2
-Output:
-0 1 2 3
-
-Example 3:
-Input:
-2 2
-1 0
-0 1
-Output:
-CYCLE DETECTED
-
-*(See `question_papers/Round3_Set6.md` for language templates)*
-
----
-
-## Round 3 — Set 7: Subarray Sums Divisible by K
-
-Given an integer array nums and an integer k, return the number of non-empty subarrays that have a sum divisible by k.
-A subarray is a contiguous part of an array.
-
-Input Format:
-- First line: Two integers n and k (1 <= n <= 10^5, 2 <= k <= 10^4)
-- Second line: n space-separated integers nums[0] ... nums[n-1] (-10^4 <= nums[i] <= 10^4)
-
-Output Format:
-- A single integer: the count of subarrays whose sum is divisible by k.
-
-Example 1:
-Input:
-6 5
-4 5 0 -2 -3 1
-Output:
-7
-Explanation: There are 7 subarrays with a sum divisible by k = 5:
-[4, 5, 0, -2, -3, 1], [5], [5, 0], [5, 0, -2, -3], [0], [0, -2, -3], [-2, -3]
-
-Example 2:
-Input:
-1 5
-5
-Output:
-1
-
-*(See `question_papers/Round3_Set7.md` for language templates)*
+*(See `question_papers/Round2_Set5.md` for language templates)*
 
 ---
 

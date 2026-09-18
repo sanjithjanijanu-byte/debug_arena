@@ -1,39 +1,38 @@
-# Round 2 — Medium Debugging (Set 3)
+# Round 2 — Hard Debugging (Set 3)
 
-## Problem: Longest Substring Without Repeating Characters
+## Problem: Median of Two Sorted Arrays
 
-**Points:** 20 Points | **Time Limit:** 2.5s | **Memory Limit:** 256MB
+**Points:** 30 Points | **Difficulty:** Hard | **Time Limit:** 3.0s | **Memory Limit:** 256MB
 
 ### Problem Statement
 
-Given a string s on stdin, find the length of the longest substring without duplicate characters.
+Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).
 
 Input Format:
-- Single line containing string s (0 <= length(s) <= 10^5)
+- First line: Two integers m and n
+- Second line: m space-separated integers nums1[0] ... nums1[m-1]
+- Third line: n space-separated integers nums2[0] ... nums2[n-1]
 
 Output Format:
-- Single integer representing the length of the longest substring without repeating characters.
+- Print the median formatted to 1 decimal place (e.g. 2.0 or 2.5).
 
 Example 1:
 Input:
-abcabcbb
+2 1
+1 3
+2
 Output:
-3
-Explanation: The answer is "abc", with the length of 3.
+2.0
+Explanation: Merged array = [1, 2, 3] and median is 2.0.
 
 Example 2:
 Input:
-bbbbb
+2 2
+1 2
+3 4
 Output:
-1
-Explanation: The answer is "b", with length 1.
-
-Example 3:
-Input:
-pwwkew
-Output:
-3
-Explanation: The answer is "wke", with length 3.
+2.5
+Explanation: Merged array = [1, 2, 3, 4] and median is (2 + 3) / 2 = 2.5.
 
 ---
 
@@ -43,32 +42,50 @@ Explanation: The answer is "wke", with length 3.
 
 ```cpp
 #include <iostream>
-#include <string>
-#include <unordered_map>
+#include <vector>
+#include <iomanip>
+#include <climits>
 #include <algorithm>
 using namespace std;
 
 int main() {
-    string s;
-    if (!getline(cin, s)) {
-        cout << 0 << endl;
-        return 0;
+    int m, n;
+    if (!(cin >> m >> n)) return 0;
+    vector<int> A(m), B(n);
+    for (int i = 0; i < m; i++) cin >> A[i];
+    for (int i = 0; i < n; i++) cin >> B[i];
+
+    if (m > n) {
+        swap(A, B);
+        swap(m, n);
     }
 
-    unordered_map<char, int> lastSeen;
-    int left = 0;
-    int maxLen = 0;
+    int low = 0, high = m;
+    while (low <= high) {
+        int i = low + (high - low) / 2;
+        int j = (m + n + 1) / 2 - i;
 
-    for (int right = 0; right < (int)s.length(); right++) {
-        char c = s[right];
-        if (lastSeen.find(c) != lastSeen.end()) {
-            left = lastSeen[c] + 1;
+        int maxLeftA = (i == 0) ? INT_MIN : A[i - 1];
+        int minRightA = (i == m) ? INT_MAX : A[i];
+
+        int maxLeftB = (j == 0) ? INT_MIN : B[j - 1];
+        int minRightB = (j == n) ? INT_MAX : B[j];
+
+        if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+            double median;
+            if ((m + n) % 2 == 1) {
+                median = max(maxLeftA, maxLeftB);
+            } else {
+                median = (max(maxLeftA, maxLeftB) + min(minRightA, minRightB)) / 2.0;
+            }
+            cout << fixed << setprecision(1) << median << endl;
+            return 0;
+        } else if (maxLeftA > minRightB) {
+            low = i + 1;
+        } else {
+            high = i - 1;
         }
-        lastSeen[c] = right;
-        maxLen = max(maxLen, right - left + 1);
     }
-
-    cout << maxLen << endl;
     return 0;
 }
 ```
@@ -81,22 +98,44 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String s = sc.hasNextLine() ? sc.nextLine() : "";
+        if (!sc.hasNextInt()) return;
+        int m = sc.nextInt(), n = sc.nextInt();
+        int[] A = new int[m];
+        for (int i = 0; i < m; i++) A[i] = sc.nextInt();
+        int[] B = new int[n];
+        for (int i = 0; i < n; i++) B[i] = sc.nextInt();
 
-        Map<Character, Integer> lastSeen = new HashMap<>();
-        int left = 0;
-        int maxLen = 0;
-
-        for (int right = 0; right < s.length(); right++) {
-            char c = s.charAt(right);
-            if (lastSeen.containsKey(c)) {
-                left = lastSeen.get(c) + 1;
-            }
-            lastSeen.put(c, right);
-            maxLen = Math.max(maxLen, right - left + 1);
+        if (m > n) {
+            int[] temp = A; A = B; B = temp;
+            int t = m; m = n; n = t;
         }
 
-        System.out.println(maxLen);
+        int low = 0, high = m;
+        while (low <= high) {
+            int i = low + (high - low) / 2;
+            int j = (m + n + 1) / 2 - i;
+
+            int maxLeftA = (i == 0) ? Integer.MIN_VALUE : A[i - 1];
+            int minRightA = (i == m) ? Integer.MAX_VALUE : A[i];
+
+            int maxLeftB = (j == 0) ? Integer.MIN_VALUE : B[j - 1];
+            int minRightB = (j == n) ? Integer.MAX_VALUE : B[j];
+
+            if (maxLeftA <= minRightB && maxLeftB <= minRightA) {
+                double median;
+                if ((m + n) % 2 == 1) {
+                    median = Math.max(maxLeftA, maxLeftB);
+                } else {
+                    median = (Math.max(maxLeftA, maxLeftB) + Math.min(minRightA, minRightB)) / 2.0;
+                }
+                System.out.printf(Locale.US, "%.1f\n", median);
+                return;
+            } else if (maxLeftA > minRightB) {
+                low = i + 1;
+            } else {
+                high = i - 1;
+            }
+        }
     }
 }
 ```
@@ -106,21 +145,45 @@ public class Main {
 ```python
 import sys
 
-def solve():
-    s = sys.stdin.read().strip()
-    last_seen = {}
-    left = 0
-    max_len = 0
+def main():
+    tokens = sys.stdin.read().split()
+    if not tokens:
+        return
+    m = int(tokens[0])
+    n = int(tokens[1])
+    A = [int(x) for x in tokens[2:2+m]]
+    B = [int(x) for x in tokens[2+m:2+m+n]]
 
-    for right, c in enumerate(s):
-        if c in last_seen:
-            left = last_seen[c] + 1
-        last_seen[c] = right
-        max_len = max(max_len, right - left + 1)
+    if m > n:
+        A, B = B, A
+        m, n = n, m
 
-    print(max_len)
+    low, high = 0, m
+    INF = float('inf')
+
+    while low <= high:
+        i = (low + high) // 2
+        j = (m + n + 1) // 2 - i
+
+        maxLeftA = -INF if i == 0 else A[i - 1]
+        minRightA = INF if i == m else A[i]
+
+        maxLeftB = -INF if j == 0 else B[j - 1]
+        minRightB = INF if j == n else B[j]
+
+        if maxLeftA <= minRightB and maxLeftB <= minRightA:
+            if (m + n) % 2 == 1:
+                median = float(max(maxLeftA, maxLeftB))
+            else:
+                median = (max(maxLeftA, maxLeftB) + min(minRightA, minRightB)) / 2.0
+            print(f"{median:.1f}")
+            return
+        elif maxLeftA > minRightB:
+            low = i + 1
+        else:
+            high = i - 1
 
 if __name__ == '__main__':
-    solve()
+    main()
 ```
 

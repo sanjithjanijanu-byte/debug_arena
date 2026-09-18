@@ -1,32 +1,39 @@
-# Round 2 — Medium Debugging (Set 1)
+# Round 2 — Hard Debugging (Set 1)
 
-## Problem: Maximum Subarray Sum with At Most K Distinct Elements
+## Problem: Shortest Path with Mandatory Checkpoints
 
-**Points:** 20 Points | **Time Limit:** 2.5s | **Memory Limit:** 256MB
+**Points:** 30 Points | **Difficulty:** Hard | **Time Limit:** 3.0s | **Memory Limit:** 256MB
 
 ### Problem Statement
 
-Given an array of n integers and an integer k, find the maximum sum of a contiguous subarray such that the subarray contains at most k distinct elements.
+You are given a weighted undirected graph with n vertices (0 to n-1) and m edges. You are also given a start vertex S, a destination vertex D, and a set of k mandatory checkpoint vertices.
+Find the minimum total distance to travel from S to D such that every mandatory checkpoint is visited at least once. If it is impossible, print -1.
 
 Input Format:
-- First line: Two integers n and k (1 <= n <= 10^5, 1 <= k <= n)
-- Second line: n space-separated integers arr[0] ... arr[n-1] (-10^4 <= arr[i] <= 10^4)
+- First line: n m k S D (vertices, edges, number of checkpoints, start, destination)
+- Second line: k space-separated integers representing the checkpoint vertices.
+- Next m lines: u v w representing an undirected edge between u and v with weight w (1 <= w <= 10^4).
 
 Output Format:
-- A single integer: maximum sum of a contiguous subarray with at most k distinct elements.
+- A single integer: the minimum distance, or -1 if unreachable.
 
 Example 1:
 Input:
-7 2
-1 2 1 2 3 4 5
+4 4 2 0 3
+1 2
+0 1 2
+1 2 3
+2 3 4
+0 3 15
 Output:
 9
-Explanation: Subarray [4, 5] has sum 9 and contains 2 distinct elements (<= 2).
+Explanation: Path 0 -> 1 -> 2 -> 3 visits checkpoints 1 and 2 with cost 2 + 3 + 4 = 9.
 
 Example 2:
 Input:
-5 3
--1 -2 -3 -4 -5
+3 1 1 0 2
+1
+0 1 5
 Output:
 -1
 
@@ -39,36 +46,73 @@ Output:
 ```cpp
 #include <iostream>
 #include <vector>
-#include <unordered_map>
-#include <climits>
+#include <queue>
+#include <tuple>
 using namespace std;
 
+const long long INF = 1e18;
+
+struct Edge {
+    int to;
+    long long w;
+};
+
 int main() {
-    int n, k;
-    if (!(cin >> n >> k)) return 0;
-    vector<int> arr(n);
-    for (int i = 0; i < n; i++) cin >> arr[i];
+    int n, m, k, S, D;
+    if (!(cin >> n >> m >> k >> S >> D)) return 0;
 
-    unordered_map<int, int> freq;
-    int left = 0;
-    long long windowSum = 0;
-    long long maxSum = LLONG_MIN;
-
-    for (int right = 0; right < n; right++) {
-        freq[arr[right]]++;
-        windowSum += arr[right];
-
-        while (freq.size() > (size_t)k) {
-            freq[arr[left]]--;
-            if (freq[arr[left]] == 0) freq.erase(arr[left]);
-            left++;
-            windowSum -= arr[left];
-        }
-
-        if (windowSum > maxSum) maxSum = windowSum;
+    vector<int> chk(k);
+    vector<int> chkIndex(n, -1);
+    for (int i = 0; i < k; i++) {
+        cin >> chk[i];
+        chkIndex[chk[i]] = i;
     }
 
-    cout << maxSum << endl;
+    vector<vector<Edge>> adj(n);
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        long long w;
+        cin >> u >> v >> w;
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
+    }
+
+    int totalMasks = 1 << k;
+    vector<vector<long long>> dist(n, vector<long long>(totalMasks, INF));
+
+    int startMask = 0;
+    if (chkIndex[S] != -1) startMask |= (1 << chkIndex[S]);
+
+    dist[S][startMask] = 0;
+    // tuple: dist, node, mask
+    priority_queue<tuple<long long, int, int>, vector<tuple<long long, int, int>>, greater<tuple<long long, int, int>>> pq;
+    pq.push({0, S, startMask});
+
+    while (!pq.empty()) {
+        auto [d, u, mask] = pq.top();
+        pq.pop();
+
+        if (d > dist[u][mask]) continue;
+
+        for (auto& edge : adj[u]) {
+            int v = edge.to;
+            int new_mask = mask;
+            if (chkIndex[v] != -1) {
+                new_mask |= (1 << chkIndex[v]);
+            }
+
+            if (dist[u][mask] + edge.w < dist[v][mask]) {
+                dist[v][mask] = dist[u][mask] + edge.w;
+                pq.push({dist[v][mask], v, new_mask});
+            }
+        }
+    }
+
+    int fullMask = (1 << k) - 1;
+    long long ans = dist[D][fullMask];
+    if (ans >= INF) cout << -1 << endl;
+    else cout << ans << endl;
+
     return 0;
 }
 ```
@@ -79,34 +123,70 @@ int main() {
 import java.util.*;
 
 public class Main {
+    static class State implements Comparable<State> {
+        long d;
+        int u;
+        int mask;
+        State(long d, int u, int mask) { this.d = d; this.u = u; this.mask = mask; }
+        public int compareTo(State o) { return Long.compare(this.d, o.d); }
+    }
+
+    static class Edge {
+        int to;
+        long w;
+        Edge(int to, long w) { this.to = to; this.w = w; }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         if (!sc.hasNextInt()) return;
-        int n = sc.nextInt();
-        int k = sc.nextInt();
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
+        int n = sc.nextInt(), m = sc.nextInt(), k = sc.nextInt(), S = sc.nextInt(), D = sc.nextInt();
 
-        Map<Integer, Integer> freq = new HashMap<>();
-        int left = 0;
-        long windowSum = 0;
-        long maxSum = Long.MIN_VALUE;
-
-        for (int right = 0; right < n; right++) {
-            freq.merge(arr[right], 1, Integer::sum);
-            windowSum += arr[right];
-
-            while (freq.size() > k) {
-                freq.merge(arr[left], -1, Integer::sum);
-                if (freq.get(arr[left]) == 0) freq.remove(arr[left]);
-                left++;
-                windowSum -= arr[left];
-            }
-
-            if (windowSum > maxSum) maxSum = windowSum;
+        int[] chkIndex = new int[n];
+        Arrays.fill(chkIndex, -1);
+        for (int i = 0; i < k; i++) {
+            chkIndex[sc.nextInt()] = i;
         }
 
-        System.out.println(maxSum);
+        List<List<Edge>> adj = new ArrayList<>();
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+
+        for (int i = 0; i < m; i++) {
+            int u = sc.nextInt(), v = sc.nextInt();
+            long w = sc.nextLong();
+            adj.get(u).add(new Edge(v, w));
+            adj.get(v).add(new Edge(u, w));
+        }
+
+        int totalMasks = 1 << k;
+        long INF = (long) 1e18;
+        long[][] dist = new long[n][totalMasks];
+        for (int i = 0; i < n; i++) Arrays.fill(dist[i], INF);
+
+        int startMask = 0;
+        if (chkIndex[S] != -1) startMask |= (1 << chkIndex[S]);
+        dist[S][startMask] = 0;
+
+        PriorityQueue<State> pq = new PriorityQueue<>();
+        pq.add(new State(0, S, startMask));
+
+        while (!pq.isEmpty()) {
+            State cur = pq.poll();
+            if (cur.d > dist[cur.u][cur.mask]) continue;
+
+            for (Edge e : adj.get(cur.u)) {
+                int newMask = cur.mask;
+                if (chkIndex[e.to] != -1) newMask |= (1 << chkIndex[e.to]);
+
+                if (dist[cur.u][cur.mask] + e.w < dist[e.to][cur.mask]) {
+                    dist[e.to][cur.mask] = dist[cur.u][cur.mask] + e.w;
+                    pq.add(new State(dist[e.to][cur.mask], e.to, newMask));
+                }
+            }
+        }
+
+        long ans = dist[D][(1 << k) - 1];
+        System.out.println(ans >= INF ? -1 : ans);
     }
 }
 ```
@@ -115,37 +195,63 @@ public class Main {
 
 ```python
 import sys
-from collections import defaultdict
+import heapq
 
-def solve():
-    data = sys.stdin.read().split()
-    if not data: return
-    n = int(data[0])
-    k = int(data[1])
-    arr = [int(x) for x in data[2:2+n]]
+def main():
+    lines = sys.stdin.read().split()
+    if not lines:
+        return
+    n = int(lines[0])
+    m = int(lines[1])
+    k = int(lines[2])
+    S = int(lines[3])
+    D = int(lines[4])
 
-    freq = defaultdict(int)
-    left = 0
-    window_sum = 0
-    max_sum = float('-inf')
+    idx = 5
+    chkIndex = [-1] * n
+    for i in range(k):
+        chkIndex[int(lines[idx])] = i
+        idx += 1
 
-    for right in range(n):
-        freq[arr[right]] += 1
-        window_sum += arr[right]
+    adj = [[] for _ in range(n)]
+    for _ in range(m):
+        u = int(lines[idx])
+        v = int(lines[idx+1])
+        w = int(lines[idx+2])
+        adj[u].append((v, w))
+        adj[v].append((u, w))
+        idx += 3
 
-        while len(freq) > k:
-            freq[arr[left]] -= 1
-            if freq[arr[left]] == 0:
-                del freq[arr[left]]
-            left += 1
-            window_sum -= arr[left]
+    INF = float('inf')
+    total_masks = 1 << k
+    dist = [[INF] * total_masks for _ in range(n)]
 
-        if window_sum > max_sum:
-            max_sum = window_sum
+    start_mask = 0
+    if chkIndex[S] != -1:
+        start_mask |= (1 << chkIndex[S])
 
-    print(max_sum)
+    dist[S][start_mask] = 0
+    pq = [(0, S, start_mask)]
+
+    while pq:
+        d, u, mask = heapq.heappop(pq)
+        if d > dist[u][mask]:
+            continue
+
+        for v, w in adj[u]:
+            new_mask = mask
+            if chkIndex[v] != -1:
+                new_mask |= (1 << chkIndex[v])
+
+            if dist[u][mask] + w < dist[v][mask]:
+                dist[v][mask] = dist[u][mask] + w
+                heapq.heappush(pq, (dist[v][mask], v, new_mask))
+
+    full_mask = (1 << k) - 1
+    ans = dist[D][full_mask]
+    print(-1 if ans == INF else ans)
 
 if __name__ == '__main__':
-    solve()
+    main()
 ```
 
