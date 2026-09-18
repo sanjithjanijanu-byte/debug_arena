@@ -103,8 +103,16 @@ export async function assignQuestionsForTeam(
   const uniqueSets = Array.from(setMap.keys()).sort((a, b) => a - b);
 
   if (uniqueSets.length > 1) {
-    // Determine which set this team receives (teamCode % uniqueSets.length)
-    const setIndex = getTeamSetIndex(team, uniqueSets.length);
+    // Determine which set this team receives: round-robin across all registered teams
+    const allTeams = await prisma.team.findMany({
+      orderBy: [{ createdAt: 'asc' }, { id: 'asc' }],
+      select: { id: true, teamCode: true },
+    });
+    const teamIdx = allTeams.findIndex((t) => t.id === team.id);
+    const setIndex = teamIdx !== -1
+      ? (teamIdx % uniqueSets.length)
+      : getTeamSetIndex(team, uniqueSets.length);
+
     const assignedSetNum = uniqueSets[setIndex];
     assignedQuestions = setMap.get(assignedSetNum) || availableQuestions;
   }
@@ -136,13 +144,18 @@ export async function assignQuestionsForTeam(
 
 /**
  * Returns existing assigned question IDs for a team in a round.
- * If no assignments exist yet, generates assignments based on the team's set.
+ * If no assignments exist yet, or if existing assignments are stale, generates fresh assignments.
  */
 export async function ensureTeamQuestionAssignments(
   teamId: string,
   roundId: string,
   language: Language
 ): Promise<string[]> {
+  const round = await prisma.round.findUnique({
+    where: { id: roundId },
+    select: { number: true },
+  });
+
   const existing = await prisma.assignment.findMany({
     where: {
       teamId,
@@ -154,8 +167,19 @@ export async function ensureTeamQuestionAssignments(
     select: { questionId: true },
   });
 
-  if (existing.length > 0) {
+  const expectedCount = round?.number === 1 ? 20 : 1;
+  if (existing.length === expectedCount) {
     return existing.map((a) => a.questionId);
+  }
+
+  // Clear stale assignments if any
+  if (existing.length > 0) {
+    await prisma.assignment.deleteMany({
+      where: {
+        teamId,
+        question: { roundId },
+      },
+    });
   }
 
   return await assignQuestionsForTeam(teamId, roundId, language);
@@ -245,12 +269,34 @@ export function getShuffledMcqOptions(
   originalOptions: { [key: string]: string }
 ): ShuffledMcq {
   const origKeys = Object.keys(originalOptions).sort(); // e.g. ['A', 'B', 'C', 'D']
-  const idMap = origKeys.reduce((acc, k) => ({ ...acc, [k]: k }), {} as { [k: string]: string });
+  if (origKeys.length <= 1) {
+    const idMap = origKeys.reduce((acc, k) => ({ ...acc, [k]: k }), {} as { [k: string]: string });
+    return {
+      shuffledOptions: originalOptions,
+      displayToOriginalMap: idMap,
+      originalToDisplayMap: idMap,
+    };
+  }
+
+  // Shuffle the original option order deterministically for this team and question
+  const permutedKeys = shuffleArray(origKeys, `${teamId}-${questionId}-options`);
+
+  const shuffledOptions: { [key: string]: string } = {};
+  const displayToOriginalMap: { [displayKey: string]: string } = {};
+  const originalToDisplayMap: { [origKey: string]: string } = {};
+
+  for (let i = 0; i < origKeys.length; i++) {
+    const displayKey = origKeys[i]; // 'A', 'B', 'C', 'D'
+    const origKey = permutedKeys[i]; // which original option is placed at displayKey
+    shuffledOptions[displayKey] = originalOptions[origKey];
+    displayToOriginalMap[displayKey] = origKey;
+    originalToDisplayMap[origKey] = displayKey;
+  }
 
   return {
-    shuffledOptions: originalOptions,
-    displayToOriginalMap: idMap,
-    originalToDisplayMap: idMap,
+    shuffledOptions,
+    displayToOriginalMap,
+    originalToDisplayMap,
   };
 }
 

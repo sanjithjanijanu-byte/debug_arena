@@ -161,12 +161,16 @@ router.get('/questions', async (req: Request, res: Response, next: NextFunction)
       orderBy: { pointsAwarded: 'desc' },
     });
 
-    // Sort questions naturally by question number (Q1, Q2, ..., Q20)
-    const orderedQuestions = [...questions].sort((a: any, b: any) => {
+    // Sort and shuffle questions deterministically per team
+    let orderedQuestions = [...questions].sort((a: any, b: any) => {
       const numA = parseInt((a.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
       const numB = parseInt((b.title.match(/Q(\d+)/i) || [])[1] || '0', 10);
       return numA - numB;
     });
+
+    if (activeRound.number === 1) {
+      orderedQuestions = shuffleArray(orderedQuestions, `${team.teamId}-${activeRound.id}-order`);
+    }
 
     const enrichedQuestions = orderedQuestions.map((q: any, index: number) => {
       const draft = drafts.find((d: any) => d.questionId === q.id);
@@ -195,8 +199,8 @@ router.get('/questions', async (req: Request, res: Response, next: NextFunction)
         isMcq = true;
       }
 
-      // Re-number question title according to this team's personal question order
-      const cleanTitle = q.title.replace(/^Q\d+\.\s*/, '');
+      // Re-number question title according to this team's personal question sequence (e.g. Q1. Integer Division)
+      const cleanTitle = q.title.replace(/^Set\s+\d+\s*[-:]\s*/i, '').replace(/^Q\d+\.?\s*[-:]?\s*/i, '');
       const displayTitle = `Q${index + 1}. ${cleanTitle}`;
 
       return {

@@ -1,11 +1,10 @@
-import { PrismaClient, Language } from '@prisma/client';
+import { prisma } from '../config/prisma';
+import { Language } from '@prisma/client';
 import fs from 'fs';
 import path from 'path';
 
-const prisma = new PrismaClient();
-
 export async function seedAllSetsQuestions() {
-  console.log('📦 Seeding all sets from complete_event_sets_import.json...');
+  console.log('📦 Checking and seeding all sets from complete_event_sets_import.json...');
 
   const searchPaths = [
     path.resolve(process.cwd(), 'complete_event_sets_import.json'),
@@ -58,7 +57,7 @@ export async function seedAllSetsQuestions() {
     [2, round2.id],
   ]);
 
-  // Clean old questions & test cases & assignments to ensure clean state
+  // Clean old questions, test cases, and stale assignments
   await prisma.assignment.deleteMany({});
   await prisma.testCase.deleteMany({});
   await prisma.question.deleteMany({});
@@ -67,11 +66,10 @@ export async function seedAllSetsQuestions() {
   for (const item of questionsData) {
     const roundId = roundMap.get(item.roundNumber);
     if (!roundId) {
-      console.warn(`Round ${item.roundNumber} not found, skipping question: ${item.title}`);
       continue;
     }
 
-    const created = await prisma.question.create({
+    await prisma.question.create({
       data: {
         roundId,
         language: item.language as Language,
@@ -79,7 +77,7 @@ export async function seedAllSetsQuestions() {
         statement: item.statement,
         buggyCode: item.buggyCode || '',
         referenceSolution: item.referenceSolution || '',
-        points: item.points || (item.roundNumber === 1 ? 10 : item.roundNumber === 2 ? 20 : 30),
+        points: item.points || (item.roundNumber === 1 ? 10 : 30),
         timeLimitMs: item.timeLimitMs || 2500,
         memoryLimitMb: item.memoryLimitMb || 256,
         isTiebreaker: false,
@@ -96,16 +94,5 @@ export async function seedAllSetsQuestions() {
     createdCount++;
   }
 
-  console.log(`✅ Seeded ${createdCount} questions across all sets and rounds!`);
-}
-
-if (require.main === module) {
-  seedAllSetsQuestions()
-    .catch((e) => {
-      console.error(e);
-      process.exit(1);
-    })
-    .finally(async () => {
-      await prisma.$disconnect();
-    });
+  console.log(`✅ Successfully seeded ${createdCount} questions across all sets and rounds!`);
 }

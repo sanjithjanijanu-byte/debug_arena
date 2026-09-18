@@ -134,9 +134,10 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-// Synchronize Round Durations on Startup (Round 1: 15m, Round 2: 30m)
-async function syncRoundDurations() {
+// Synchronize Round Durations and Question Sets on Startup (Round 1: 15m, Round 2: 30m, 5 Sets)
+async function syncDatabaseOnStartup() {
   try {
+    // 1. Durations
     await prisma.round.updateMany({
       where: { number: 1 },
       data: { durationMinutes: 15 },
@@ -153,8 +154,24 @@ async function syncRoundDurations() {
       await prisma.round.delete({ where: { id: round3.id } }).catch(() => {});
     }
     console.log('⚡ Round durations auto-synced: Round 1 (15m), Round 2 (30m)');
+
+    // 2. Auto-import 5 question sets if incomplete
+    const qCount = await prisma.question.count();
+    const set5Sample = await prisma.question.findFirst({
+      where: { title: { contains: 'Set 5' } },
+    });
+
+    if (qCount < 315 || !set5Sample) {
+      console.log(`📦 Question bank incomplete (${qCount} questions, Set 5 missing: ${!set5Sample}). Auto-seeding 5 sets...`);
+      const { seedAllSetsQuestions } = await import('./services/seedQuestions.service');
+      await seedAllSetsQuestions();
+      await prisma.assignment.deleteMany({});
+      console.log('✅ Question bank synchronized with 5 distinct sets!');
+    } else {
+      console.log(`✅ Question bank verified: ${qCount} questions active across 5 sets.`);
+    }
   } catch (err) {
-    console.warn('⚠️ syncRoundDurations skipped or error:', err);
+    console.warn('⚠️ syncDatabaseOnStartup error:', err);
   }
 }
 
@@ -163,7 +180,7 @@ server.listen(env.PORT, () => {
   console.log(`🚀 Debugging Event Platform Server running on port ${env.PORT}`);
   console.log(`📡 WebSocket ready on port ${env.PORT}`);
   console.log(`🎯 Client origin allowed: ${env.CLIENT_URL}`);
-  syncRoundDurations();
+  syncDatabaseOnStartup();
 });
 
 // Process Signal Handling
