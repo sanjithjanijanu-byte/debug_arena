@@ -85,7 +85,7 @@ export const RoundWorkspace: React.FC = () => {
   const [code, setCode] = useState<string>('');
   const [autosaveStatus, setAutosaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
-  const autosaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const autosaveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Timer & Event Status
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
