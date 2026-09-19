@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/useAuthStore';
+import { api } from '../../services/api';
+import { getSocket } from '../../services/socket';
 import {
   ShieldAlert,
   CheckCircle2,
@@ -13,7 +15,29 @@ export const Instructions: React.FC = () => {
   const [agreed, setAgreed] = useState(false);
   const navigate = useNavigate();
   const team = useAuthStore((state) => state.team);
+  const isDisqualified = useAuthStore((state) => state.isDisqualified);
   const logoutParticipant = useAuthStore((state) => state.logoutParticipant);
+
+  // Auto-redirect if an active round is ongoing
+  useEffect(() => {
+    if (isDisqualified || team?.status === 'DISQUALIFIED') return;
+
+    const socket = getSocket();
+    const handleRoundStarted = () => {
+      navigate('/event/round', { replace: true });
+    };
+    socket.on('round:started', handleRoundStarted);
+
+    api.get('/event/team/status').then((res) => {
+      if (res.data?.activeRound && res.data.activeRound.status === 'ACTIVE') {
+        navigate('/event/round', { replace: true });
+      }
+    }).catch(() => {});
+
+    return () => {
+      socket.off('round:started', handleRoundStarted);
+    };
+  }, [navigate, isDisqualified, team?.status]);
 
   const handleProceed = () => {
     if (agreed) {
@@ -145,30 +169,30 @@ export const Instructions: React.FC = () => {
         </div>
 
         {/* Anti-Cheat Warning Box */}
-        <div className="p-6 rounded-xl bg-red-950/20 border border-red-500/30 text-slate-200 mb-8 space-y-4">
+        <div className="p-6 rounded-xl bg-red-950/30 border border-red-500/40 text-slate-200 mb-8 space-y-4 shadow-lg shadow-red-950/20">
           <div className="flex items-center space-x-2 text-red-400">
             <ShieldAlert className="w-6 h-6 flex-shrink-0" />
-            <h3 className="text-base font-bold">Strict Anti-Cheat Proctoring Rules</h3>
+            <h3 className="text-base font-bold tracking-tight">Zero-Tolerance Anti-Cheat Proctoring Rules</h3>
           </div>
-          <p className="text-sm text-slate-300 leading-relaxed">
-            The workspace environment is actively monitored in real-time. Violations are logged and will trigger automatic disqualification:
+          <p className="text-sm text-slate-300 leading-relaxed font-medium">
+            The workspace environment is strictly monitored in real-time. Any of the following actions will result in <span className="text-red-400 font-bold underline">IMMEDIATE AND PERMANENT DISQUALIFICATION</span>:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-slate-300">
-            <div className="flex items-start space-x-2 bg-slate-900/60 p-3 rounded-lg border border-red-500/10">
-              <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-              <span><strong>Tab Switching / Window Blur:</strong> Leaving the active browser tab will issue a strike and flag your team.</span>
+            <div className="flex items-start space-x-2.5 bg-slate-900/80 p-3.5 rounded-lg border border-red-500/20">
+              <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+              <span><strong className="text-white">Tab Switching & Window Blur:</strong> Moving to another browser tab, minimizing the browser, or switching away will instantly disqualify your team.</span>
             </div>
-            <div className="flex items-start space-x-2 bg-slate-900/60 p-3 rounded-lg border border-red-500/10">
-              <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-              <span><strong>Fullscreen Mode:</strong> Fullscreen is mandatory during the round. Exiting without admin authorization is flagged.</span>
+            <div className="flex items-start space-x-2.5 bg-slate-900/80 p-3.5 rounded-lg border border-red-500/20">
+              <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+              <span><strong className="text-white">External Applications:</strong> Opening or focusing any new application (e.g. VS Code, Discord, ChatGPT, calculator, or desktop shortcuts) will instantly disqualify your team.</span>
             </div>
-            <div className="flex items-start space-x-2 bg-slate-900/60 p-3 rounded-lg border border-red-500/10">
+            <div className="flex items-start space-x-2.5 bg-slate-900/80 p-3.5 rounded-lg border border-red-500/20">
               <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-              <span><strong>Single Device Session:</strong> Simultaneous login on multiple computers will immediately invalidate the session.</span>
+              <span><strong className="text-white">Mandatory Fullscreen:</strong> The exam must be taken in Fullscreen mode. Exiting fullscreen mode without proctor authorization is strictly prohibited.</span>
             </div>
-            <div className="flex items-start space-x-2 bg-slate-900/60 p-3 rounded-lg border border-red-500/10">
+            <div className="flex items-start space-x-2.5 bg-slate-900/80 p-3.5 rounded-lg border border-red-500/20">
               <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
-              <span><strong>External Copy/Paste:</strong> External clipboard pasting into Monaco Editor is restricted.</span>
+              <span><strong className="text-white">Single Device Session:</strong> Simultaneous login on multiple computers or secondary sessions will immediately terminate the team's access.</span>
             </div>
           </div>
         </div>

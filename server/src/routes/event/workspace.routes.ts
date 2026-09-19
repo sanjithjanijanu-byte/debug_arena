@@ -12,6 +12,7 @@ import {
   getShuffledMcqOptions,
   resolveOriginalMcqAnswer,
 } from '../../services/questionAssignment.service';
+import { handleProctoringViolation } from '../../services/proctoring.service';
 
 const router = Router();
 router.use(authParticipant);
@@ -753,6 +754,34 @@ router.post('/submit', async (req: Request, res: Response, next: NextFunction) =
       allPassed: execResult.allPassed,
       compileError: execResult.compileError,
       results: sanitizedResults,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+/**
+ * POST /api/event/workspace/violation
+ * Report proctoring violation (e.g. TAB_SWITCH, WINDOW_BLUR) and trigger auto-disqualification.
+ */
+router.post('/violation', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const teamId = req.team!.teamId;
+    const { type, details } = req.body;
+
+    if (!type) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Violation type is required.' },
+      });
+    }
+
+    const result = await handleProctoringViolation(teamId, type, details);
+
+    res.json({
+      success: true,
+      violationId: result.violation?.id,
+      disqualified: result.disqualified,
     });
   } catch (err) {
     next(err);

@@ -11,8 +11,11 @@ interface AuthState {
   // Participant Portal State
   participantToken: string | null;
   team: Partial<Team> | null;
+  isDisqualified: boolean;
+  disqualificationReason: string | null;
   setParticipantAuth: (token: string, team: Partial<Team>) => void;
   updateTeam: (updates: Partial<Team>) => void;
+  disqualifyParticipant: (reason: string) => void;
   logoutParticipant: () => void;
 }
 
@@ -47,16 +50,90 @@ export const useAuthStore = create<AuthState>((set) => ({
       return null;
     }
   })(),
+  isDisqualified: (() => {
+    if (typeof window === 'undefined') return false;
+    const rawTeam = sessionStorage.getItem('teamInfo') || localStorage.getItem('teamInfo');
+    let teamStatus = '';
+    if (rawTeam) {
+      try {
+        teamStatus = JSON.parse(rawTeam)?.status || '';
+      } catch {}
+    }
+    return (
+      teamStatus === 'DISQUALIFIED' ||
+      sessionStorage.getItem('team_disqualified') === 'true' ||
+      localStorage.getItem('team_disqualified') === 'true'
+    );
+  })(),
+  disqualificationReason: (() => {
+    if (typeof window === 'undefined') return null;
+    return (
+      sessionStorage.getItem('team_dq_reason') ||
+      localStorage.getItem('team_dq_reason') ||
+      null
+    );
+  })(),
   setParticipantAuth: (token, team) => {
+    const isDQ =
+      team.status === 'DISQUALIFIED' ||
+      sessionStorage.getItem('team_disqualified') === 'true' ||
+      localStorage.getItem('team_disqualified') === 'true' ||
+      (team.id ? localStorage.getItem(`team_disqualified_${team.id}`) === 'true' : false) ||
+      (team.id ? sessionStorage.getItem(`team_disqualified_${team.id}`) === 'true' : false);
+
     sessionStorage.setItem('participantToken', token);
     sessionStorage.setItem('teamInfo', JSON.stringify(team));
-    set({ participantToken: token, team });
+    localStorage.setItem('participantToken', token);
+    localStorage.setItem('teamInfo', JSON.stringify(team));
+
+    set({
+      participantToken: token,
+      team,
+      isDisqualified: isDQ,
+      disqualificationReason: isDQ
+        ? sessionStorage.getItem('team_dq_reason') ||
+          localStorage.getItem('team_dq_reason') ||
+          'Team is disqualified'
+        : null,
+    });
   },
   updateTeam: (updates) => {
     set((state) => {
       const updated = { ...state.team, ...updates };
       sessionStorage.setItem('teamInfo', JSON.stringify(updated));
+      localStorage.setItem('teamInfo', JSON.stringify(updated));
       return { team: updated };
+    });
+  },
+  disqualifyParticipant: (reason: string) => {
+    try {
+      sessionStorage.setItem('team_disqualified', 'true');
+      sessionStorage.setItem('team_dq_reason', reason);
+      localStorage.setItem('team_disqualified', 'true');
+      localStorage.setItem('team_dq_reason', reason);
+    } catch {}
+
+    set((state) => {
+      const updatedTeam = state.team
+        ? { ...state.team, status: 'DISQUALIFIED' as any }
+        : ({ status: 'DISQUALIFIED' } as any);
+
+      try {
+        if (state.team?.id) {
+          sessionStorage.setItem(`team_disqualified_${state.team.id}`, 'true');
+          sessionStorage.setItem(`team_dq_reason_${state.team.id}`, reason);
+          localStorage.setItem(`team_disqualified_${state.team.id}`, 'true');
+          localStorage.setItem(`team_dq_reason_${state.team.id}`, reason);
+        }
+        sessionStorage.setItem('teamInfo', JSON.stringify(updatedTeam));
+        localStorage.setItem('teamInfo', JSON.stringify(updatedTeam));
+      } catch {}
+
+      return {
+        isDisqualified: true,
+        disqualificationReason: reason,
+        team: updatedTeam,
+      };
     });
   },
   logoutParticipant: () => {
@@ -64,6 +141,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     sessionStorage.removeItem('teamInfo');
     localStorage.removeItem('participantToken');
     localStorage.removeItem('teamInfo');
+    // Note: Do NOT clear team_disqualified flags on logout to prevent bypassing DQ by re-logging!
     set({ participantToken: null, team: null });
   },
 }));

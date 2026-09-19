@@ -18,10 +18,14 @@ export const WaitingRoom: React.FC = () => {
   const [checking, setChecking] = useState(false);
   const navigate = useNavigate();
   const team = useAuthStore((state) => state.team);
+  const isDisqualified = useAuthStore((state) => state.isDisqualified);
+  const disqualifyParticipant = useAuthStore((state) => state.disqualifyParticipant);
   const logoutParticipant = useAuthStore((state) => state.logoutParticipant);
 
   // Check event status and listen to real-time round:started socket event
   useEffect(() => {
+    if (isDisqualified || team?.status === 'DISQUALIFIED') return;
+
     const socket = getSocket();
 
     const handleRoundStarted = () => {
@@ -42,6 +46,10 @@ export const WaitingRoom: React.FC = () => {
         setChecking(true);
         const res = await api.get('/event/team/status');
         if (res.data.success) {
+          if (res.data.team?.status === 'DISQUALIFIED') {
+            disqualifyParticipant('Team is disqualified.');
+            return;
+          }
           if (res.data.activeRound && res.data.activeRound.status === 'ACTIVE') {
             navigate('/event/round', { replace: true });
           } else {
@@ -49,8 +57,14 @@ export const WaitingRoom: React.FC = () => {
             setUpcomingRound(res.data.upcomingRound || res.data.activeRound);
           }
         }
-      } catch (err) {
-        console.warn('Waiting room status check error:', err);
+      } catch (err: any) {
+        if (err.response?.status === 403) {
+          disqualifyParticipant(
+            err.response?.data?.error?.message || 'Your team has been disqualified.'
+          );
+        } else {
+          console.warn('Waiting room status check error:', err);
+        }
       } finally {
         setChecking(false);
       }
@@ -64,7 +78,7 @@ export const WaitingRoom: React.FC = () => {
       socket.off('timer:sync', handleTimerSync);
       clearInterval(interval);
     };
-  }, [navigate]);
+  }, [navigate, isDisqualified, team?.status, disqualifyParticipant]);
 
   return (
     <div className="min-h-screen bg-[#0a0d14] text-slate-100 flex flex-col">

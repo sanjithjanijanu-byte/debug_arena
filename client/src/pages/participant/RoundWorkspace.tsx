@@ -23,6 +23,9 @@ import {
   Info,
   AlertTriangle,
   Lock,
+  ShieldAlert,
+  Shield,
+  AlertOctagon,
 } from 'lucide-react';
 
 interface TestCase {
@@ -92,13 +95,119 @@ export const RoundWorkspace: React.FC = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [pauseReason, setPauseReason] = useState('Event paused by organizer');
   const [roundEnded, setRoundEnded] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(
+    typeof document !== 'undefined' ? !!document.fullscreenElement : false
+  );
 
   // Proctoring & Moderation State
   const [adminMessage, setAdminMessage] = useState<string | null>(null);
-  const [isDisqualified, setIsDisqualified] = useState(false);
-  const [disqualificationReason, setDisqualificationReason] = useState<string | null>(null);
+  const isDisqualifiedStore = useAuthStore((state) => state.isDisqualified);
+  const dqReasonStore = useAuthStore((state) => state.disqualificationReason);
+
+  const [isDisqualified, setIsDisqualified] = useState(() => {
+    return (
+      isDisqualifiedStore ||
+      team?.status === 'DISQUALIFIED' ||
+      sessionStorage.getItem('team_disqualified') === 'true' ||
+      localStorage.getItem('team_disqualified') === 'true' ||
+      (team?.id ? sessionStorage.getItem(`team_disqualified_${team.id}`) === 'true' : false) ||
+      (team?.id ? localStorage.getItem(`team_disqualified_${team.id}`) === 'true' : false)
+    );
+  });
+  const [disqualificationReason, setDisqualificationReason] = useState<string | null>(() => {
+    return (
+      dqReasonStore ||
+      (team?.id ? sessionStorage.getItem(`team_dq_reason_${team.id}`) : null) ||
+      sessionStorage.getItem('team_dq_reason') ||
+      (team?.id ? localStorage.getItem(`team_dq_reason_${team.id}`) : null) ||
+      localStorage.getItem('team_dq_reason') ||
+      null
+    );
+  });
   const [proctorNotice, setProctorNotice] = useState<string | null>(null);
+
+  // Strict Anti-Cheat Refs (immediate sync and guards against multi-triggers)
+  const isDisqualifiedRef = useRef(isDisqualified);
+  const mountTimeRef = useRef(Date.now());
+  const roundEndedRef = useRef(false);
+  roundEndedRef.current = roundEnded;
+
+  // Keep state in sync with store
+  useEffect(() => {
+    if (isDisqualifiedStore) {
+      setIsDisqualified(true);
+      setDisqualificationReason(dqReasonStore);
+      isDisqualifiedRef.current = true;
+    }
+  }, [isDisqualifiedStore, dqReasonStore]);
+
+  // In-App Confirm Modal State (avoids native window.confirm which triggers window blur)
+  const [confirmModal, setConfirmModal] = useState<{
+    open: boolean;
+    title: string;
+    message: string;
+    confirmLabel: string;
+    isDestructive?: boolean;
+    onConfirm: () => void;
+  }>({
+    open: false,
+    title: '',
+    message: '',
+    confirmLabel: 'Confirm',
+    onConfirm: () => {},
+  });
+
+  // Disqualification trigger: instantly freezes workspace and notifies backend
+  const triggerDisqualification = useCallback((type: string, reason: string) => {
+    if (isDisqualifiedRef.current) return;
+    isDisqualifiedRef.current = true;
+
+    setIsDisqualified(true);
+    setDisqualificationReason(reason);
+
+    // Synchronize to global Zustand store so all routes, components, and tabs lock immediately
+    useAuthStore.getState().disqualifyParticipant(reason);
+
+    // 1. Notify server over WebSocket
+    try {
+      const socket = getSocket();
+      socket.emit('violation:disqualify', { type, details: reason });
+    } catch (e) {}
+
+    // 2. Notify server over REST HTTP
+    api.post('/event/workspace/violation', { type, details: reason }).catch((err) => {
+      console.error('Failed to dispatch violation over HTTP:', err);
+    });
+
+    // Exit fullscreen
+    if (typeof document !== 'undefined' && document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
+  }, [team?.id]);
+
+  // Fullscreen Entry
+  const enterFullscreen = useCallback(async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+      }
+      setIsFullscreen(true);
+    } catch (err) {
+      console.warn('Fullscreen entry failed or was blocked by browser:', err);
+      setIsFullscreen(true);
+    }
+  }, []);
+
+  const toggleFullscreen = useCallback(() => {
+    if (document.fullscreenElement) {
+      // Intentionally exiting fullscreen is prohibited while taking the test
+      if (!isDisqualifiedRef.current && !roundEndedRef.current) {
+        triggerDisqualification('FULLSCREEN_EXIT', 'Exited mandatory fullscreen mode during active test.');
+      }
+    } else {
+      enterFullscreen();
+    }
+  }, [enterFullscreen, triggerDisqualification]);
 
   // Execution & Output State
   const [bottomTab, setBottomTab] = useState<'sample' | 'custom' | 'submissions'>('sample');
@@ -172,13 +281,29 @@ export const RoundWorkspace: React.FC = () => {
         }
       }
     } catch (err: any) {
-      setError(err.response?.data?.error?.message || 'Failed to load round questions');
+      const errMsg = err.response?.data?.error?.message || err.response?.data?.message || '';
+      if (err.response?.status === 403 && errMsg.toLowerCase().includes('disqualif')) {
+        setIsDisqualified(true);
+        setDisqualificationReason(errMsg);
+        isDisqualifiedRef.current = true;
+      } else {
+        setError(errMsg || 'Failed to load round questions');
+      }
     } finally {
       setLoading(false);
     }
   }, [navigate]);
 
   useEffect(() => {
+    // Check initial cached disqualification
+    if (team?.id && sessionStorage.getItem(`team_disqualified_${team.id}`) === 'true') {
+      setIsDisqualified(true);
+      setDisqualificationReason(
+        sessionStorage.getItem(`team_dq_reason_${team.id}`) || 'Violation of event rules'
+      );
+      isDisqualifiedRef.current = true;
+    }
+
     fetchWorkspaceData();
 
     const socket = getSocket();
@@ -216,13 +341,28 @@ export const RoundWorkspace: React.FC = () => {
     const handleTeamDisqualified = (data: any) => {
       setIsDisqualified(true);
       setDisqualificationReason(data.reason || 'Violation of event rules');
+      isDisqualifiedRef.current = true;
+      try {
+        if (team?.id) {
+          sessionStorage.setItem(`team_disqualified_${team.id}`, 'true');
+          sessionStorage.setItem(`team_dq_reason_${team.id}`, data.reason || 'Violation of event rules');
+        }
+      } catch (e) {}
     };
 
     const handleTeamReinstated = (data: any) => {
       setIsDisqualified(false);
       setDisqualificationReason(null);
+      isDisqualifiedRef.current = false;
+      try {
+        if (team?.id) {
+          sessionStorage.removeItem(`team_disqualified_${team.id}`);
+          sessionStorage.removeItem(`team_dq_reason_${team.id}`);
+        }
+      } catch (e) {}
       setProctorNotice(`Team Reinstated by Organizer! ${data.compensationMinutes ? `(+${data.compensationMinutes}m granted)` : ''}`);
       setTimeout(() => setProctorNotice(null), 8000);
+      fetchWorkspaceData();
     };
 
     const handleTimeExtended = (data: any) => {
@@ -249,7 +389,153 @@ export const RoundWorkspace: React.FC = () => {
       socket.off('team:reinstated', handleTeamReinstated);
       socket.off('team:time_extended', handleTimeExtended);
     };
-  }, [fetchWorkspaceData]);
+  }, [fetchWorkspaceData, team?.id]);
+
+  // Strict Anti-Cheat Listeners: Prohibit Tab Switching, Minimizing, External Applications, Page Navigation, and Fullscreen Exit
+  useEffect(() => {
+    // 1. Fullscreen state change
+    const handleFullscreenChange = () => {
+      const isFull = !!document.fullscreenElement;
+      setIsFullscreen(isFull);
+      if (!isFull && Date.now() - mountTimeRef.current > 1500 && !isDisqualifiedRef.current && !roundEndedRef.current) {
+        triggerDisqualification('FULLSCREEN_EXIT', 'Exited mandatory fullscreen mode during active test.');
+      }
+    };
+
+    // 2. Tab switch or window minimized (document hidden)
+    const handleVisibilityChange = () => {
+      if (document.hidden && !isDisqualifiedRef.current && !roundEndedRef.current) {
+        triggerDisqualification('TAB_SWITCH', 'Switched browser tab or minimized window during active test.');
+      }
+    };
+
+    // 3. Window blur (opening another application, Alt-Tab, clicking outside browser)
+    const handleWindowBlur = () => {
+      if (Date.now() - mountTimeRef.current > 400 && !isDisqualifiedRef.current && !roundEndedRef.current) {
+        triggerDisqualification('WINDOW_BLUR', 'Switched away from browser window or opened an external application during active test.');
+      }
+    };
+
+    // 4. Trap browser back / forward navigation (popstate)
+    for (let i = 0; i < 5; i++) {
+      window.history.pushState({ proctorLock: true }, '', window.location.href);
+    }
+    const handlePopState = () => {
+      window.history.pushState({ proctorLock: true }, '', window.location.href);
+      if (!isDisqualifiedRef.current && !roundEndedRef.current) {
+        triggerDisqualification('PAGE_NAVIGATION', 'Attempted to use browser navigation (Back/Forward) during active test.');
+      }
+    };
+
+    // 5. Intercept any link clicks attempting to leave the test workspace
+    const handleClickCapture = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement)?.closest('a, [data-navigate]');
+      if (target) {
+        const href = target.getAttribute('href');
+        if (href && !href.startsWith('#')) {
+          e.preventDefault();
+          e.stopPropagation();
+          if (!isDisqualifiedRef.current && !roundEndedRef.current) {
+            triggerDisqualification('PAGE_NAVIGATION', `Attempted to click a navigation link away from test page: ${href}`);
+          }
+        }
+      }
+    };
+
+    // 6. Before unload / tab closing or refreshing
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isDisqualifiedRef.current && !roundEndedRef.current) {
+        try {
+          const token = sessionStorage.getItem('participantToken') || localStorage.getItem('participantToken');
+          fetch('/api/event/workspace/violation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token ? `Bearer ${token}` : '',
+            },
+            body: JSON.stringify({
+              type: 'PAGE_NAVIGATION',
+              details: 'Participant refreshed, closed, or navigated away from active test.',
+            }),
+            keepalive: true,
+          });
+          useAuthStore.getState().disqualifyParticipant('Participant refreshed, closed, or navigated away from active test.');
+        } catch (err) {}
+        e.preventDefault();
+        e.returnValue = 'Leaving the active test page will permanently disqualify your team!';
+        return e.returnValue;
+      }
+    };
+
+    // 7. Shortcut deterrents (blocking Ctrl+T, Ctrl+N, Ctrl+W, Ctrl+Tab, F11, F12, DevTools)
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'F5' || e.key === 'F11' || e.key === 'F12') {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if ((e.ctrlKey || e.metaKey) && ['t', 'T', 'n', 'N', 'w', 'W', 'r', 'R', 'l', 'L', 'u', 'U'].includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && ['I', 'i', 'J', 'j', 'C', 'c'].includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if ((e.ctrlKey || e.metaKey) && ['Tab', 'PageUp', 'PageDown'].includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      if (e.altKey && ['ArrowLeft', 'ArrowRight', 'd', 'D'].includes(e.key)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    };
+
+    // 8. Prevent right-click context menu
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('blur', handleWindowBlur);
+    window.addEventListener('popstate', handlePopState);
+    document.addEventListener('click', handleClickCapture, true);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener('keydown', handleKeyDown, true);
+    document.addEventListener('contextmenu', handleContextMenu, true);
+
+    return () => {
+      // If the component unmounts while test is active and not ended:
+      if (!isDisqualifiedRef.current && !roundEndedRef.current) {
+        try {
+          const token = sessionStorage.getItem('participantToken') || localStorage.getItem('participantToken');
+          fetch('/api/event/workspace/violation', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: token ? `Bearer ${token}` : '',
+            },
+            body: JSON.stringify({
+              type: 'PAGE_NAVIGATION',
+              details: 'Navigated away from active test page.',
+            }),
+            keepalive: true,
+          });
+          useAuthStore.getState().disqualifyParticipant('Navigated away from active test page.');
+        } catch (err) {}
+      }
+
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('blur', handleWindowBlur);
+      window.removeEventListener('popstate', handlePopState);
+      document.removeEventListener('click', handleClickCapture, true);
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+      window.removeEventListener('keydown', handleKeyDown, true);
+      window.removeEventListener('contextmenu', handleContextMenu, true);
+    };
+  }, [team?.id, triggerDisqualification]);
 
   // Local 1-second countdown tick for smooth visual display between socket syncs
   useEffect(() => {
@@ -343,22 +629,8 @@ export const RoundWorkspace: React.FC = () => {
     await saveDraft(optionKey, activeQuestion.id);
   };
 
-  const handleSubmitMCQ = async (optionKey?: string) => {
+  const executeSubmitMCQ = async (opt: string) => {
     if (!activeQuestion) return;
-    if (isQuestionLocked(activeQuestion)) {
-      alert('You have already submitted an answer for this question. Only one attempt is allowed.');
-      return;
-    }
-    const opt = optionKey || activeQuestion.selectedOption || code;
-    if (!opt) {
-      alert('Please select an option before submitting.');
-      return;
-    }
-
-    if (!window.confirm(`Lock in Option ${opt} as your final answer? You can only submit once.`)) {
-      return;
-    }
-
     try {
       setSubmitting(true);
       const res = await api.post('/event/workspace/submit', {
@@ -389,19 +661,55 @@ export const RoundWorkspace: React.FC = () => {
         setQuestions(updated);
       }
     } catch (err: any) {
-      alert(err.response?.data?.error?.message || 'Failed to submit MCQ answer');
+      setProctorNotice(err.response?.data?.error?.message || 'Failed to submit MCQ answer');
+      setTimeout(() => setProctorNotice(null), 5000);
     } finally {
       setSubmitting(false);
     }
   };
 
+  const handleSubmitMCQ = (optionKey?: string) => {
+    if (!activeQuestion) return;
+    if (isQuestionLocked(activeQuestion)) {
+      setProctorNotice('You have already submitted an answer for this question. Only one attempt is allowed.');
+      setTimeout(() => setProctorNotice(null), 5000);
+      return;
+    }
+    const opt = optionKey || activeQuestion.selectedOption || code;
+    if (!opt) {
+      setProctorNotice('Please select an option before submitting.');
+      setTimeout(() => setProctorNotice(null), 4000);
+      return;
+    }
+
+    setConfirmModal({
+      open: true,
+      title: `Lock in Option ${opt}?`,
+      message: 'You can only submit an answer once for this question. Are you sure you want to lock in your choice?',
+      confirmLabel: 'Lock In Answer',
+      isDestructive: false,
+      onConfirm: () => {
+        setConfirmModal((prev) => ({ ...prev, open: false }));
+        executeSubmitMCQ(opt);
+      },
+    });
+  };
+
   // Reset to original buggy code
   const handleResetToBuggy = () => {
     if (!activeQuestion) return;
-    if (window.confirm('Reset code back to original buggy template? Your current edits will be replaced.')) {
-      setCode(activeQuestion.buggyCode);
-      saveDraft(activeQuestion.buggyCode, activeQuestion.id);
-    }
+    setConfirmModal({
+      open: true,
+      title: 'Reset Code to Template?',
+      message: 'Your current edits will be replaced with the original buggy code template.',
+      confirmLabel: 'Reset Code',
+      isDestructive: true,
+      onConfirm: () => {
+        setConfirmModal((prev) => ({ ...prev, open: false }));
+        setCode(activeQuestion.buggyCode);
+        saveDraft(activeQuestion.buggyCode, activeQuestion.id);
+      },
+    });
   };
 
   // Execute Code (Sample Test Cases)
@@ -426,19 +734,15 @@ export const RoundWorkspace: React.FC = () => {
         }
       }
     } catch (err: any) {
-      alert(err.response?.data?.error?.message || 'Execution error');
+      setProctorNotice(err.response?.data?.error?.message || 'Execution error');
+      setTimeout(() => setProctorNotice(null), 5000);
     } finally {
       setRunning(false);
     }
   };
 
-  // Submit Solution (Hidden & Visible Test Cases)
-  const handleSubmitSolution = async () => {
+  const executeSubmitSolution = async () => {
     if (!activeQuestion || submitting) return;
-
-    if (!window.confirm(`Submit final solution for "${activeQuestion.title}"? Your code will be evaluated against all test cases.`)) {
-      return;
-    }
 
     try {
       setSubmitting(true);
@@ -458,44 +762,44 @@ export const RoundWorkspace: React.FC = () => {
             q.id === activeQuestion.id
               ? {
                   ...q,
-                  draftCode: code,
-                  submissionCount: q.submissionCount + 1,
-                  bestSubmission: {
-                    verdict: res.data.verdict,
-                    pointsAwarded: res.data.pointsAwarded,
-                    testsPassed: res.data.testsPassed,
-                    testsTotal: res.data.testsTotal,
-                    submittedAt: new Date().toISOString(),
-                  },
+                  bestSubmission: res.data.submission,
+                  submissionCount: (q.submissionCount || 0) + 1,
                 }
               : q
           )
         );
 
-        if (res.data.allPassed) {
+        if (res.data.submission?.verdict === 'ACCEPTED') {
           confetti({
-            particleCount: 120,
+            particleCount: 100,
             spread: 70,
             origin: { y: 0.6 },
           });
         }
       }
     } catch (err: any) {
-      alert(err.response?.data?.error?.message || 'Submission error');
+      setProctorNotice(err.response?.data?.error?.message || 'Submission error');
+      setTimeout(() => setProctorNotice(null), 5000);
     } finally {
       setSubmitting(false);
     }
   };
 
-  // Toggle Fullscreen
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen().catch(() => {});
-      setIsFullscreen(false);
-    }
+  // Submit Solution (Hidden & Visible Test Cases)
+  const handleSubmitSolution = () => {
+    if (!activeQuestion || submitting) return;
+
+    setConfirmModal({
+      open: true,
+      title: `Submit Final Solution for "${activeQuestion.title}"?`,
+      message: 'Your code will be evaluated against all test cases. Submitting will record your attempt and score.',
+      confirmLabel: 'Submit Solution',
+      isDestructive: false,
+      onConfirm: () => {
+        setConfirmModal((prev) => ({ ...prev, open: false }));
+        executeSubmitSolution();
+      },
+    });
   };
 
   const formatTimer = (secs: number) => {
@@ -504,6 +808,39 @@ export const RoundWorkspace: React.FC = () => {
     return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
+  // 1. DISQUALIFIED LOCKDOWN (Evaluated first to guarantee total screen coverage)
+  if (isDisqualified || isDisqualifiedStore) {
+    return (
+      <div className="min-h-screen bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 text-center select-none text-white">
+        <div className="w-24 h-24 rounded-3xl bg-rose-500/20 border-2 border-rose-500/50 flex items-center justify-center text-rose-400 mb-6 shadow-2xl shadow-rose-500/30 animate-bounce">
+          <XCircle className="w-12 h-12" />
+        </div>
+        <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-bold tracking-wide uppercase mb-3">
+          <AlertOctagon className="w-3.5 h-3.5" />
+          <span>Integrity Violation Detected</span>
+        </div>
+        <h2 className="text-4xl font-black text-white tracking-tight mb-3">Team Disqualified</h2>
+        <p className="text-sm text-slate-300 max-w-lg mb-6 leading-relaxed">
+          Your team has been disqualified for a proctoring violation. Submissions, drafts, and code executions are permanently frozen.
+        </p>
+        <div className="bg-rose-950/60 border border-rose-500/40 px-6 py-4 rounded-2xl max-w-lg text-left text-xs text-rose-200 mb-8 space-y-1.5 shadow-lg">
+          <div className="font-bold text-rose-300 flex items-center space-x-1.5">
+            <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0" />
+            <span>Violation Details:</span>
+          </div>
+          <p className="pl-5 text-slate-200 font-mono text-[11px] break-words">
+            {disqualificationReason || dqReasonStore || 'Switched tab or opened an external application during active test.'}
+          </p>
+        </div>
+        <div className="p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-xs text-slate-400 max-w-md">
+          <p className="font-semibold text-slate-300 mb-1">What to do next:</p>
+          <p>Please remain seated at your workstation and contact the event proctor or lab coordinator.</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 2. LOADING STATE
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0a0d14] flex flex-col items-center justify-center space-y-3 text-slate-400">
@@ -513,18 +850,19 @@ export const RoundWorkspace: React.FC = () => {
     );
   }
 
+  // 3. ERROR / RECONNECT STATE (Never allows voluntary departure to waiting room)
   if (error) {
     return (
       <div className="min-h-screen bg-[#0a0d14] flex flex-col items-center justify-center p-6 text-center space-y-4">
         <div className="p-4 rounded-2xl bg-rose-950/30 border border-rose-500/40 text-rose-300 max-w-md text-xs">
-          <p className="font-bold mb-1">Workspace Error</p>
+          <p className="font-bold mb-1">Workspace Connection Issue</p>
           <p>{error}</p>
         </div>
         <button
-          onClick={() => navigate('/event/waiting-room', { replace: true })}
-          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-semibold"
+          onClick={fetchWorkspaceData}
+          className="px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold transition shadow-lg shadow-brand-600/30"
         >
-          Return to Waiting Room
+          Retry Connection
         </button>
       </div>
     );
@@ -569,20 +907,80 @@ export const RoundWorkspace: React.FC = () => {
         </div>
       )}
 
-      {/* DISQUALIFIED OVERLAY */}
-      {isDisqualified && (
-        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg flex flex-col items-center justify-center p-6 text-center animate-in fade-in duration-200">
-          <div className="w-20 h-20 rounded-3xl bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-400 mb-6 shadow-2xl shadow-rose-500/20 animate-bounce">
-            <XCircle className="w-10 h-10" />
+
+      {/* MANDATORY FULLSCREEN PROCTORED ENTRANCE MODAL */}
+      {!isFullscreen && !isDisqualified && !roundEnded && activeRound && !loading && (
+        <div className="fixed inset-0 z-50 bg-[#07090e]/95 backdrop-blur-xl flex flex-col items-center justify-center p-6 text-center select-none animate-in fade-in duration-300">
+          <div className="w-20 h-20 rounded-3xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-6 shadow-2xl shadow-amber-500/10">
+            <ShieldAlert className="w-10 h-10 animate-pulse" />
           </div>
-          <h2 className="text-3xl font-black text-white tracking-tight mb-2">Team Disqualified</h2>
-          <p className="text-sm text-slate-300 max-w-md mb-4 leading-relaxed">
-            Your team has been disqualified by the event proctors. Submissions and code executions are frozen.
+          <h2 className="text-3xl font-black text-white tracking-tight mb-2">Proctored Exam Session</h2>
+          <p className="text-sm text-slate-300 max-w-lg mb-6 leading-relaxed">
+            This test environment is actively monitored under <span className="text-rose-400 font-bold">zero-tolerance anti-cheat rules</span>. Fullscreen mode is mandatory to begin and continue.
           </p>
-          <div className="bg-rose-950/40 border border-rose-500/30 px-5 py-3 rounded-xl max-w-md text-xs text-rose-300 mb-6">
-            <strong>Reason:</strong> {disqualificationReason || 'Violation of technical fest code of conduct'}
+
+          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 max-w-lg text-left text-xs space-y-3 mb-8 shadow-inner">
+            <div className="flex items-start space-x-3 text-rose-300">
+              <span className="font-bold text-rose-400 flex-shrink-0">⛔ TAB SWITCHING:</span>
+              <span>Leaving this tab, opening a new tab, or minimizing the browser will <strong className="text-white">instantly disqualify</strong> your team.</span>
+            </div>
+            <div className="flex items-start space-x-3 text-rose-300">
+              <span className="font-bold text-rose-400 flex-shrink-0">⛔ EXTERNAL APPS:</span>
+              <span>Opening or focusing any external application (VS Code, chat, browser, desktop tools) will <strong className="text-white">instantly disqualify</strong> your team.</span>
+            </div>
+            <div className="flex items-start space-x-3 text-amber-300">
+              <span className="font-bold text-amber-400 flex-shrink-0">⚠️ FULLSCREEN LOCK:</span>
+              <span>Exiting fullscreen mode during the test will trigger an immediate disqualification flag.</span>
+            </div>
           </div>
-          <p className="text-xs text-slate-500">Please remain at your desk and contact your lab coordinator.</p>
+
+          <button
+            onClick={enterFullscreen}
+            className="px-8 py-4 bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white rounded-2xl text-sm font-bold transition shadow-xl shadow-brand-600/30 hover:shadow-brand-600/50 flex items-center space-x-3 transform active:scale-95 cursor-pointer"
+          >
+            <Maximize2 className="w-5 h-5" />
+            <span>Enter Fullscreen & Begin Test</span>
+          </button>
+          <p className="text-[11px] text-slate-500 mt-4">By clicking above, you agree to real-time proctoring monitoring for this competition session.</p>
+        </div>
+      )}
+
+      {/* IN-APP CONFIRMATION MODAL (Replaces native window.confirm to avoid browser blur) */}
+      {confirmModal.open && (
+        <div className="fixed inset-0 z-[90] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-[#0f141f] border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div className="flex items-center space-x-3">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${
+                confirmModal.isDestructive
+                  ? 'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                  : 'bg-brand-500/20 text-brand-400 border border-brand-500/30'
+              }`}>
+                {confirmModal.isDestructive ? <AlertTriangle className="w-5 h-5" /> : <Info className="w-5 h-5" />}
+              </div>
+              <h3 className="text-base font-bold text-white tracking-tight">{confirmModal.title}</h3>
+            </div>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              {confirmModal.message}
+            </p>
+            <div className="flex items-center justify-end space-x-3 pt-3 border-t border-slate-800">
+              <button
+                onClick={() => setConfirmModal((prev) => ({ ...prev, open: false }))}
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmModal.onConfirm}
+                className={`px-5 py-2 rounded-xl text-xs font-bold text-white shadow-lg transition flex items-center space-x-1.5 ${
+                  confirmModal.isDestructive
+                    ? 'bg-rose-600 hover:bg-rose-500 shadow-rose-600/30'
+                    : 'bg-brand-600 hover:bg-brand-500 shadow-brand-600/30'
+                }`}
+              >
+                <span>{confirmModal.confirmLabel}</span>
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -641,6 +1039,13 @@ export const RoundWorkspace: React.FC = () => {
 
         {/* Center/Right: Timers & Controls */}
         <div className="flex items-center space-x-4">
+          {/* Strict Proctoring Active Badge */}
+          <div className="flex items-center space-x-1.5 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[11px] font-bold">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <ShieldAlert className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">PROCTORED EXAM ACTIVE</span>
+          </div>
+
           {/* Autosave Status Indicator */}
           <span className="text-[11px] text-slate-500 hidden sm:inline">
             {autosaveStatus === 'saving'
@@ -665,8 +1070,12 @@ export const RoundWorkspace: React.FC = () => {
           {/* Fullscreen Toggle */}
           <button
             onClick={toggleFullscreen}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition"
-            title="Toggle Fullscreen"
+            className={`p-1.5 rounded-lg transition ${
+              isFullscreen
+                ? 'text-emerald-400 bg-emerald-500/10 border border-emerald-500/30'
+                : 'text-amber-400 bg-amber-500/10 border border-amber-500/30 animate-pulse'
+            }`}
+            title={isFullscreen ? 'Fullscreen active (leaving will disqualify)' : 'Enter Fullscreen'}
           >
             {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
@@ -1074,6 +1483,7 @@ export const RoundWorkspace: React.FC = () => {
               value={code}
               onChange={handleCodeChange}
               options={{
+                readOnly: isDisqualified || isPaused || roundEnded,
                 fontSize: 13,
                 fontFamily: "'Fira Code', Consolas, Monaco, monospace",
                 lineNumbers: 'on',
@@ -1135,11 +1545,11 @@ export const RoundWorkspace: React.FC = () => {
               <div className="flex items-center space-x-3">
                 <button
                   onClick={handleRunCode}
-                  disabled={running || runCooldown > 0}
+                  disabled={running || runCooldown > 0 || isDisqualified || isPaused || roundEnded}
                   className={`px-4 py-1.5 rounded-lg text-xs font-bold transition flex items-center space-x-1.5 ${
-                    runCooldown > 0
-                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                      : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+                    runCooldown > 0 || isDisqualified || isPaused || roundEnded
+                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed opacity-50'
+                      : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 cursor-pointer'
                   }`}
                 >
                   {running ? (
@@ -1152,8 +1562,8 @@ export const RoundWorkspace: React.FC = () => {
 
                 <button
                   onClick={handleSubmitSolution}
-                  disabled={submitting}
-                  className="px-5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow-lg shadow-emerald-600/20"
+                  disabled={submitting || isDisqualified || isPaused || roundEnded}
+                  className="px-5 py-1.5 bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold transition flex items-center space-x-1.5 shadow-lg shadow-emerald-600/20 cursor-pointer"
                 >
                   {submitting ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />

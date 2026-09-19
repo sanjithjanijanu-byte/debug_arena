@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 export const api = axios.create({
   baseURL: '/api',
@@ -30,7 +31,7 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response interceptor for session expiration handling
+// Response interceptor for session expiration handling and disqualification
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -53,6 +54,17 @@ api.interceptors.response.use(
         if (window.location.pathname !== '/login') {
           window.location.href = '/login';
         }
+      }
+    } else if (error.response?.status === 403) {
+      const url = error.config?.url || '';
+      const errMsg =
+        error.response?.data?.error?.message ||
+        error.response?.data?.message ||
+        '';
+      if (url.startsWith('/event') || errMsg.toLowerCase().includes('disqualif')) {
+        useAuthStore.getState().disqualifyParticipant(
+          errMsg || 'Violation of event proctoring rules: Your team has been disqualified.'
+        );
       }
     }
     return Promise.reject(error);

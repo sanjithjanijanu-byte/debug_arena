@@ -101,25 +101,26 @@ export function initSocketServer(httpServer: HttpServer): SocketIOServer {
       if (!socket.data.teamId) return;
 
       try {
-        const violation = await prisma.violation.create({
-          data: {
-            teamId: socket.data.teamId,
-            type: payload.type,
-            details: payload.details || null,
-          },
-        });
-
-        // Notify admins in real time
-        io?.to('admins').emit('team:violation', {
-          id: violation.id,
-          teamId: socket.data.teamId,
-          teamCode: socket.data.teamCode,
-          type: violation.type,
-          details: violation.details,
-          occurredAt: violation.occurredAt.toISOString(),
-        });
+        const { handleProctoringViolation } = await import('./services/proctoring.service');
+        await handleProctoringViolation(socket.data.teamId, payload.type, payload.details);
       } catch (err) {
         console.error('Failed to log violation:', err);
+      }
+    });
+
+    // Immediate disqualification signal from participant proctoring
+    socket.on('violation:disqualify', async (payload: { type?: string; details?: string }) => {
+      if (!socket.data.teamId) return;
+
+      try {
+        const { handleProctoringViolation } = await import('./services/proctoring.service');
+        await handleProctoringViolation(
+          socket.data.teamId,
+          payload.type || 'DISQUALIFY',
+          payload.details || 'Participant left the active test window'
+        );
+      } catch (err) {
+        console.error('Failed to process disqualification over socket:', err);
       }
     });
 

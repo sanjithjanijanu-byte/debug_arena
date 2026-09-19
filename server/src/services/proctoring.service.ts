@@ -262,10 +262,31 @@ export async function sendWarningMessage(teamId: string, message: string, adminI
 
 /**
  * Disqualify a team, freeze timer, block submissions, and broadcast event.
+ * Supports both manual admin disqualification and automated proctoring disqualification.
  */
-export async function disqualifyTeam(teamId: string, reason: string, adminId: string) {
+export async function disqualifyTeam(teamId: string, reason: string, adminId?: string) {
   const team = await prisma.team.findUnique({ where: { id: teamId } });
   if (!team) throw new Error('Team not found');
+
+  if (team.status === TeamStatus.DISQUALIFIED) {
+    return team;
+  }
+
+  let effectiveAdminId = adminId;
+  if (!effectiveAdminId) {
+    const defaultAdmin = await prisma.admin.findFirst();
+    if (defaultAdmin) {
+      effectiveAdminId = defaultAdmin.id;
+    } else {
+      const sysAdmin = await prisma.admin.create({
+        data: {
+          username: 'system_proctor',
+          passwordHash: 'DISABLED',
+        },
+      });
+      effectiveAdminId = sysAdmin.id;
+    }
+  }
 
   const activeRound = await prisma.round.findFirst({ where: { status: RoundStatus.ACTIVE } });
   let remainingTimeSnapshot: number | null = null;
@@ -287,7 +308,7 @@ export async function disqualifyTeam(teamId: string, reason: string, adminId: st
       teamId,
       action: 'DISQUALIFY',
       reason,
-      adminId,
+      adminId: effectiveAdminId,
       remainingTimeSnapshot,
     },
   });
@@ -295,10 +316,16 @@ export async function disqualifyTeam(teamId: string, reason: string, adminId: st
   // Audit Log
   await prisma.auditLog.create({
     data: {
-      actorType: 'ADMIN',
-      actorId: adminId,
+      actorType: adminId ? 'ADMIN' : 'SYSTEM',
+      actorId: effectiveAdminId,
       action: 'DISQUALIFY_TEAM',
-      payload: { teamId, teamCode: team.teamCode, reason, remainingTimeSnapshot },
+      payload: {
+        teamId,
+        teamCode: team.teamCode,
+        reason,
+        remainingTimeSnapshot,
+        automated: !adminId,
+      },
     },
   });
 
@@ -314,10 +341,73 @@ export async function disqualifyTeam(teamId: string, reason: string, adminId: st
     teamId,
     teamCode: team.teamCode,
     status: TeamStatus.DISQUALIFIED,
+    reason,
     timestamp: new Date().toISOString(),
   });
 
+  broadcastToAdmins('team:violation', {
+    id: `auto-dq-${Date.now()}`,
+    teamId,
+    teamCode: team.teamCode,
+    type: 'DISQUALIFIED_BY_SYSTEM',
+    details: reason,
+    occurredAt: new Date().toISOString(),
+  });
+
   return updatedTeam;
+}
+
+/**
+ * Log a violation and immediately disqualify if violation is a tab switch, blur, or app change.
+ */
+export async function handleProctoringViolation(
+  teamId: string,
+  type: string,
+  details?: string
+): Promise<{ violation: any; disqualified: boolean }> {
+  const team = await prisma.team.findUnique({ where: { id: teamId } });
+  if (!team) throw new Error('Team not found');
+
+  // 1. Record violation
+  const violation = await prisma.violation.create({
+    data: {
+      teamId,
+      type,
+      details: details || null,
+    },
+  });
+
+  // 2. Real-time push to admins
+  broadcastToAdmins('team:violation', {
+    id: violation.id,
+    teamId,
+    teamCode: team.teamCode,
+    type: violation.type,
+    details: violation.details,
+    occurredAt: violation.occurredAt.toISOString(),
+  });
+
+  // 3. Determine if this triggers immediate disqualification
+  const criticalTypes = ['TAB_SWITCH', 'WINDOW_BLUR', 'APP_SWITCH', 'FULLSCREEN_EXIT', 'DISQUALIFY'];
+  const isCritical = criticalTypes.includes(type.toUpperCase());
+
+  if (isCritical && team.status !== TeamStatus.DISQUALIFIED) {
+    let reason = 'Violation of strict proctoring rules: Left active test window.';
+    if (type.toUpperCase() === 'TAB_SWITCH') {
+      reason = 'Disqualified: Tab switch or minimized browser window detected during active test.';
+    } else if (type.toUpperCase() === 'WINDOW_BLUR') {
+      reason = 'Disqualified: Lost window focus or opened external application during active test.';
+    } else if (type.toUpperCase() === 'FULLSCREEN_EXIT') {
+      reason = 'Disqualified: Exited mandatory fullscreen mode during active test.';
+    } else if (details) {
+      reason = `Disqualified: ${details}`;
+    }
+
+    await disqualifyTeam(teamId, reason);
+    return { violation, disqualified: true };
+  }
+
+  return { violation, disqualified: team.status === TeamStatus.DISQUALIFIED };
 }
 
 /**

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import { useAuthStore } from '../../store/useAuthStore';
+import { resetSocket } from '../../services/socket';
 import { Terminal, Lock, KeyRound, AlertCircle, Loader2, Code2, Clock, Zap } from 'lucide-react';
 
 export const ParticipantLogin: React.FC = () => {
@@ -25,6 +26,7 @@ export const ParticipantLogin: React.FC = () => {
 
       if (response.data.success) {
         setParticipantAuth(response.data.token, response.data.team);
+        resetSocket();
         navigate('/event/instructions');
       }
     } catch (err: any) {
